@@ -1,0 +1,14 @@
+
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Pages Preview",
+      "type": "shell",
+      "command": "wrangler pages dev .",
+      "group": "build",
+      "presentation": { "reveal": "always" },
+      "problemMatcher": []
+    }
+  ]
+}
