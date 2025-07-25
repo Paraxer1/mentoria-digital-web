@@ -4,22 +4,22 @@ const cursos = [
     { title: "Desarrollo Web & apps", img: "multimedia/Desarrollo_apps.jpg", description: "Crea sitios web desde cero." },
     { title: "Marketing Digital 360°", img: "multimedia/Marcketing.jpg", description: "Domina el marketing online." },
     { title: "Tech Digital", img: "multimedia/Tech_total.jpg", description: "Curso avanzado sobre tecnología e innovación." },
-    { title: "Cocina Internacional", img: "https://www.example.com/cocina-internacional.jpg", description: "Aprende a cocinar platillos internacionales." },
+    { title: "Libreria Digital", img: "multimedia/Biblioteca.jpg", description: "Accede a la coleccion mas completa de libros y audio libros." },
     { title: "Multimedia y diseño", img: "multimedia/Multimedia_diseño.jpg", description: "Domina las herramientas de diseño gráfico." },
     { title: "Ciberseguridad & Hacking", img: "multimedia/Hacking.jpg", description: "Domina habilidades de hacking y ciberseguridad." },
-    { title: "Fotografía Profesional", img: "https://www.example.com/fotografia.jpg", description: "Aprende los fundamentos de la fotografía profesional." },
-    { title: "Desarrollo de Aplicaciones Móviles", img: "https://www.example.com/app-movil.jpg", description: "Desarrolla aplicaciones para dispositivos móviles." },
-    { title: "Gestión de Proyectos", img: "https://www.example.com/gestion-proyectos.jpg", description: "Aprende a gestionar proyectos de manera eficiente." },
+    { title: "Educación academica", img: "multimedia/Educacion_academica.jpg", description: "Refuerza tus conocimientos con el contenido mas completo para todos los niveles de estudio." },
+    { title: "Psicología & Neurociencia", img: "multimedia/Psicologia.jpg", description: "Explora la mente humana con cursos personalizados." },
+    { title: "Habilidades & Manualidades Pro", img: "multimedia/Manualidades.jpg", description: "Desarrolla proyectos y emprende con habilidades practicas." },
     { title: "Desarrollo personal & Mentalidad", img: "multimedia/Desarrollo_personal.jpg", description: "Cursos para mejorar tu bienestar personal." },
     { title: "Idiomas & Finanzas", img: "multimedia/Idiomas.jpg", description: "Aprende nuevos idiomas con nuestra metodología." }
 ];
 
 // Mega Packs (ofertas de descuento)
 const megaPacks = [
-    { title: "Pack 1: Tecnología + Web + IA", img: "https://www.example.com/mega1.jpg", description: "Todo lo que necesitas para ser un experto en tecnología." },
-    { title: "Pack 2: Gastronomía + Cocina Avanzada", img: "https://www.example.com/mega2.jpg", description: "Masterchef en casa." },
-    { title: "Pack 3: Marketing Digital + Diseño Gráfico", img: "https://www.example.com/mega3.jpg", description: "Domina las herramientas del marketing y diseño." },
-    { title: "Pack 4: Programación + Desarrollo de Apps", img: "https://www.example.com/mega4.jpg", description: "Aprende a programar y desarrollar aplicaciones." }
+    { title: "Mega Pack tecnologico", img: "multimedia/Tecnologico.jpg", description: "Todo lo que necesitas para ser un experto en tecnología." },
+    { title: "Mega Pack Mentalidad & crecimiento", img: "multimedia/Mentalidad.jpg", description: "Potencia tu mente y liderazgo." },
+    { title: "Mega Pack Creativo & Diseño Gráfico", img: "multimedia/Creativo.jpg", description: "Despierta tu lado creativo y despierta tu lado emprendedor." },
+    { title: "Mega Pack Educativo Pro", img: "multimedia/Educativo.jpg", description: "Es excelente para los estudiantes de todos los niveles o autodidactas." }
 ];
 
 // Función para agregar los cursos dinámicamente
@@ -57,7 +57,7 @@ const addMegaPacks = () => {
 // Redirigir al WhatsApp con el mensaje de interés
 const redirectToWhatsApp = (curso) => {
     const message = `Me interesa el curso de ${curso}!`;
-    const phone = "1234567890"; // Aquí va tu número de WhatsApp
+    const phone = "+5212321443592"; // Aquí va tu número de WhatsApp
     window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, "_blank");
 };
 
