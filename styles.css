@@ -1,0 +1,140 @@
+/* Reset global */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* General */
+body {
+  font-family: "Arial", sans-serif;
+  background-color: #f4f4f4;
+  color: #333;
+}
+
+/* Header */
+.header {
+  background-color: #6a1b9a;
+  padding: 20px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+}
+
+.header nav ul {
+  list-style-type: none;
+}
+
+.header nav ul li {
+  display: inline;
+  margin: 0 15px;
+}
+
+.header nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-size: 1.2rem;
+}
+
+/* Hero Section */
+.hero-section {
+  background: linear-gradient(to right, #ff5722, #6a1b9a);
+  color: white;
+  padding: 100px 20px;
+  text-align: center;
+  position: relative;
+}
+
+.hero-content h1 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+}
+
+.hero-content p {
+  font-size: 1.5rem;
+  margin-bottom: 30px;
+}
+
+.cta {
+  background-color: #ff5722;
+  color: white;
+  padding: 12px 30px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 1.1em;
+  text-align: center;
+}
+
+/* Cursos */
+.cursos-section,
+.megaPacks-section,
+.todos-cursos-section,
+.contacto-section {
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.curso-grid,
+.mega-pack-grid {
+  display: flex;
+  justify-content: space-around;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.curso,
+.mega-pack {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 30%;
+  padding: 20px;
+  position: relative;
+  transition: transform 0.3s ease-out;
+}
+
+.curso img,
+.mega-pack img {
+  width: 100%;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.curso:hover,
+.mega-pack:hover {
+  transform: scale(1.05);
+}
+
+.curso h3,
+.mega-pack h3 {
+  font-size: 1.2rem;
+  margin: 10px 0;
+}
+
+.curso p,
+.mega-pack p {
+  font-size: 1rem;
+  color: #777;
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+  .curso,
+  .mega-pack {
+    width: 100%;
+  }
+
+  .hero-content h1 {
+    font-size: 2rem;
+  }
+
+  .hero-content p {
+    font-size: 1.2rem;
+  }
+
+  .cta {
+    width: 100%;
+  }
+}

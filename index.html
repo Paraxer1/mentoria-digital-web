@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Mentoría Digital</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- Header con logo y navegación -->
+    <header class="header">
+      <div class="logo">
+        <!-- Logo de la tienda importado desde URL proporcionado -->
+        <img
+          src="https://scontent.fpbc2-2.fna.fbcdn.net/v/t39.30808-6/523246281_122243955704219203_3033553950861640375_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=SREB9tvtHAoQ7kNvwFLprHD&_nc_oc=AdkQ-JFakPWEKCQ6W5wm2N2K4v7Zfr1Hs_A359OB0B0K-n0TEpdp-s6fAd6-wPFdpYk&_nc_zt=23&_nc_ht=scontent.fpbc2-2.fna&_nc_gid=D8e93jb7RbM66df7ZFvfOQ&oh=00_AfTX01bv1p9roBZ16yzZaV1hboNTQWJmLCZSm0Lw-_51Cg&oe=68889F66"
+          alt="Mentoría Digital Logo"
+          width="150px"
+        />
+      </div>
+      <nav>
+        <ul>
+          <li><a href="#home">Inicio</a></li>
+          <li><a href="#cursos">Cursos</a></li>
+          <li><a href="#megaPacks">Mega Packs</a></li>
+          <li><a href="#todosCursos">Todos los Cursos</a></li>
+          <li><a href="#contacto">Contacto</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+      <div class="hero-content">
+        <h1>¡Transforma tu futuro con Mentoría Digital!</h1>
+        <p>
+          Accede a los mejores cursos online en áreas como gastronomía,
+          tecnología, desarrollo personal y más.
+        </p>
+        <button id="explorarCursosBtn" class="cta">Explorar Cursos</button>
+      </div>
+      <br /><br />
+
+      <video width="80%" autoplay muted playsinline>
+        <source src="multimedia/video.mp4" type="video/mp4" />
+        Tu navegador no soporta el video.
+      </video>
+    </section>
+
+    <!-- Cursos -->
+    <section id="cursos" class="cursos-section">
+      <h2>Nuestros Cursos</h2>
+      <div class="curso-grid" id="cursosContainer"></div>
+    </section>
+
+    <!-- Mega Packs -->
+    <section id="megaPacks" class="megaPacks-section">
+      <h2>Mega Packs</h2>
+      <div class="mega-pack-grid" id="megaPacksContainer"></div>
+    </section>
+
+    <!-- Comprar Todos los Cursos -->
+    <section id="todosCursos" class="todos-cursos-section">
+      <h2>Comprar Todo el Catálogo</h2>
+      <p>Adquiere todos nuestros cursos con un descuento especial.</p>
+      <button class="cta" id="comprarTodoBtn">Comprar Todos</button>
+    </section>
+
+    <!-- Footer (Contacto) -->
+    <section id="contacto" class="contacto-section">
+      <h2>Contacto</h2>
+      <p>
+        Si tienes alguna pregunta, no dudes en contactarnos a través de
+        WhatsApp.
+      </p>
+    </section>
+
+    <script src="scripts.js"></script>
+  </body>
+</html>
