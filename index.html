@@ -3,77 +3,134 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Mentoría Digital</title>
+    <title>Mentoría Digital ✨</title>
+    <link
+      rel="icon"
+      href="multimedia/logo.jpg"
+      sizes="32x32"
+      type="image/png"
+    />
+    <!-- Fuente juvenil y profesional -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <!-- Header con logo y navegación -->
-    <header class="header">
-      <div class="logo">
-        <!-- Logo de la tienda importado desde URL proporcionado -->
-        <img
-          src="https://scontent.fpbc2-2.fna.fbcdn.net/v/t39.30808-6/523246281_122243955704219203_3033553950861640375_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=SREB9tvtHAoQ7kNvwFLprHD&_nc_oc=AdkQ-JFakPWEKCQ6W5wm2N2K4v7Zfr1Hs_A359OB0B0K-n0TEpdp-s6fAd6-wPFdpYk&_nc_zt=23&_nc_ht=scontent.fpbc2-2.fna&_nc_gid=D8e93jb7RbM66df7ZFvfOQ&oh=00_AfTX01bv1p9roBZ16yzZaV1hboNTQWJmLCZSm0Lw-_51Cg&oe=68889F66"
-          alt="Mentoría Digital Logo"
-          width="150px"
-        />
-      </div>
-      <nav>
-        <ul>
-          <li><a href="#home">Inicio</a></li>
-          <li><a href="#cursos">Cursos</a></li>
-          <li><a href="#megaPacks">Mega Packs</a></li>
-          <li><a href="#todosCursos">Todos los Cursos</a></li>
-          <li><a href="#contacto">Contacto</a></li>
-        </ul>
-      </nav>
-    </header>
-
-    <!-- Hero Section -->
+    <!-- Hero -->
     <section id="home" class="hero-section">
-      <div class="hero-content">
-        <h1>¡Transforma tu futuro con Mentoría Digital!</h1>
-        <p>
-          Accede a los mejores cursos online en áreas como gastronomía,
-          tecnología, desarrollo personal y más.
-        </p>
-        <button id="explorarCursosBtn" class="cta">Explorar Cursos</button>
+      <div class="hero-video-wrapper">
+        <video autoplay muted loop playsinline class="hero-video">
+          <source src="multimedia/video1.mp4" type="video/mp4" />
+          Tu navegador no soporta el vídeo.
+        </video>
+        <div class="hero-overlay"></div>
       </div>
-      <br /><br />
+      <div class="hero-logo">
+        <a href="#home">
+          <img src="multimedia/logo.jpg" alt="Logo Mentoría Digital" />
+        </a>
+      </div>
+      <div class="hero-content">
+        <h1>🚀 ¡Transforma tu futuro con Mentoría Digital!</h1>
+        <p>Accede a cursos online en gastronomía, tecnología, diseño y más.</p>
+        <button id="explorarCursosBtn" class="cta">✨ Explorar Cursos</button>
+      </div>
+    </section>
 
-      <video width="80%" autoplay muted playsinline>
-        <source src="multimedia/video1.mp4" type="video/mp4" />
-        Tu navegador no soporta el video.
-      </video>
+    <!-- Beneficios -->
+    <section id="beneficios" class="benefits-section">
+      <h2>¿Por qué elegirnos?</h2>
+      <ul>
+        <li>✔ Acceso inmediato</li>
+        <li>✔ Aprende a tu ritmo</li>
+        <li>✔ Sin caducidad</li>
+        <li>✔ Material descargable</li>
+        <li>✔ Certificado digital</li>
+        <li>✔ Soporte por WhatsApp</li>
+      </ul>
+    </section>
+
+    <!-- Promoción -->
+    <section id="promo-timer" class="promo-timer">
+      <div class="promo-content">
+        <h2>🔥 ¡20% OFF en todos los cursos! 🔥</h2>
+        <p>Válido hasta el <strong>1 de agosto</strong></p>
+        <div class="countdown-wrapper">
+          <svg class="progress-ring" width="120" height="120">
+            <circle
+              class="progress-ring__circle"
+              stroke="#fff"
+              stroke-width="8"
+              fill="transparent"
+              r="52"
+              cx="60"
+              cy="60"
+            />
+          </svg>
+          <div id="countdown" class="countdown-text">⏳ Cargando...</div>
+        </div>
+      </div>
     </section>
 
     <!-- Cursos -->
     <section id="cursos" class="cursos-section">
-      <h2>Nuestros Cursos</h2>
+      <h2>🎓 Nuestros Cursos</h2>
       <div class="curso-grid" id="cursosContainer"></div>
     </section>
 
     <!-- Mega Packs -->
     <section id="megaPacks" class="megaPacks-section">
-      <h2>Mega Packs</h2>
+      <h2>💥 Mega Packs</h2>
       <div class="mega-pack-grid" id="megaPacksContainer"></div>
     </section>
 
-    <!-- Comprar Todos los Cursos -->
+    <!-- Comprar catálogo -->
     <section id="todosCursos" class="todos-cursos-section">
-      <h2>Comprar Todo el Catálogo</h2>
-      <p>Adquiere todos nuestros cursos con un descuento especial.</p>
-      <button class="cta" id="comprarTodoBtn">Comprar Todos</button>
+      <h2>🛒 Comprar Todo el Catálogo</h2>
+      <p>Obtén todos los cursos con un super descuento.</p>
+      <button class="cta" id="comprarTodoBtn">🔖 ¡Comprar Todos!</button>
     </section>
 
-    <!-- Footer (Contacto) -->
-    <section id="contacto" class="contacto-section">
-      <h2>Contacto</h2>
-      <p>
-        Si tienes alguna pregunta, no dudes en contactarnos a través de
-        WhatsApp.
-      </p>
+    <!-- FAQ -->
+    <section id="faq" class="faq-section">
+      <h2>❓ Preguntas Frecuentes</h2>
+      <div class="faq-item">
+        <button class="faq-question">¿Cómo recibo los cursos?</button>
+        <div class="faq-answer">
+          <p>Recibirás el enlace por WhatsApp al instante.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">¿Puedo usar mi celular?</button>
+        <div class="faq-answer">
+          <p>Sí, la plataforma es 100% responsiva.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">¿Tienen garantía?</button>
+        <div class="faq-answer"><p>Garantía de satisfacción de 7 días.</p></div>
+      </div>
     </section>
+
+    <!-- Contacto -->
+    <section id="contacto" class="contacto-section">
+      <h2>📞 Contáctanos</h2>
+      <p>Escríbenos por WhatsApp para más info.</p>
+    </section>
+
+    <!-- WhatsApp fijo -->
+    <div class="whatsapp-fixed">
+      <a
+        href="https://wa.me/5212321443592?text=¡Hola!%20Quiero%20info!"
+        target="_blank"
+      >
+        <img src="multimedia/whatsapp.jpg" alt="WhatsApp" />
+      </a>
+    </div>
 
     <script src="scripts.js"></script>
   </body>
