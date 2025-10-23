@@ -1,328 +1,195 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Actividad 3: Cuadro Comparativo de Valores</title>
-    <!-- Incluimos Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        /* Usamos la fuente Inter que es parte de Tailwind */
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f8f9fa; /* Un fondo gris muy claro */
-        }
-        /* Estilos para las tarjetas de contenido */
-        .content-card {
-            background-color: white;
-            border-radius: 0.75rem; /* 12px */
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            margin-bottom: 1.5rem; /* 24px */
-            overflow: hidden; /* Para que los bordes redondeados funcionen bien */
-        }
-        
-        /* Estilos de la tabla */
-        th, td {
-            padding: 1rem; /* 16px */
-            vertical-align: top;
-            font-size: 0.95rem; /* 15px */
-            line-height: 1.6;
-        }
-
-        /* Encabezados de la Tabla */
-        th {
-            font-weight: 700;
-            font-size: 0.875rem; /* 14px */
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            text-align: left;
-        }
-        
-        /* Encabezado del Criterio */
-        .th-criterion {
-            background-color: #f3f4f6;
-            color: #1f2937;
-            width: 20%;
-        }
-
-        /* Encabezados de Autores */
-        .th-scheler { background-color: #ede9fe; color: #5b21b6; }
-        .th-maslow { background-color: #dbeafe; color: #1d4ed8; }
-        .th-giroux { background-color: #d1fae5; color: #047857; }
-
-        /* Celdas de Criterio */
-        .criterion-cell {
-            background-color: #f9fafb;
-            font-weight: 600;
-            color: #374151;
-            border-bottom: 1px solid #e5e7eb;
-        }
-        
-        /* Celdas de Datos */
-        .data-cell {
-            border-bottom: 1px solid #e5e7eb;
-            color: #374151;
-        }
-
-        /* Colores sutiles para las celdas de datos */
-        .cell-scheler { background-color: #f5f3ff; }
-        .cell-maslow { background-color: #eff6ff; }
-        .cell-giroux { background-color: #f0fdf4; }
-
-        li {
-            margin-bottom: 0.5rem;
-        }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Grupo Ingeniambres TICS - UTGZ</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="https://www.utgz.edu.mx/images/favicon.png" type="image/png">
 </head>
-<body class="p-4 md:p-8">
-    <div class="max-w-7xl mx-auto">
 
-        <!-- Encabezado con datos del alumno -->
-        <div class="content-card p-6 border-l-4 border-gray-800 mb-6">
-            <h1 class="text-2xl font-bold text-gray-900">Ismael Olivares Hernández</h1>
-            <p class="text-gray-700 mt-1">Asignatura: Desarrollo Humano y Valores</p>
-            <p class="text-gray-600">Profesor: MIGUEL RIVERA LÓPEZ</p>
-            <p class="text-gray-600">Carrera: Tsu en desarrollo de software y multiplataforma | Grupo: 110-AE</p>
+<body>
+  <div class="container">
+    <header>
+      <img src="https://www.utgz.edu.mx/images/logo-utgz-blanco.png" alt="Logo UTGZ" class="logo-img" />
+      <div>
+        <h1>Orgullo UTGZ - Grupo Ingeniambres TICS</h1>
+        <div class="subtitle">TSU en Desarrollo de Software Multiplataforma</div>
+      </div>
+
+      <div class="controls" role="region" aria-label="Controles">
+        <label class="sr-only" for="filter">Filtrar</label>
+        <select id="filter">
+          <option value="all">Todo</option>
+          <option value="kevin">Kevin</option>
+          <option value="oscar">Oscar</option>
+          <option value="guero">Güero</option>
+          <option value="photos">Solo fotos</option>
+          <option value="videos">Solo videos</option>
+        </select>
+
+        <button id="sortBtn">Orden: Cronológico</button>
+        <button id="shuffleBtn">Mezclar</button>
+        <button class="primary" id="groupBtn">Grupo Ingeniambres TICS</button>
+      </div>
+    </header>
+
+    <main>
+      <section aria-labelledby="gal-title">
+        <div class="section-title">
+          <h2 id="gal-title">Galería principal</h2>
+          <div class="hint">Clic para ampliar. Videos reproducen en visor.</div>
         </div>
 
-        <!-- Título de la Actividad -->
-        <header class="text-left mb-8">
-            <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900">Actividad 3: Cuadro Comparativo</h1>
-            <p class="text-xl font-semibold text-gray-700">Clasificación de Valores: Scheler, Maslow y Giroux</p>
-        </header>
+        <div id="gallery" class="grid" aria-live="polite">
+          
+          <article class="card" data-type="image" data-owner="kevin" data-src="fotos/kevin1.jpeg" tabindex="0" role="button" aria-label="Abrir foto de Kevin 1">
+            <figure class="thumb-wrapper">
+              <img src="fotos/kevin1.jpeg" alt="Foto de Kevin 1" loading="lazy" class="thumb-img" />
+            </figure>
+            <div class="meta"><div class="title">Kevin</div><div class="tag">Kevin</div></div>
+          </article>
 
-        <!-- Parte 1: Cuadro Comparativo -->
-        <div class="content-card">
-            <div class="p-6">
-                <h2 class="text-2xl font-bold text-gray-800 mb-2">Parte 1: Cuadro Comparativo</h2>
-                <p class="text-gray-700">
-                    <strong>Definición Inicial:</strong> Para este trabajo, entendemos los "valores universales" como aquellos principios (ej. justicia, verdad) que muchas culturas consideran deseables. El propósito de este cuadro es comparar cómo Scheler, Maslow y Giroux explican su origen, sus características y su función en la sociedad.
-                </p>
-            </div>
-            
-            <!-- Contenedor de la Tabla (con scroll horizontal en móvil) -->
-            <div class="overflow-x-auto">
-                <table class="min-w-full">
-                    <thead>
-                        <tr>
-                            <th class="th-criterion">Criterio</th>
-                            <th class="th-scheler">
-                                <div class="flex items-center">
-                                    <svg class="w-6 h-6 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18c-2.305 0-4.408.867-6 2.292m0-14.25v14.25" /></svg>
-                                    Max Scheler (1874-1928)
-                                </div>
-                            </th>
-                            <th class="th-maslow">
-                                <div class="flex items-center">
-                                    <svg class="w-6 h-6 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 4.5h14.25M3 9h14.25m-14.25 4.5h14.25m0 0l-3.75-3.75M17.25 13.5l-3.75 3.75" /></svg>
-                                    Abraham Maslow (1908-1970)
-                                </div>
-                            </th>
-                            <th class="th-giroux">
-                                <div class="flex items-center">
-                                    <svg class="w-6 h-6 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666M18 18.72A8.954 8.954 0 0112 21c-2.17 0-4.207-.5-6.1-1.42m12.2 0a9.043 9.043 0 01-3.741-.479 3 3 0 01-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666M12 3c-2.17 0-4.207.5-6.1 1.42m12.2 0a9.043 9.043 0 00-3.741.479 3 3 0 00-4.682 2.72m.94-3.198l.001-.031c0-.225.012-.447.037-.666M6.1 19.58A9.026 9.026 0 014.25 12 9.026 9.026 0 016.1 4.42m11.8 15.16A9.026 9.026 0 0019.75 12 9.026 9.026 0 0017.9 4.42" /></svg>
-                                    Henry Giroux (n. 1943)
-                                </div>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody class="bg-white">
-                        <!-- Fila 1: Contexto y Época -->
-                        <tr>
-                            <td class="criterion-cell">
-                                <div class="flex items-center">
-                                    <svg class="w-6 h-6 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                                    Contexto y Época
-                                </div>
-                            </td>
-                            <td class="data-cell cell-scheler">
-                                Filósofo alemán de principios del s. XX.
-                                <ul class="list-disc list-inside mt-2">
-                                    <li><strong>Corriente:</strong> Fenomenología y Axiología (Teoría de los Valores).</li>
-                                    <li>Su trabajo es una reacción a la ética formal de Kant, proponiendo una ética centrada en el "contenido" (los valores mismos).</li>
-                                </ul>
-                            </td>
-                            <td class="data-cell cell-maslow">
-                                Psicólogo estadounidense de mediados del s. XX.
-                                <ul class="list-disc list-inside mt-2">
-                                    <li><strong>Corriente:</strong> Psicología Humanista (la "Tercera Fuerza").</li>
-                                    <li>Se opuso al Conductismo (que veía al humano como máquina) y al Psicoanálisis (enfocado en lo patológico).</li>
-                                </ul>
-                            </td>
-                            <td class="data-cell cell-giroux">
-                                Sociólogo y pedagogo crítico estadounidense.
-                                <ul class="list-disc list-inside mt-2">
-                                    <li><strong>Corriente:</strong> Pedagogía Crítica y Teoría Crítica Social.</li>
-                                    <li>Su pensamiento critica el neoliberalismo y el autoritarismo en la educación y la sociedad.</li>
-                                </ul>
-                            </td>
-                        </tr>
-                        
-                        <!-- Fila 2: Tipos de Valores -->
-                        <tr>
-                            <td class="criterion-cell">
-                                <div class="flex items-center">
-                                    <svg class="w-6 h-6 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" /></svg>
-                                    Tipos de Valores
-                                </div>
-                            </td>
-                            <td class="data-cell cell-scheler">
-                                Una jerarquía objetiva de 4 niveles (del más bajo al más alto):
-                                <ol class="list-decimal list-inside mt-2 space-y-1">
-                                    <li><strong>Sensibles:</strong> Placer, Dolor, Agrado.</li>
-                                    <li><strong>Vitales:</strong> Salud, Fortaleza, Enfermedad.</li>
-                                    <li><strong>Espirituales:</strong>
-                                        <ul class="list-disc list-inside ml-4">
-                                            <li>Estéticos: Belleza / Fealdad.</li>
-                                            <li>Jurídicos: Justicia / Injusticia.</li>
-                                            <li>De Conocimiento: Verdad / Falsedad.</li>
-                                        </ul>
-                                    </li>
-                                    <li><strong>Religiosos:</strong> Lo Santo / Lo Profano.</li>
-                                </ol>
-                            </td>
-                            <td class="data-cell cell-maslow">
-                                Distingue dos grandes tipos:
-                                <ol class="list-decimal list-inside mt-2 space-y-1">
-                                    <li><strong>Valores-D (por Deficiencia):</strong>
-                                        <ul class="list-disc list-inside ml-4">
-                                            <li>Ligados a necesidades básicas (seguridad, pertenencia). Nos motivan cuando nos falta algo.</li>
-                                        </ul>
-                                    </li>
-                                    <li><strong>Valores-B (del Ser o "Metanecesidades"):</strong>
-                                        <ul class="list-disc list-inside ml-4">
-                                            <li>Son los valores de la gente autorrealizada.</li>
-                                            <li><strong>Ejemplos:</strong> Verdad, Bondad, Belleza, Unidad, Justicia, Plenitud, Orden, Simplicidad.</li>
-                                        </ul>
-                                    </li>
-                                </ol>
-                            </td>
-                            <td class="data-cell cell-giroux">
-                                Valores ético-políticos para la acción:
-                                <ul class="list-disc list-inside mt-2">
-                                    <li>No da una lista fija, sino que habla de valores necesarios para una democracia crítica.</li>
-                                    <li><strong>Ejemplos:</strong> Justicia Social (más allá de lo legal), Equidad, Solidaridad, Bien Común, Coraje Cívico (retar al poder), Pensamiento Crítico, Dignidad Humana.</li>
-                                </ul>
-                            </td>
-                        </tr>
+          <article class="card" data-type="image" data-owner="kevin" data-src="fotos/kevin2.jpeg" tabindex="0" role="button" aria-label="Abrir foto de Kevin 2">
+            <figure class="thumb-wrapper">
+              <img src="fotos/kevin2.jpeg" alt="Foto de Kevin 2" loading="lazy" class="thumb-img" />
+            </figure>
+            <div class="meta"><div class="title">Kevin</div><div class="tag">Kevin</div></div>
+          </article>
+          
+          <article class="card" data-type="image" data-owner="kevin" data-src="fotos/kevin3.jpeg" tabindex="0" role="button" aria-label="Abrir foto de Kevin 3">
+            <figure class="thumb-wrapper"><img src="fotos/kevin3.jpeg" alt="Foto de Kevin 3" loading="lazy" class="thumb-img" /></figure>
+            <div class="meta"><div class="title">Kevin</div><div class="tag">Kevin</div></div>
+          </article>
+          
+          <article class="card" data-type="image" data-owner="kevin" data-src="fotos/kevin4.jpeg" tabindex="0" role="button" aria-label="Abrir foto de Kevin 4">
+            <figure class="thumb-wrapper"><img src="fotos/kevin4.jpeg" alt="Foto de Kevin 4" loading="lazy" class="thumb-img" /></figure>
+            <div class="meta"><div class="title">Kevin</div><div class="tag">Kevin</div></div>
+          </article>
 
-                        <!-- Fila 3: Características -->
-                        <tr>
-                            <td class="criterion-cell">
-                                <div class="flex items-center">
-                                    <svg class="w-6 h-6 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                                    Características
-                                </div>
-                            </td>
-                            <td class="data-cell cell-scheler">
-                                <ul class="list-disc list-inside space-y-1">
-                                    <li><strong>Objetividad:</strong> Son reales y no dependen de la opinión.</li>
-                                    <li><strong>Inmutabilidad:</strong> No cambian con la historia.</li>
-                                    <li><strong>Polaridad:</strong> Siempre vienen en pares (positivo/negativo).</li>
-                                    <li><strong>Jerarquía:</strong> Unos son objetivamente superiores a otros.</li>
-                                    <li><strong>A priori:</strong> Los captamos por "intuición emocional", no por la razón.</li>
-                                </ul>
-                            </td>
-                            <td class="data-cell cell-maslow">
-                                <ul class="list-disc list-inside space-y-1">
-                                    <li><strong>Intrínsecos:</strong> Son parte de nuestra naturaleza humana.</li>
-                                    <li><strong>Necesidades:</strong> Los Valores-B son "metanecesidades". Si nos faltan, nos enfermamos psicológicamente (cinismo, apatía).</li>
-                                    <li><strong>No-Jerárquicos (los B):</strong> La Verdad no es "más" que la Belleza; se viven como una unidad.</li>
-                                    <li><strong>Emergentes:</strong> Solo nos motivan cuando las necesidades básicas (D) están cubiertas.</li>
-                                </ul>
-                            </td>
-                            <td class="data-cell cell-giroux">
-                                <ul class="list-disc list-inside space-y-1">
-                                    <li><strong>Prácticos (Praxis):</strong> Son acciones, no ideas abstractas. El valor es la lucha por la justicia.</li>
-                                    <li><strong>Contextuales:</strong> Se definen en la lucha contra algo (ej. injusticia, autoritarismo).</li>
-                                    <li><strong>Políticos:</strong> Nunca son neutrales; apoyar la equidad es una decisión política.</li>
-                                    <li><strong>Educativos:</strong> Son la base de la "pedagogía pública"; se deben enseñar y practicar.</li>
-                                </ul>
-                            </td>
-                        </tr>
+          <article class="card" data-type="image" data-owner="kevin" data-src="fotos/kevin5.jpeg" tabindex="0" role="button" aria-label="Abrir foto de Kevin 5">
+            <figure class="thumb-wrapper"><img src="fotos/kevin5.jpeg" alt="Foto de Kevin 5" loading="lazy" class="thumb-img" /></figure>
+            <div class="meta"><div class="title">Kevin</div><div class="tag">Kevin</div></div>
+          </article>
 
-                        <!-- Fila 4: Función -->
-                        <tr>
-                            <td class="criterion-cell">
-                                <div class="flex items-center">
-                                    <svg class="w-6 h-6 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" /></svg>
-                                    Función
-                                </div>
-                            </td>
-                            <td class="data-cell cell-scheler">
-                                <strong class="text-purple-800">Desarrollo Moral (Individual):</strong>
-                                <p class="mt-1">La función de los valores es ser nuestra guía ética. El desarrollo de una persona consiste en aprender a preferir y realizar los valores superiores (justicia, verdad) por encima de los inferiores (placer).</p>
-                            </td>
-                            <td class="data-cell cell-maslow">
-                                <strong class="text-blue-800">Desarrollo Psicológico (Individual):</strong>
-                                <p class="mt-1">La función de los valores (Valores-B) es darnos salud psicológica y permitirnos crecer. Son la meta del desarrollo humano: la Autorrealización. Vivir buscando estos valores permite alcanzar la plenitud.</p>
-                            </td>
-                            <td class="data-cell cell-giroux">
-                                <strong class="text-green-800">Transformación (Social):</strong>
-                                <p class="mt-1">La función es colectiva, social y política. Los valores son las herramientas éticas para crear una democracia radical. Sirven para formar ciudadanos que piensen críticamente y desafíen las injusticias.</p>
-                            </td>
-                        </tr>
+          <article class="card" data-type="image" data-owner="kevin" data-src="fotos/kevin6.jpeg" tabindex="0" role="button" aria-label="Abrir foto de Kevin 6">
+            <figure class="thumb-wrapper"><img src="fotos/kevin6.jpeg" alt="Foto de Kevin 6" loading="lazy" class="thumb-img" /></figure>
+            <div class="meta"><div class="title">Kevin</div><div class="tag">Kevin</div></div>
+          </article>
 
-                        <!-- Fila 5: Postura Histórica -->
-                        <tr>
-                            <td class="criterion-cell" style="border-bottom: none;">
-                                <div class="flex items-center">
-                                    <svg class="w-6 h-6 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" /></svg>
-                                    Postura Histórica
-                                </div>
-                            </td>
-                            <td class="data-cell cell-scheler" style="border-bottom: none;">
-                                <strong class="text-purple-800">Ahistórica (Inmutables).</strong>
-                                <p class="mt-1">Los valores (como los números) son eternos y no cambian. Lo que cambia con la historia es la capacidad de una cultura para "verlos" o preferirlos.</p>
-                            </td>
-                            <td class="data-cell cell-maslow" style="border-bottom: none;">
-                                <strong class="text-blue-800">Evolutiva (Emergentes).</strong>
-                                <p class="mt-1">Son universales (necesidades humanas), pero su aparición en la vida del individuo es evolutiva. Solo emergen tras cubrir las necesidades básicas.</p>
-                            </td>
-                            <td class="data-cell cell-giroux" style="border-bottom: none;">
-                                <strong class="text-green-800">Histórica (Construidos).</strong>
-                                <p class="mt-1">No son eternos. Los valores (como la "justicia social") se están definiendo y disputando todo el tiempo en la sociedad. Su significado cambia y se construye con la historia.</p>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+          <article class="card" data-type="image" data-owner="kevin" data-src="fotos/kevin7.jpeg" tabindex="0" role="button" aria-label="Abrir foto de Kevin 7">
+            <figure class="thumb-wrapper"><img src="fotos/kevin7.jpeg" alt="Foto de Kevin 7" loading="lazy" class="thumb-img" /></figure>
+            <div class="meta"><div class="title">Kevin</div><div class="tag">Kevin</div></div>
+          </article>
+
+          <article class="card" data-type="image" data-owner="kevin" data-src="fotos/kevin8.jpeg" tabindex="0" role="button" aria-label="Abrir foto de Kevin 8">
+            <figure class="thumb-wrapper"><img src="fotos/kevin8.jpeg" alt="Foto de Kevin 8" loading="lazy" class="thumb-img" /></figure>
+            <div class="meta"><div class="title">Kevin</div><div class="tag">Kevin</div></div>
+          </article>
+
+          <article class="card" data-type="image" data-owner="kevin" data-src="fotos/kevin9.jpeg" tabindex="0" role="button" aria-label="Abrir foto de Kevin 9">
+            <figure class="thumb-wrapper"><img src="fotos/kevin9.jpeg" alt="Foto de Kevin 9" loading="lazy" class="thumb-img" /></figure>
+            <div class="meta"><div class="title">Kevin</div><div class="tag">Kevin</div></div>
+          </article>
+
+          <article class="card" data-type="image" data-owner="kevin" data-src="fotos/kevin10.jpeg" tabindex="0" role="button" aria-label="Abrir foto de Kevin 10">
+            <figure class="thumb-wrapper"><img src="fotos/kevin10.jpeg" alt="Foto de Kevin 10" loading="lazy" class="thumb-img" /></figure>
+            <div class="meta"><div class="title">Kevin</div><div class="tag">Kevin</div></div>
+          </article>
+
+          <article class="card" data-type="image" data-owner="kevin" data-src="fotos/kevin11.jpeg" tabindex="0" role="button" aria-label="Abrir foto de Kevin 11">
+            <figure class="thumb-wrapper"><img src="fotos/kevin11.jpeg" alt="Foto de Kevin 11" loading="lazy" class="thumb-img" /></figure>
+            <div class="meta"><div class="title">Kevin</div><div class="tag">Kevin</div></div>
+          </article>
+
+          <article class="card" data-type="image" data-owner="kevin" data-src="fotos/kevin12.jpeg" tabindex="0" role="button" aria-label="Abrir foto de Kevin 12">
+            <figure class="thumb-wrapper"><img src="fotos/kevin12.jpeg" alt="Foto de Kevin 12" loading="lazy" class="thumb-img" /></figure>
+            <div class="meta"><div class="title">Kevin</div><div class="tag">Kevin</div></div>
+          </article>
+
+          <article class="card" data-type="image" data-owner="oscar" data-src="fotos/oscar.jpeg" tabindex="0" role="button" aria-label="Abrir foto de Oscar">
+            <figure class="thumb-wrapper">
+              <img src="fotos/oscar.jpeg" alt="Foto de Oscar" loading="lazy" class="thumb-img" />
+            </figure>
+            <div class="meta"><div class="title">Oscar</div><div class="tag">Oscar</div></div>
+          </article>
+
+          <article class="card" data-type="video" data-owner="kevin" data-src="fotos/videokevin1.mp4" data-poster="fotos/videokevin1-poster.jpg" tabindex="0" role="button" aria-label="Abrir video de Kevin -abreme-">
+            <figure class="thumb-wrapper">
+              <img src="fotos/videokevin1-poster.jpg" alt="Vista previa de video de Kevin" loading="lazy" class="thumb-img video-poster" />
+              <span class="play-overlay">▶</span>
+            </figure> 
+            <div class="badge">Video</div>
+            <div class="meta"><div class="title">video kevin -abreme-</div><div class="tag">Kevin</div></div>
+          </article>
+
+          <article class="card" data-type="video" data-owner="kevin" data-src="fotos/videokevin2.mp4" data-poster="fotos/videokevin2-poster.jpg" tabindex="0" role="button" aria-label="Abrir video de Kevin - Aun no hay nada">
+            <figure class="thumb-wrapper">
+              <img src="fotos/videokevin2-poster.jpg" alt="Vista previa de video de Kevin 2" loading="lazy" class="thumb-img video-poster" />
+              <span class="play-overlay">▶</span>
+            </figure>
+            <div class="badge">Video</div>
+            <div class="meta"><div class="title">Aun no hay nada</div><div class="tag">Kevin</div></div>
+          </article>
+        </div>
+      </section> 
+      
+      <section aria-labelledby="group-title">
+        <div class="section-title">
+          <h2 id="group-title">Grupo</h2>
         </div>
         
-        <!-- Actividad de Reflexión -->
-        <div class="content-card p-6 md:p-8">
-            <div class="flex items-start">
-                <svg class="w-10 h-10 text-blue-600 mr-4 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                <div>
-                    <h2 class="text-2xl font-bold text-gray-800 mb-4">Actividad de Reflexión Escrita Final</h2>
-                    <div class="text-gray-700 space-y-4">
-                        <h3 class="text-xl font-semibold text-gray-900">¿Qué me enseñó comparar los valores universales entre autores?</h3>
-                        <p>Al comparar a estos tres autores, la diferencia más grande que encontré es el origen que le dan a los valores. Scheler los ve como verdades objetivas y eternas (un enfoque filosófico), Maslow como necesidades internas para nuestra autorrealización (un enfoque psicológico), y Giroux como herramientas políticas que construimos activamente para luchar por la justicia (un enfoque social). Sin embargo, todos coinciden de alguna forma en que valores como la "justicia" o la "verdad" son de un orden superior al simple placer.</p>
-                        <p>La visión que me pareció más cercana es una combinación de Maslow y Giroux. Maslow explica muy bien <em>por qué</em> necesitamos estos valores internamente para sentirnos plenos, pero Giroux aterriza esas ideas en la práctica social y nos dice <em>para qué</em> usarlos en la comunidad.</p>
-                        <p>Hoy en día, creo que valores como la <strong>dignidad humana</strong>, la <strong>empatía</strong> y la búsqueda de la <strong>justicia</strong> son aspiraciones universales, aunque cada cultura los interprete de forma distinta.</p>
-                        <p>Este análisis me ayuda a ver los valores no como ideas abstractas, sino como decisiones diarias. En mi carrera como desarrollador de software, esto influye directamente en cómo pienso sobre la ética de la tecnología: si lo que creo es equitativo y si realmente contribuye al bienestar de las personas, tal como lo plantearían Giroux y Maslow.</p>
-                    </div>
-                </div>
-            </div>
+        <div id="group" class="grid" aria-live="polite">
+          <article class="card" data-type="image" data-owner="guero" data-src="fotos/guero1.jpeg" tabindex="0" role="button" aria-label="Abrir foto de Güero 1">
+            <figure class="thumb-wrapper">
+              <img src="fotos/guero1.jpeg" alt="Foto de Güero 1" loading="lazy" class="thumb-img" />
+            </figure>
+            <div class="meta"><div class="title">Güero</div><div class="tag">Guero</div></div>
+          </article>
+
+          <article class="card" data-type="image" data-owner="guero" data-src="fotos/guero2.jpeg" tabindex="0" role="button" aria-label="Abrir foto de Güero 2">
+            <figure class="thumb-wrapper">
+              <img src="fotos/guero2.jpeg" alt="Foto de Güero 2" loading="lazy" class="thumb-img" />
+            </figure>
+            <div class="meta"><div class="title">Güero</div><div class="tag">Guero</div></div>
+          </article>
+
+          <article class="card" data-type="image" data-owner="guero" data-src="fotos/guero3.jpeg" tabindex="0" role="button" aria-label="Abrir foto de Güero 3">
+            <figure class="thumb-wrapper">
+              <img src="fotos/guero3.jpeg" alt="Foto de Güero 3" loading="lazy" class="thumb-img" />
+            </figure>
+            <div class="meta"><div class="title">Güero</div><div class="tag">Guero</div></div>
+          </article>
         </div>
-        
-        <!-- Sección de Referencias (Añadida) -->
-        <div class="content-card p-6 md:p-8">
-            <div class="flex items-start">
-                <svg class="w-10 h-10 text-gray-600 mr-4 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18c-2.305 0-4.408.867-6 2.292m0-14.25v14.25" /></svg>
-                <div>
-                    <h2 class="text-2xl font-bold text-gray-800 mb-4">Referencias</h2>
-                    <ul class="list-disc list-inside text-gray-700 text-sm">
-                        <li>Scheler, M. (1973). *Formalism in Ethics and Non-Formal Ethics of Values*. Northwestern University Press.</li>
-                        <li>Maslow, A. H. (1970). *Motivation and Personality* (2ª ed.). Harper & Row.</li>
-                        <li>Giroux, H. A. (2011). *On Critical Pedagogy*. Continuum.</li>
-                    </ul>
-                </div>
-            </div>
+      </section> 
+    </main>
+
+    <div id="backdrop" class="backdrop" role="dialog" aria-modal="true" aria-hidden="true">
+      <div class="viewer" role="document" aria-label="Visor multimedia">
+        <div class="v-top">
+          <div style="display:flex;gap:12px;align-items:center">
+            <button id="prev" class="icon" aria-label="Anterior">◀</button>
+            <button id="next" class="icon" aria-label="Siguiente">▶</button>
+            <div class="v-caption" id="vCaption">Título</div>
+          </div>
+          <div class="v-controls">
+            <div class="v-pos" id="vPos">0 / 0</div>
+            <a id="vDownload" class="icon" href="#" download title="Descargar">⬇</a>
+            <button id="vClose" class="icon" aria-label="Cerrar">✕</button>
+          </div>
         </div>
 
+        <div class="v-media" id="vMedia" tabindex="0"></div>
+        <button id="vCloseBig" class="close-big" aria-label="Cerrar visor">✕</button>
+        <button id="backToGallery" class="back-gallery" aria-label="Volver a galería">Volver a galería</button>
+      </div>
     </div>
+    
+    <footer>
+        <p>&copy; 2025 Grupo Ingeniambres TICS - UTGZ</p>
+    </footer>
+  </div>
+  
+  <script src="script.js"></script>
 </body>
 </html>
-

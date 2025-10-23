@@ -43,10 +43,10 @@
   const prevBtn = $(SELECTORS.prev);
   const nextBtn = $(SELECTORS.next);
 
-  let allItems = [];     // original snapshot of items from DOM with stableIndex
-  let viewList = [];     // currently visible items in order
-  let current = 0;       // index in viewList of current viewed item
-  let chronoAsc = true;  // sort order flag
+  let allItems = [];    // original snapshot of items from DOM with stableIndex
+  let viewList = [];    // currently visible items in order
+  let current = 0;      // index in viewList of current viewed item
+  let chronoAsc = true;   // sort order flag
 
   // Utilities
   const debounce = (fn, wait = 150) => {
@@ -62,6 +62,7 @@
         type: el.dataset.type || 'image',
         owner: (el.dataset.owner || '').toLowerCase(),
         title: el.querySelector('.title')?.textContent?.trim() || el.getAttribute('aria-label') || `item-${i+1}`,
+        poster: el.dataset.poster || '', // Añadir poster para videos
         stableIndex: i
       }));
   }
@@ -76,25 +77,25 @@
     viewList = allItems.filter(item => {
       if (filter === 'all') return true;
       if (filter === 'kevin') return item.owner === 'kevin';
-      if (filter === 'Oscar') return item.owner === 'Oscar';
+      if (filter === 'oscar') return item.owner === 'oscar';
       if (filter === 'guero' || filter === 'grupo') return item.owner === 'guero' || item.owner === 'grupo';
       if (filter === 'photos') return item.type === 'image';
       if (filter === 'videos') return item.type === 'video';
       return true;
     });
 
-    // Stable sort by stableIndex then reverse if needed
-    viewList.sort((a, b) => a.stableIndex - b.stableIndex);
-    if (!chronoAsc) viewList.reverse();
-
-    // Update DOM: hide non-visible, append visible in order (preserves event listeners)
-    const parent = gallery;
+    const parents = new Set(allItems.map(it => it.el.parentElement));
+    
     // Hide all first
     allItems.forEach(it => it.el.style.display = 'none');
-    // Append and show visible
+    
+    // Append and show visible, re-sorting them into their correct parents
     viewList.forEach(it => {
-      parent.appendChild(it.el);
-      it.el.style.display = '';
+      const correctParent = document.getElementById(it.el.closest('.grid').id);
+      if(correctParent) {
+         correctParent.appendChild(it.el);
+         it.el.style.display = '';
+      }
     });
 
     // Reattach handlers (idempotent)
@@ -122,7 +123,8 @@
       src: el.dataset.src || '',
       type: el.dataset.type || 'image',
       owner: (el.dataset.owner || '').toLowerCase(),
-      title: el.querySelector('.title')?.textContent?.trim() || `item-${idx+1}`
+      title: el.querySelector('.title')?.textContent?.trim() || `item-${idx+1}`,
+      poster: el.dataset.poster || '' // Asegúrate de capturar el poster
     }));
   }
 
@@ -154,8 +156,6 @@
         img.src = it.src;
         img.alt = it.title;
         img.loading = 'eager';
-        img.style.maxWidth = '100%';
-        img.style.height = 'auto';
         // double click to close
         img.addEventListener('dblclick', closeViewer);
         vMedia.appendChild(img);
@@ -167,7 +167,9 @@
         vid.muted = true;
         vid.playsInline = true;
         vid.preload = 'metadata';
-        vid.style.maxWidth = '100%';
+        if (it.poster) { // Añadir el atributo poster
+            vid.poster = it.poster;
+        }
         vMedia.appendChild(vid);
       }
     } catch (err) {
@@ -224,7 +226,11 @@
       const j = Math.floor(Math.random() * (i + 1));
       [viewList[i], viewList[j]] = [viewList[j], viewList[i]];
     }
-    viewList.forEach(it => gallery.appendChild(it.el));
+    // Re-append to their respective parents
+    viewList.forEach(it => {
+        const correctParent = document.getElementById(it.el.closest('.grid').id);
+        if(correctParent) correctParent.appendChild(it.el);
+    });
     attachCardHandlers();
   }
 
@@ -239,7 +245,12 @@
         const im = new Image();
         im.src = it.src;
       } else {
-        // preload video
+        // preload video (solo precargamos el poster si existe para ahorrar banda ancha)
+        if (it.poster) {
+            const im = new Image();
+            im.src = it.poster;
+        }
+        // También podemos precargar el video, pero el poster es suficiente para una vista previa rápida
         const link = document.createElement('link');
         link.rel = 'preload';
         link.as = 'video';
@@ -275,7 +286,9 @@
       if (e.key === 'ArrowRight') { e.preventDefault(); goNext(); }
       if (e.key === ' ') {
         const vid = vMedia.querySelector('video');
-        if (vid) { e.preventDefault(); vid.paused ? vid.play() : vid.pause(); }
+        if (vid && document.activeElement !== vid) { // Solo si el video no está enfocado (para no interferir con sus controles)
+           e.preventDefault(); vid.paused ? vid.play() : vid.pause(); 
+        }
       }
     });
   }
@@ -284,7 +297,7 @@
   function initControls() {
     buildAllItems();
     attachCardHandlers();
-    applyFilterAndSort();
+    applyFilterAndSort(); // Run on load
 
     if (filterEl) filterEl.addEventListener('change', debounce(applyFilterAndSort, 80));
     if (sortBtn) sortBtn.addEventListener('click', () => {
@@ -293,6 +306,7 @@
       applyFilterAndSort();
     });
     if (shuffleBtn) shuffleBtn.addEventListener('click', shuffleVisible);
+    
     if (groupBtn) groupBtn.addEventListener('click', () => document.getElementById('group-title')?.scrollIntoView({ behavior: 'smooth' }));
 
     if (prevBtn) prevBtn.addEventListener('click', goPrev);
