@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infografía: Jerarquía de Valores de Max Scheler</title>
+    <!-- Incluimos Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Usamos la fuente Inter que es parte de Tailwind */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f4f7f6; /* Un fondo gris muy claro */
+        }
+        /* Clase para un contenedor con sombra y bordes redondeados */
+        .card {
+            background-color: white;
+            border-radius: 0.75rem; /* 12px */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            padding: 1.5rem; /* 24px */
+            margin-bottom: 1.5rem; /* 24px */
+        }
+        .card-title {
+            font-size: 1.25rem; /* 20px */
+            font-weight: 700;
+            margin-bottom: 0.5rem; /* 8px */
+        }
+        /* Estilos para los niveles de la pirámide */
+        .level {
+            border-left-width: 6px;
+            padding: 1.5rem; /* 24px */
+            border-radius: 0.5rem; /* 8px */
+            margin-bottom: 1rem; /* 16px */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+        .level-1 { border-color: #ef4444; background-color: #fee2e2; } /* Rojo */
+        .level-2 { border-color: #f97316; background-color: #ffedd5; } /* Naranja */
+        .level-3 { border-color: #3b82f6; background-color: #dbeafe; } /* Azul */
+        .level-4 { border-color: #8b5cf6; background-color: #ede9fe; } /* Morado */
+        
+        .level-title {
+            font-size: 1.5rem; /* 24px */
+            font-weight: 800;
+        }
+        .level-subtitle {
+            font-size: 0.875rem; /* 14px */
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+    <div class="max-w-4xl mx-auto">
+
+        <!-- Encabezado con datos del alumno -->
+        <div class="card text-center mb-8 bg-gray-800 text-white">
+            <h2 class="text-xl font-semibold">Tsu en desarrollo de software y multiplataforma</h2>
+            <h1 class="text-3xl font-bold mt-2 mb-4">Actividad 2: Infografía de Valores</h1>
+            <p class="text-gray-300">Asignatura: Desarrollo Humano y Valores</p>
+            <p class="text-gray-300">Profesor: MIGUEL RIVERA LOPEZ</p>
+            <p class="text-gray-300">Alumno: Ismael Olivares Hernandez | Grupo: 110-AE</p>
+        </div>
+
+        <!-- Título principal de la infografía -->
+        <header class="text-center mb-8">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900">La Jerarquía de los Valores</h1>
+            <p class="text-2xl font-semibold text-gray-700">según Max Scheler</p>
+        </header>
+
+        <!-- Contexto del Autor -->
+        <div class="card flex flex-col md:flex-row items-center">
+            <!-- Icono: Libro -->
+            <div class="flex-shrink-0 mb-4 md:mb-0 md:mr-6">
+                <svg class="w-20 h-20 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18c-2.305 0-4.408.867-6 2.292m0-14.25v14.25" />
+                </svg>
+            </div>
+            <div>
+                <h3 class="card-title text-blue-800">¿Quién fue Max Scheler? (1874-1928)</h3>
+                <p class="text-gray-700">
+                    Fue un influyente filósofo alemán, clave en la fenomenología. Su gran aporte a la axiología (el estudio de los valores) fue sostener que los valores son cualidades objetivas, captadas por la "intuición emocional", y que se organizan en una jerarquía clara.
+                </p>
+            </div>
+        </div>
+
+        <!-- Jerarquía de Valores (Presentada de la cima al fondo) -->
+        <h2 class="text-3xl font-bold text-center my-8">Jerarquía de Valores</h2>
+
+        <!-- NIVEL 4: Cima -->
+        <div class="level level-4">
+            <div class="flex items-center mb-2">
+                <!-- Icono: Estrella -->
+                <svg class="w-10 h-10 text-purple-700 mr-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.31h5.418a.562.562 0 01.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.021a.562.562 0 01-.84.61l-4.725-3.356a.563.563 0 00-.652 0l-4.725 3.356a.562.562 0 01-.84-.61l1.285-5.021a.563.563 0 00-.182-.557l-4.204-3.602a.562.562 0 01.321-.988h5.418a.563.563 0 00.475-.31L11.48 3.5z" />
+                </svg>
+                <div>
+                    <p class="level-subtitle text-purple-800">NIVEL 4 (CIMA)</p>
+                    <h3 class="level-title text-purple-900">Valores Religiosos</h3>
+                </div>
+            </div>
+            <p class="text-gray-800 mb-3">Son los valores supremos, los que dan un sentido último a la existencia. Se refieren a lo absoluto y lo sagrado, y se captan a través de la fe.</p>
+            <p class="font-semibold text-gray-900">Ejemplos: <span class="font-normal bg-purple-200 px-2 py-1 rounded">Santidad</span>, <span class="font-normal bg-purple-200 px-2 py-1 rounded">Fe</span>, <span class="font-normal bg-purple-200 px-2 py-1 rounded">Piedad</span>, <span class="font-normal bg-purple-200 px-2 py-1 rounded">Creencia en lo divino</span>.</p>
+        </div>
+
+        <!-- NIVEL 3 -->
+        <div class="level level-3">
+            <div class="flex items-center mb-2">
+                <!-- Icono: Cerebro -->
+                <svg class="w-10 h-10 text-blue-700 mr-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L1.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L24 5.25l-.813 2.846a4.5 4.5 0 00-3.09 3.09L18.25 12l-2.846.813a4.5 4.5 0 00-3.09 3.09L12 18.75l.813-2.846a4.5 4.5 0 003.09-3.09L18.25 12zM12 1.25l2.846.813a4.5 4.5 0 013.09 3.09L20.75 8l-2.846.813a4.5 4.5 0 01-3.09 3.09L12 14.75l-.813-2.846a4.5 4.5 0 01-3.09-3.09L5.25 8l2.846-.813a4.5 4.5 0 013.09-3.09L12 1.25z" />
+                </svg>
+                <div>
+                    <p class="level-subtitle text-blue-800">NIVEL 3</p>
+                    <h3 class="level-title text-blue-900">Valores Espirituales</h3>
+                </div>
+            </div>
+            <p class="text-gray-800 mb-3">Son independientes del cuerpo y del entorno. Perfeccionan al ser humano como tal. Se dividen en:</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="bg-blue-100 p-3 rounded">
+                    <h4 class="font-bold text-blue-900">1. Estéticos</h4>
+                    <p class="text-sm text-gray-700">Percepción de lo bello y feo.<br><b>Ej:</b> Belleza, armonía.</p>
+                </div>
+                <div class="bg-blue-100 p-3 rounded">
+                    <h4 class="font-bold text-blue-900">2. Jurídicos (Justicia)</h4>
+                    <p class="text-sm text-gray-700">Relacionados con la equidad.<br><b>Ej:</b> Justicia, imparcialidad.</p>
+                </div>
+                <div class="bg-blue-100 p-3 rounded">
+                    <h4 class="font-bold text-blue-900">3. Intelectuales (Saber)</h4>
+                    <p class="text-sm text-gray-700">Búsqueda de lo verdadero.<br><b>Ej:</b> Verdad, conocimiento.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- NIVEL 2 -->
+        <div class="level level-2">
+            <div class="flex items-center mb-2">
+                <!-- Icono: Corazón -->
+                <svg class="w-10 h-10 text-orange-700 mr-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+                </svg>
+                <div>
+                    <p class="level-subtitle text-orange-800">NIVEL 2</p>
+                    <h3 class="level-title text-orange-900">Valores Vitales</h3>
+                </div>
+            </div>
+            <p class="text-gray-800 mb-3">Todo lo relacionado con la afirmación de la vida, la salud y el bienestar del organismo. Son los valores que impulsan la vitalidad.</p>
+            <p class="font-semibold text-gray-900">Ejemplos: <span class="font-normal bg-orange-200 px-2 py-1 rounded">Salud</span>, <span class="font-normal bg-orange-200 px-2 py-1 rounded">Fuerza física</span>, <span class="font-normal bg-orange-200 px-2 py-1 rounded">Agilidad</span>, <span class="font-normal bg-orange-200 px-2 py-1 rounded">Vitalidad</span>.</p>
+        </div>
+
+        <!-- NIVEL 1: Base -->
+        <div class="level level-1">
+            <div class="flex items-center mb-2">
+                <!-- Icono: Taza de café -->
+                <svg class="w-10 h-10 text-red-700 mr-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                </svg>
+                <div>
+                    <p class="level-subtitle text-red-800">NIVEL 1 (BASE)</p>
+                    <h3 class="level-title text-red-900">Valores de lo Agradable y Desagradable</h3>
+                </div>
+            </div>
+            <p class="text-gray-800 mb-3">Corresponden a las sensaciones sensoriales e inmediatas de placer y dolor. Es el nivel más básico de nuestra respuesta afectiva.</p>
+            <p class="font-semibold text-gray-900">Ejemplos: <span class="font-normal bg-red-200 px-2 py-1 rounded">Comodidad</span>, <span class="font-normal bg-red-200 px-2 py-1 rounded">Placer sensorial</span>, <span class="font-normal bg-red-200 px-2 py-1 rounded">Lujo</span>.</p>
+        </div>
+
+        <!-- Auto-reflexión Final -->
+        <h2 class="text-3xl font-bold text-center my-8">Auto-reflexión: ¿Qué aprendí?</h2>
+        
+        <div class="card">
+            <h3 class="card-title text-gray-800">Reflexión sobre la Jerarquía de Valores</h3>
+            <p class="text-gray-700 leading-relaxed">
+                En esta actividad, trabajé con el filósofo Max Scheler y su clasificación jerárquica de valores. Scheler propone que los valores son objetivos y se organizan en cuatro niveles, desde la base con los valores de lo agradable y desagradable, ascendiendo a los valores vitales, luego los espirituales (que incluyen lo estético, lo justo y el conocimiento), y culminando en los valores religiosos o de lo sagrado.
+            </p>
+            <p class="text-gray-700 leading-relaxed mt-4">
+                Lo que más me llamó la atención es su idea de que los valores más altos, como la santidad, son superiores a los valores intelectuales como la verdad. También me sorprendió que viera los valores como algo objetivo que "intuimos" emocionalmente, no como algo que simplemente decidimos.
+            </p>
+            <p class="text-gray-700 leading-relaxed mt-4">
+                Identifico que ya practico varios de estos valores. Como estudiante de desarrollo de software, valoro mucho los "intelectuales" (Nivel 3), como el conocimiento y la verdad, al buscar soluciones lógicas. También valoro los "vitales" (Nivel 2) al cuidar mi salud. A partir de esto, me gustaría fortalecer los valores "estéticos" (Nivel 3), para no solo hacer software funcional, sino también bello y armónico.
+            </p>
+            <p class="text-gray-700 leading-relaxed mt-4">
+                Conocer esta jerarquía me sirve en mi vida personal para tomar mejores decisiones, por ejemplo, priorizar mi salud (vital) sobre un placer momentáneo (agradable). En mi carrera profesional, me ayudará a recordar que la tecnología puede servir a valores superiores, como la justicia o el acceso al conocimiento, y no solo al lujo o la comodidad. Definitivamente, esta actividad me ayudó a reflexionar sobre mi propia escala de valores, ya que me dio un marco para entender por qué priorizo ciertas cosas y cómo podría alinear mejor mis acciones con valores más elevados.
+            </p>
+        </div>
+
+    </div> <!-- Cierre del div max-w-4xl mx-auto -->
+
+    <script>
+        // Configuración de Tailwind CSS
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'blue-800': '#1e40af',
+                        'purple-800': '#6d28d9',
+                        'orange-800': '#c2410c',
+                        'red-800': '#b91c1c',
+                    }
+                }
+            }
+        };
+    </script>
+</body>
+</html>
