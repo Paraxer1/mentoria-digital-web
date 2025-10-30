@@ -1,270 +1,195 @@
-<!DOCTYPE html>
-<html lang="es" style="scroll-behavior: smooth;">
+<!doctype html>
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Presentación: Perros vs Gatos - Ismael Olivares H.</title>
-    <!-- Incluimos Tailwind CSS para el diseño -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Incluimos AOS (Animate on Scroll) para las animaciones -->
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    
-    <style>
-        /* Usamos la fuente Inter para un look moderno */
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
-        
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #111827; /* gray-900 */
-            color: #F9FAFB; /* gray-50 */
-            overflow-x: hidden; /* Evita scroll horizontal */
-        }
-
-        /* Estilo para las secciones de pantalla completa */
-        .section {
-            width: 100vw;
-            min-height: 100vh; /* Altura mínima de la pantalla */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            padding: 4rem 2rem;
-            position: relative;
-            box-sizing: border-box;
-        }
-
-        /* Estilo para el efecto Parallax */
-        .parallax {
-            background-attachment: fixed;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-            position: relative;
-        }
-
-        /* Superposición oscura para legibilidad sobre imágenes parallax */
-        .parallax::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(0, 0, 0, 0.6); /* Overlay oscuro */
-            z-index: 1;
-        }
-
-        /* Contenido debe estar sobre el overlay */
-        .parallax-content {
-            position: relative;
-            z-index: 2;
-        }
-
-        /* Fallback para imágenes */
-        .image-fallback {
-            background-color: #374151; /* gray-700 */
-            color: #d1d5db; /* gray-300 */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 0.5rem; /* rounded-lg */
-            font-style: italic;
-            width: 100%;
-            height: 100%;
-        }
-
-        /* Animación para el indicador de scroll */
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {
-                transform: translateY(0);
-            }
-            40% {
-                transform: translateY(-20px);
-            }
-            60% {
-                transform: translateY(-10px);
-            }
-        }
-        .scroll-indicator {
-            animation: bounce 2s infinite;
-        }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Grupo Ingeniambres TICS - UTGZ</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="https://www.utgz.edu.mx/images/favicon.png" type="image/png">
 </head>
+
 <body>
+  <div class="container">
+    <header>
+      <img src="https://www.utgz.edu.mx/images/logo-utgz-blanco.png" alt="Logo UTGZ" class="logo-img" />
+      <div>
+        <h1>Orgullo UTGZ - Grupo Ingeniambres TICS</h1>
+        <div class="subtitle">TSU en Desarrollo de Software Multiplataforma</div>
+      </div>
 
-    <!-- SECCIÓN 1: TÍTULO Y PORTADA -->
-    <section class="section parallax" style="background-image: url('https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');">
-        <div class="parallax-content text-center">
-            <h1 data-aos="fade-down" class="text-6xl md:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">
-                La Batalla Eterna
-            </h1>
-            <h2 data-aos="fade-up" data-aos-delay="200" class="text-4xl md:text-6xl font-semibold text-white mt-4">
-                ¿Perros o Gatos?
-            </h2>
-            <p data-aos="fade-up" data-aos-delay="400" class="text-2xl text-gray-300 mt-10">
-                Por: Ismael Olivares Hernández
-            </p>
-            <p data-aos="fade-up" data-aos-delay="500" class="text-xl text-gray-400 mt-4">
-                Universidad UTGZ
-            </p>
-        </div>
-        <!-- Indicador de Scroll -->
-        <div class="scroll-indicator absolute bottom-10 z-10 text-white">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-            </svg>
-        </div>
-    </section>
+      <div class="controls" role="region" aria-label="Controles">
+        <label class="sr-only" for="filter">Filtrar</label>
+        <select id="filter">
+          <option value="all">Todo</option>
+          <option value="kevin">Kevin</option>
+          <option value="oscar">Oscar</option>
+          <option value="guero">Güero</option>
+          <option value="photos">Solo fotos</option>
+          <option value="videos">Solo videos</option>
+        </select>
 
-    <!-- SECCIÓN 2: EL GANCHO (LA ENCUESTA) -->
-    <section class="section bg-gray-900">
-        <div class="text-center max-w-4xl">
-            <h2 data-aos="fade-up" class="text-5xl font-bold mb-10">Un Debate Real</h2>
-            <div data-aos="fade-up" data-aos-delay="200" class="space-y-8 text-2xl text-gray-300">
-                <p>Quiero que levanten la mano...</p>
-                <p class="text-4xl font-bold text-cyan-400">¿Quiénes son "Personas de Perros"?</p>
-                <p class="text-4xl font-bold text-orange-400">¿Y quiénes son "Personas de Gatos"?</p>
-                <p class="mt-8 text-gray-400 text-xl">Hoy no vamos a decidir un 'ganador', vamos a explorar por qué amamos a cada uno.</p>
-            </div>
-        </div>
-    </section>
+        <button id="sortBtn">Orden: Cronológico</button>
+        <button id="shuffleBtn">Mezclar</button>
+        <button class="primary" id="groupBtn">Grupo Ingeniambres TICS</button>
+      </div>
+    </header>
 
-    <!-- SECCIÓN 3: EQUIPO PERRO -->
-    <section class="section parallax" style="background-image: url('https://images.pexels.com/photos/1490908/pexels-photo-1490908.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');">
-        <div class="parallax-content max-w-6xl w-full">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
-                <!-- Imagen -->
-                <div data-aos="fade-right">
-                    <img 
-                        src="https://images.pexels.com/photos/5749137/pexels-photo-5749137.jpeg?auto=compress&cs=tinysrgb&w=600"
-                        alt="Perro Leal Golden Retriever" 
-                        class="rounded-lg shadow-2xl w-full h-96 object-cover"
-                        onerror="this.outerHTML = '<div class=\'h-96 image-fallback\'>[Foto de perro leal]</div>'"
-                    >
-                </div>
-                <!-- Texto -->
-                <div data-aos="fade-left" data-aos-delay="200" class="text-left">
-                    <h2 class="text-5xl font-bold mb-6 text-cyan-400">Equipo Perro: El Mejor Amigo</h2>
-                    <ul class="text-gray-200 text-xl space-y-4">
-                        <li><strong class="text-cyan-300 text-2xl">Lealtad Incondicional:</strong> Te reciben como si no te hubieran visto en años, aunque solo fuiste por el correo. Son la definición de un compañero fiel.</li>
-                        <li><strong class="text-cyan-300 text-2xl">Compañeros de Aventuras:</strong> Fomentan un estilo de vida activo. Te *obligan* a salir, caminar, correr y explorar. Son perfectos para la aventura.</li>
-                        <li><strong class="text-cyan-300 text-2xl">Inteligencia Funcional:</strong> Aprenden trucos, siguen órdenes y pueden tener "trabajos" reales: desde perros guía hasta perros de rescate.</li>
-                    </ul>
-                </div>
-            </div>
+    <main>
+      <section aria-labelledby="gal-title">
+        <div class="section-title">
+          <h2 id="gal-title">Galería principal</h2>
+          <div class="hint">Clic para ampliar. Videos reproducen en visor.</div>
         </div>
-    </section>
 
-    <!-- SECCIÓN 4: EQUIPO GATO -->
-    <section class="section parallax" style="background-image: url('https://images.pexels.com/photos/45201/kitty-cat-kitten-pet-45201.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');">
-        <div class="parallax-content max-w-6xl w-full">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
-                <!-- Texto -->
-                <div data-aos="fade-right" class="text-left order-last md:order-first">
-                    <h2 class="text-5xl font-bold mb-6 text-orange-400">Equipo Gato: El Maestro Zen</h2>
-                    <ul class="text-gray-200 text-xl space-y-4">
-                        <li><strong class="text-orange-300 text-2xl">Independencia Soberana:</strong> Son perfectos para gente ocupada. No necesitan paseos a las 6 AM. Son dueños de su tiempo (y del tuyo).</li>
-                        <li><strong class="text-orange-300 text-2xl">Bajo Mantenimiento:</strong> Son máquinas de limpieza autómatas. Se bañan solos y son meticulosamente limpios por naturaleza.</li>
-                        <li><strong class="text-orange-300 text-2xl">Terapéuticos y Relajantes:</strong> El poder curativo de un ronroneo puede bajar la presión arterial y reducir el estrés. Son meditativos.</li>
-                    </ul>
-                </div>
-                <!-- Imagen -->
-                <div data-aos="fade-left" data-aos-delay="200">
-                    <img 
-                        src="https://images.pexels.com/photos/1741205/pexels-photo-1741205.jpeg?auto=compress&cs=tinysrgb&w=600"
-                        alt="Gato Relajado" 
-                        class="rounded-lg shadow-2xl w-full h-96 object-cover"
-                        onerror="this.outerHTML = '<div class=\'h-96 image-fallback\'>[Foto de gato relajado]</div>'"
-                    >
-                </div>
-            </div>
+        <div id="gallery" class="grid" aria-live="polite">
+          
+          <article class="card" data-type="image" data-owner="kevin" data-src="fotos/kevin1.jpeg" tabindex="0" role="button" aria-label="Abrir foto de Kevin 1">
+            <figure class="thumb-wrapper">
+              <img src="fotos/kevin1.jpeg" alt="Foto de Kevin 1" loading="lazy" class="thumb-img" />
+            </figure>
+            <div class="meta"><div class="title">Kevin</div><div class="tag">Kevin</div></div>
+          </article>
+
+          <article class="card" data-type="image" data-owner="kevin" data-src="fotos/kevin2.jpeg" tabindex="0" role="button" aria-label="Abrir foto de Kevin 2">
+            <figure class="thumb-wrapper">
+              <img src="fotos/kevin2.jpeg" alt="Foto de Kevin 2" loading="lazy" class="thumb-img" />
+            </figure>
+            <div class="meta"><div class="title">Kevin</div><div class="tag">Kevin</div></div>
+          </article>
+          
+          <article class="card" data-type="image" data-owner="kevin" data-src="fotos/kevin3.jpeg" tabindex="0" role="button" aria-label="Abrir foto de Kevin 3">
+            <figure class="thumb-wrapper"><img src="fotos/kevin3.jpeg" alt="Foto de Kevin 3" loading="lazy" class="thumb-img" /></figure>
+            <div class="meta"><div class="title">Kevin</div><div class="tag">Kevin</div></div>
+          </article>
+          
+          <article class="card" data-type="image" data-owner="kevin" data-src="fotos/kevin4.jpeg" tabindex="0" role="button" aria-label="Abrir foto de Kevin 4">
+            <figure class="thumb-wrapper"><img src="fotos/kevin4.jpeg" alt="Foto de Kevin 4" loading="lazy" class="thumb-img" /></figure>
+            <div class="meta"><div class="title">Kevin</div><div class="tag">Kevin</div></div>
+          </article>
+
+          <article class="card" data-type="image" data-owner="kevin" data-src="fotos/kevin5.jpeg" tabindex="0" role="button" aria-label="Abrir foto de Kevin 5">
+            <figure class="thumb-wrapper"><img src="fotos/kevin5.jpeg" alt="Foto de Kevin 5" loading="lazy" class="thumb-img" /></figure>
+            <div class="meta"><div class="title">Kevin</div><div class="tag">Kevin</div></div>
+          </article>
+
+          <article class="card" data-type="image" data-owner="kevin" data-src="fotos/kevin6.jpeg" tabindex="0" role="button" aria-label="Abrir foto de Kevin 6">
+            <figure class="thumb-wrapper"><img src="fotos/kevin6.jpeg" alt="Foto de Kevin 6" loading="lazy" class="thumb-img" /></figure>
+            <div class="meta"><div class="title">Kevin</div><div class="tag">Kevin</div></div>
+          </article>
+
+          <article class="card" data-type="image" data-owner="kevin" data-src="fotos/kevin7.jpeg" tabindex="0" role="button" aria-label="Abrir foto de Kevin 7">
+            <figure class="thumb-wrapper"><img src="fotos/kevin7.jpeg" alt="Foto de Kevin 7" loading="lazy" class="thumb-img" /></figure>
+            <div class="meta"><div class="title">Kevin</div><div class="tag">Kevin</div></div>
+          </article>
+
+          <article class="card" data-type="image" data-owner="kevin" data-src="fotos/kevin8.jpeg" tabindex="0" role="button" aria-label="Abrir foto de Kevin 8">
+            <figure class="thumb-wrapper"><img src="fotos/kevin8.jpeg" alt="Foto de Kevin 8" loading="lazy" class="thumb-img" /></figure>
+            <div class="meta"><div class="title">Kevin</div><div class="tag">Kevin</div></div>
+          </article>
+
+          <article class="card" data-type="image" data-owner="kevin" data-src="fotos/kevin9.jpeg" tabindex="0" role="button" aria-label="Abrir foto de Kevin 9">
+            <figure class="thumb-wrapper"><img src="fotos/kevin9.jpeg" alt="Foto de Kevin 9" loading="lazy" class="thumb-img" /></figure>
+            <div class="meta"><div class="title">Kevin</div><div class="tag">Kevin</div></div>
+          </article>
+
+          <article class="card" data-type="image" data-owner="kevin" data-src="fotos/kevin10.jpeg" tabindex="0" role="button" aria-label="Abrir foto de Kevin 10">
+            <figure class="thumb-wrapper"><img src="fotos/kevin10.jpeg" alt="Foto de Kevin 10" loading="lazy" class="thumb-img" /></figure>
+            <div class="meta"><div class="title">Kevin</div><div class="tag">Kevin</div></div>
+          </article>
+
+          <article class="card" data-type="image" data-owner="kevin" data-src="fotos/kevin11.jpeg" tabindex="0" role="button" aria-label="Abrir foto de Kevin 11">
+            <figure class="thumb-wrapper"><img src="fotos/kevin11.jpeg" alt="Foto de Kevin 11" loading="lazy" class="thumb-img" /></figure>
+            <div class="meta"><div class="title">Kevin</div><div class="tag">Kevin</div></div>
+          </article>
+
+          <article class="card" data-type="image" data-owner="kevin" data-src="fotos/kevin12.jpeg" tabindex="0" role="button" aria-label="Abrir foto de Kevin 12">
+            <figure class="thumb-wrapper"><img src="fotos/kevin12.jpeg" alt="Foto de Kevin 12" loading="lazy" class="thumb-img" /></figure>
+            <div class="meta"><div class="title">Kevin</div><div class="tag">Kevin</div></div>
+          </article>
+
+          <article class="card" data-type="image" data-owner="oscar" data-src="fotos/oscar.jpeg" tabindex="0" role="button" aria-label="Abrir foto de Oscar">
+            <figure class="thumb-wrapper">
+              <img src="fotos/oscar.jpeg" alt="Foto de Oscar" loading="lazy" class="thumb-img" />
+            </figure>
+            <div class="meta"><div class="title">Oscar</div><div class="tag">Oscar</div></div>
+          </article>
+
+          <article class="card" data-type="video" data-owner="kevin" data-src="fotos/videokevin1.mp4" data-poster="fotos/videokevin1-poster.jpg" tabindex="0" role="button" aria-label="Abrir video de Kevin -abreme-">
+            <figure class="thumb-wrapper">
+              <img src="fotos/videokevin1-poster.jpg" alt="Vista previa de video de Kevin" loading="lazy" class="thumb-img video-poster" />
+              <span class="play-overlay">▶</span>
+            </figure> 
+            <div class="badge">Video</div>
+            <div class="meta"><div class="title">video kevin -abreme-</div><div class="tag">Kevin</div></div>
+          </article>
+
+          <article class="card" data-type="video" data-owner="kevin" data-src="fotos/videokevin2.mp4" data-poster="fotos/videokevin2-poster.jpg" tabindex="0" role="button" aria-label="Abrir video de Kevin - Aun no hay nada">
+            <figure class="thumb-wrapper">
+              <img src="fotos/videokevin2-poster.jpg" alt="Vista previa de video de Kevin 2" loading="lazy" class="thumb-img video-poster" />
+              <span class="play-overlay">▶</span>
+            </figure>
+            <div class="badge">Video</div>
+            <div class="meta"><div class="title">Aun no hay nada</div><div class="tag">Kevin</div></div>
+          </article>
         </div>
-    </section>
+      </section> 
+      
+      <section aria-labelledby="group-title">
+        <div class="section-title">
+          <h2 id="group-title">Grupo</h2>
+        </div>
+        
+        <div id="group" class="grid" aria-live="polite">
+          <article class="card" data-type="image" data-owner="guero" data-src="fotos/guero1.jpeg" tabindex="0" role="button" aria-label="Abrir foto de Güero 1">
+            <figure class="thumb-wrapper">
+              <img src="fotos/guero1.jpeg" alt="Foto de Güero 1" loading="lazy" class="thumb-img" />
+            </figure>
+            <div class="meta"><div class="title">Güero</div><div class="tag">Guero</div></div>
+          </article>
+
+          <article class="card" data-type="image" data-owner="guero" data-src="fotos/guero2.jpeg" tabindex="0" role="button" aria-label="Abrir foto de Güero 2">
+            <figure class="thumb-wrapper">
+              <img src="fotos/guero2.jpeg" alt="Foto de Güero 2" loading="lazy" class="thumb-img" />
+            </figure>
+            <div class="meta"><div class="title">Güero</div><div class="tag">Guero</div></div>
+          </article>
+
+          <article class="card" data-type="image" data-owner="guero" data-src="fotos/guero3.jpeg" tabindex="0" role="button" aria-label="Abrir foto de Güero 3">
+            <figure class="thumb-wrapper">
+              <img src="fotos/guero3.jpeg" alt="Foto de Güero 3" loading="lazy" class="thumb-img" />
+            </figure>
+            <div class="meta"><div class="title">Güero</div><div class="tag">Guero</div></div>
+          </article>
+        </div>
+      </section> 
+    </main>
+
+    <div id="backdrop" class="backdrop" role="dialog" aria-modal="true" aria-hidden="true">
+      <div class="viewer" role="document" aria-label="Visor multimedia">
+        <div class="v-top">
+          <div style="display:flex;gap:12px;align-items:center">
+            <button id="prev" class="icon" aria-label="Anterior">◀</button>
+            <button id="next" class="icon" aria-label="Siguiente">▶</button>
+            <div class="v-caption" id="vCaption">Título</div>
+          </div>
+          <div class="v-controls">
+            <div class="v-pos" id="vPos">0 / 0</div>
+            <a id="vDownload" class="icon" href="#" download title="Descargar">⬇</a>
+            <button id="vClose" class="icon" aria-label="Cerrar">✕</button>
+          </div>
+        </div>
+
+        <div class="v-media" id="vMedia" tabindex="0"></div>
+        <button id="vCloseBig" class="close-big" aria-label="Cerrar visor">✕</button>
+        <button id="backToGallery" class="back-gallery" aria-label="Volver a galería">Volver a galería</button>
+      </div>
+    </div>
     
-    <!-- SECCIÓN 5: COMPARACIÓN -->
-    <section class="section bg-gray-900">
-        <div class="max-w-7xl w-full text-center">
-            <h2 data-aos="fade-up" class="text-5xl font-bold mb-12">Comparación Directa</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Columna 1: Afecto -->
-                <div data-aos="fade-up" data-aos-delay="100" class="bg-gray-800 p-8 rounded-2xl shadow-lg border-t-4 border-gray-700">
-                    <h3 class="text-3xl font-bold text-gray-300 mb-6">Afecto</h3>
-                    <p class="text-xl text-cyan-400 mb-3"><strong>Perro:</strong> Extrovertido, constante, efusivo.</p>
-                    <p class="text-xl text-orange-400"><strong>Gato:</strong> Introvertido, sutil, "cuando él quiere".</p>
-                </div>
-                <!-- Columna 2: Estilo de Vida -->
-                <div data-aos="fade-up" data-aos-delay="200" class="bg-gray-800 p-8 rounded-2xl shadow-lg border-t-4 border-blue-500 transform md:scale-105">
-                    <h3 class="text-3xl font-bold text-gray-300 mb-6">Estilo de Vida</h3>
-                    <p class="text-xl text-cyan-400 mb-3"><strong>Perro:</strong> Requiere tiempo, paseos, y espacio.</p>
-                    <p class="text-xl text-orange-400"><strong>Gato:</strong> Ideal para departamentos y personas ocupadas.</p>
-                </div>
-                <!-- Columna 3: Costo -->
-                <div data-aos="fade-up" data-aos-delay="300" class="bg-gray-800 p-8 rounded-2xl shadow-lg border-t-4 border-gray-700">
-                    <h3 class="text-3xl font-bold text-gray-300 mb-6">Costo</h3>
-                    <p class="text-xl text-cyan-400 mb-3"><strong>Perro:</strong> Generalmente más caro (comida, veterinario).</p>
-                    <p class="text-xl text-orange-400"><strong>Gato:</strong> Generalmente más económico.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- SECCIÓN 6: DERRIBANDO MITOS (Contenido Mejorado) -->
-    <section class="section bg-gray-800">
-        <div class="max-w-5xl w-full text-center">
-            <h2 data-aos="fade-up" class="text-5xl font-bold mb-12">Derribando Mitos Comunes</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
-                <!-- Mito Gato -->
-                <div data-aos="fade-right" class="bg-gray-900 p-8 rounded-lg shadow-xl">
-                    <h3 class="text-3xl font-bold text-orange-400 mb-4">Mito: "Los gatos no son cariñosos"</h3>
-                    <p class="text-xl text-gray-300"><strong>Realidad:</strong> Muestran afecto de forma diferente. Un gato que parpadea lentamente, te "amasa" o frota su cabeza contigo, te está dando el equivalente a un abrazo de perro. Su cariño es más sutil, pero igual de profundo.</p>
-                </div>
-                <!-- Mito Perro -->
-                <div data-aos="fade-left" data-aos-delay="200" class="bg-gray-900 p-8 rounded-lg shadow-xl">
-                    <h3 class="text-3xl font-bold text-cyan-400 mb-4">Mito: "Los perros no pueden vivir en departamentos"</h3>
-                    <p class="text-xl text-gray-300"><strong>Realidad:</strong> Depende de la raza y el dueño. Un Gran Danés puede ser más feliz en un departamento que un Jack Russell Terrier, porque son más tranquilos. Lo importante no es el espacio interior, sino el ejercicio y estimulación mental que le das.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- SECCIÓN 7: CONCLUSIÓN -->
-    <section class="section parallax" style="background-image: url('https://images.pexels.com/photos/2640271/pexels-photo-2640271.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');">
-        <div class="parallax-content text-center max-w-4xl">
-            <h2 data-aos="fade-up" class="text-5xl font-bold mb-8">Veredicto Final: No Hay Ganador</h2>
-            <div data-aos="fade-up" data-aos-delay="200" class="space-y-6 text-2xl text-white bg-gray-900/50 backdrop-blur-md p-8 rounded-lg">
-                <p>No hay un "mejor" animal.</p>
-                <p>La mascota ideal es la que se adapta a <strong class="text-cyan-300">tu personalidad</strong>, <strong class="text-orange-300">tu tiempo</strong> y <strong class="text-gray-300">tu estilo de vida</strong>.</p>
-                <p class="text-3xl font-bold text-gray-400 mt-4">(¡O ambos!)</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- SECCIÓN 8: PREGUNTAS Y CIERRE -->
-    <section class="section bg-gray-900">
-        <div class="text-center">
-            <h1 data-aos="fade-up" class="text-6xl md:text-8xl font-black text-white">
-                ¡Gracias!
-            </h1>
-            <p data-aos="fade-up" data-aos-delay="200" class="text-4xl text-gray-400 mt-8">¿Preguntas?</p>
-            <p data-aos="fade-up" data-aos-delay="400" class="text-2xl text-gray-500 mt-16">
-                Ismael Olivares Hernández | Universidad UTGZ
-            </p>
-        </div>
-    </section>
-
-    <!-- Scripts de AOS -->
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script>
-      // Inicializar Animate on Scroll con mejoras
-      AOS.init({
-        duration: 1000, // Duración de la animación (un poco más larga para más elegancia)
-        easing: 'ease-in-out', // Una curva de animación más suave
-        once: false, // La animación se repite al volver a hacer scroll (más dinámico)
-        mirror: true, // Permite que la animación ocurra al scrollear en ambas direcciones
-        offset: 120, // Distancia desde el borde para disparar la animación
-      });
-    </script>
-
+    <footer>
+        <p>&copy; 2025 Grupo Ingeniambres TICS - UTGZ</p>
+    </footer>
+  </div>
+  
+  <script src="script.js"></script>
 </body>
 </html>
-
