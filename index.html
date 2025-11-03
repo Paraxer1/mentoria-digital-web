@@ -1,195 +1,246 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Grupo Ingeniambres TICS - UTGZ</title>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="icon" href="https://www.utgz.edu.mx/images/favicon.png" type="image/png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solucionario Unidad II de Física</title>
+    <!-- Carga de Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Carga de MathJax para renderizar ecuaciones LaTeX correctamente -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        /* Fuente principal */
+        body {
+            font-family: "Inter", sans-serif;
+            background-color: #f7fafc;
+        }
+
+        /* Contenedor del documento principal */
+        .document-container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 30px;
+            background-color: #ffffff;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            border-radius: 12px;
+        }
+
+        /* Estilo para los títulos de sección (Problemas) */
+        h1, h2, h3 {
+            font-weight: 700;
+            color: #1a202c;
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        h1 { font-size: 2.25rem; }
+        h2 { font-size: 1.5rem; border-bottom: 2px solid #e2e8f0; padding-bottom: 4px; }
+        h3 { font-size: 1.25rem; color: #4a5568; }
+
+        /* Estilo para los bloques de datos y cálculos */
+        .data-block {
+            background-color: #f0f4f8;
+            border-left: 4px solid #4299e1;
+            padding: 12px 16px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+        }
+
+        /* Estilo para las respuestas finales */
+        .answer {
+            font-weight: 600;
+            color: #2b6cb0;
+        }
+
+        /* Asegura que los bloques de ecuaciones (displayMath) estén centrados */
+        .MathJax_Display {
+            text-align: center !important;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Estilo para las listas de ítems de cálculo */
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        ul li {
+            margin-bottom: 8px;
+            padding-left: 1.5em;
+            text-indent: -1.5em;
+        }
+        ul li:before {
+            content: "•"; /* Bullet point */
+            color: #4299e1;
+            font-weight: bold;
+            display: inline-block;
+            width: 1.5em;
+        }
+
+        /* Eliminación del abstract (aunque ya fue quitado en el HTML) */
+        .abstract-content {
+            display: none;
+        }
+    </style>
 </head>
+<body class="p-4 sm:p-8">
 
-<body>
-  <div class="container">
-    <header>
-      <img src="https://www.utgz.edu.mx/images/logo-utgz-blanco.png" alt="Logo UTGZ" class="logo-img" />
-      <div>
-        <h1>Orgullo UTGZ - Grupo Ingeniambres TICS</h1>
-        <div class="subtitle">TSU en Desarrollo de Software Multiplataforma</div>
-      </div>
+    <div class="document-container">
 
-      <div class="controls" role="region" aria-label="Controles">
-        <label class="sr-only" for="filter">Filtrar</label>
-        <select id="filter">
-          <option value="all">Todo</option>
-          <option value="kevin">Kevin</option>
-          <option value="oscar">Oscar</option>
-          <option value="guero">Güero</option>
-          <option value="photos">Solo fotos</option>
-          <option value="videos">Solo videos</option>
-        </select>
-
-        <button id="sortBtn">Orden: Cronológico</button>
-        <button id="shuffleBtn">Mezclar</button>
-        <button class="primary" id="groupBtn">Grupo Ingeniambres TICS</button>
-      </div>
-    </header>
-
-    <main>
-      <section aria-labelledby="gal-title">
-        <div class="section-title">
-          <h2 id="gal-title">Galería principal</h2>
-          <div class="hint">Clic para ampliar. Videos reproducen en visor.</div>
-        </div>
-
-        <div id="gallery" class="grid" aria-live="polite">
-          
-          <article class="card" data-type="image" data-owner="kevin" data-src="fotos/kevin1.jpeg" tabindex="0" role="button" aria-label="Abrir foto de Kevin 1">
-            <figure class="thumb-wrapper">
-              <img src="fotos/kevin1.jpeg" alt="Foto de Kevin 1" loading="lazy" class="thumb-img" />
-            </figure>
-            <div class="meta"><div class="title">Kevin</div><div class="tag">Kevin</div></div>
-          </article>
-
-          <article class="card" data-type="image" data-owner="kevin" data-src="fotos/kevin2.jpeg" tabindex="0" role="button" aria-label="Abrir foto de Kevin 2">
-            <figure class="thumb-wrapper">
-              <img src="fotos/kevin2.jpeg" alt="Foto de Kevin 2" loading="lazy" class="thumb-img" />
-            </figure>
-            <div class="meta"><div class="title">Kevin</div><div class="tag">Kevin</div></div>
-          </article>
-          
-          <article class="card" data-type="image" data-owner="kevin" data-src="fotos/kevin3.jpeg" tabindex="0" role="button" aria-label="Abrir foto de Kevin 3">
-            <figure class="thumb-wrapper"><img src="fotos/kevin3.jpeg" alt="Foto de Kevin 3" loading="lazy" class="thumb-img" /></figure>
-            <div class="meta"><div class="title">Kevin</div><div class="tag">Kevin</div></div>
-          </article>
-          
-          <article class="card" data-type="image" data-owner="kevin" data-src="fotos/kevin4.jpeg" tabindex="0" role="button" aria-label="Abrir foto de Kevin 4">
-            <figure class="thumb-wrapper"><img src="fotos/kevin4.jpeg" alt="Foto de Kevin 4" loading="lazy" class="thumb-img" /></figure>
-            <div class="meta"><div class="title">Kevin</div><div class="tag">Kevin</div></div>
-          </article>
-
-          <article class="card" data-type="image" data-owner="kevin" data-src="fotos/kevin5.jpeg" tabindex="0" role="button" aria-label="Abrir foto de Kevin 5">
-            <figure class="thumb-wrapper"><img src="fotos/kevin5.jpeg" alt="Foto de Kevin 5" loading="lazy" class="thumb-img" /></figure>
-            <div class="meta"><div class="title">Kevin</div><div class="tag">Kevin</div></div>
-          </article>
-
-          <article class="card" data-type="image" data-owner="kevin" data-src="fotos/kevin6.jpeg" tabindex="0" role="button" aria-label="Abrir foto de Kevin 6">
-            <figure class="thumb-wrapper"><img src="fotos/kevin6.jpeg" alt="Foto de Kevin 6" loading="lazy" class="thumb-img" /></figure>
-            <div class="meta"><div class="title">Kevin</div><div class="tag">Kevin</div></div>
-          </article>
-
-          <article class="card" data-type="image" data-owner="kevin" data-src="fotos/kevin7.jpeg" tabindex="0" role="button" aria-label="Abrir foto de Kevin 7">
-            <figure class="thumb-wrapper"><img src="fotos/kevin7.jpeg" alt="Foto de Kevin 7" loading="lazy" class="thumb-img" /></figure>
-            <div class="meta"><div class="title">Kevin</div><div class="tag">Kevin</div></div>
-          </article>
-
-          <article class="card" data-type="image" data-owner="kevin" data-src="fotos/kevin8.jpeg" tabindex="0" role="button" aria-label="Abrir foto de Kevin 8">
-            <figure class="thumb-wrapper"><img src="fotos/kevin8.jpeg" alt="Foto de Kevin 8" loading="lazy" class="thumb-img" /></figure>
-            <div class="meta"><div class="title">Kevin</div><div class="tag">Kevin</div></div>
-          </article>
-
-          <article class="card" data-type="image" data-owner="kevin" data-src="fotos/kevin9.jpeg" tabindex="0" role="button" aria-label="Abrir foto de Kevin 9">
-            <figure class="thumb-wrapper"><img src="fotos/kevin9.jpeg" alt="Foto de Kevin 9" loading="lazy" class="thumb-img" /></figure>
-            <div class="meta"><div class="title">Kevin</div><div class="tag">Kevin</div></div>
-          </article>
-
-          <article class="card" data-type="image" data-owner="kevin" data-src="fotos/kevin10.jpeg" tabindex="0" role="button" aria-label="Abrir foto de Kevin 10">
-            <figure class="thumb-wrapper"><img src="fotos/kevin10.jpeg" alt="Foto de Kevin 10" loading="lazy" class="thumb-img" /></figure>
-            <div class="meta"><div class="title">Kevin</div><div class="tag">Kevin</div></div>
-          </article>
-
-          <article class="card" data-type="image" data-owner="kevin" data-src="fotos/kevin11.jpeg" tabindex="0" role="button" aria-label="Abrir foto de Kevin 11">
-            <figure class="thumb-wrapper"><img src="fotos/kevin11.jpeg" alt="Foto de Kevin 11" loading="lazy" class="thumb-img" /></figure>
-            <div class="meta"><div class="title">Kevin</div><div class="tag">Kevin</div></div>
-          </article>
-
-          <article class="card" data-type="image" data-owner="kevin" data-src="fotos/kevin12.jpeg" tabindex="0" role="button" aria-label="Abrir foto de Kevin 12">
-            <figure class="thumb-wrapper"><img src="fotos/kevin12.jpeg" alt="Foto de Kevin 12" loading="lazy" class="thumb-img" /></figure>
-            <div class="meta"><div class="title">Kevin</div><div class="tag">Kevin</div></div>
-          </article>
-
-          <article class="card" data-type="image" data-owner="oscar" data-src="fotos/oscar.jpeg" tabindex="0" role="button" aria-label="Abrir foto de Oscar">
-            <figure class="thumb-wrapper">
-              <img src="fotos/oscar.jpeg" alt="Foto de Oscar" loading="lazy" class="thumb-img" />
-            </figure>
-            <div class="meta"><div class="title">Oscar</div><div class="tag">Oscar</div></div>
-          </article>
-
-          <article class="card" data-type="video" data-owner="kevin" data-src="fotos/videokevin1.mp4" data-poster="fotos/videokevin1-poster.jpg" tabindex="0" role="button" aria-label="Abrir video de Kevin -abreme-">
-            <figure class="thumb-wrapper">
-              <img src="fotos/videokevin1-poster.jpg" alt="Vista previa de video de Kevin" loading="lazy" class="thumb-img video-poster" />
-              <span class="play-overlay">▶</span>
-            </figure> 
-            <div class="badge">Video</div>
-            <div class="meta"><div class="title">video kevin -abreme-</div><div class="tag">Kevin</div></div>
-          </article>
-
-          <article class="card" data-type="video" data-owner="kevin" data-src="fotos/videokevin2.mp4" data-poster="fotos/videokevin2-poster.jpg" tabindex="0" role="button" aria-label="Abrir video de Kevin - Aun no hay nada">
-            <figure class="thumb-wrapper">
-              <img src="fotos/videokevin2-poster.jpg" alt="Vista previa de video de Kevin 2" loading="lazy" class="thumb-img video-poster" />
-              <span class="play-overlay">▶</span>
-            </figure>
-            <div class="badge">Video</div>
-            <div class="meta"><div class="title">Aun no hay nada</div><div class="tag">Kevin</div></div>
-          </article>
-        </div>
-      </section> 
-      
-      <section aria-labelledby="group-title">
-        <div class="section-title">
-          <h2 id="group-title">Grupo</h2>
-        </div>
+        <header class="text-center pb-4 mb-6 border-b border-gray-200">
+            <h1 class="text-3xl sm:text-4xl font-extrabold text-blue-800">Solucionario - Unidad II de Física</h1>
+            <p class="text-lg text-gray-600 mt-1">Análisis de Cinemática y Movimiento</p>
+            <p class="text-sm text-gray-400 mt-1">Fecha: 
+                <script>document.write(new Date().toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' }));</script>
+            </p>
+        </header>
         
-        <div id="group" class="grid" aria-live="polite">
-          <article class="card" data-type="image" data-owner="guero" data-src="fotos/guero1.jpeg" tabindex="0" role="button" aria-label="Abrir foto de Güero 1">
-            <figure class="thumb-wrapper">
-              <img src="fotos/guero1.jpeg" alt="Foto de Güero 1" loading="lazy" class="thumb-img" />
-            </figure>
-            <div class="meta"><div class="title">Güero</div><div class="tag">Guero</div></div>
-          </article>
+        <!-- SECCIÓN DE ABSTRACT ELIMINADA -->
 
-          <article class="card" data-type="image" data-owner="guero" data-src="fotos/guero2.jpeg" tabindex="0" role="button" aria-label="Abrir foto de Güero 2">
-            <figure class="thumb-wrapper">
-              <img src="fotos/guero2.jpeg" alt="Foto de Güero 2" loading="lazy" class="thumb-img" />
-            </figure>
-            <div class="meta"><div class="title">Güero</div><div class="tag">Guero</div></div>
-          </article>
+        <!-- PROBLEMA 1 -->
+        <section id="problema-1" class="mb-8">
+            <h2 class="text-2xl font-bold text-gray-800">Problema 1: La Carrera de Juan</h2>
+            <p class="mt-2 text-gray-700">Juan y Pedro se enzarzan en una carrera para una distancia de $20.00\text{ km}$. Juan corre $15\text{ km}$ y después se detiene a dormir $60.0\text{ min}$. Al despertar, recuerda la carrera y corre dos veces más rápido. Finalizando el recorrido en un tiempo total de $2\text{ h}$, Juan gana la carrera.</p>
 
-          <article class="card" data-type="image" data-owner="guero" data-src="fotos/guero3.jpeg" tabindex="0" role="button" aria-label="Abrir foto de Güero 3">
-            <figure class="thumb-wrapper">
-              <img src="fotos/guero3.jpeg" alt="Foto de Güero 3" loading="lazy" class="thumb-img" />
-            </figure>
-            <div class="meta"><div class="title">Güero</div><div class="tag">Guero</div></div>
-          </article>
-        </div>
-      </section> 
-    </main>
+            <h3 class="text-xl mt-4">a) Calcule la rapidez promedio de Juan.</h3>
+            <div class="data-block">
+                <p class="mb-1"><strong>Fórmula:</strong> $\text{Rapidez promedio} = \frac{\text{Distancia total}}{\text{Tiempo total}}$</p>
+                <p class="mb-1"><strong>Cálculo:</strong></p>
+                <p class="MathJax_Display">$$ \text{Rapidez promedio} = \frac{20.00\text{ km}}{2\text{ h}} = \mathbf{10.00\text{ km/h}} $$</p>
+                <p class="mt-2"><strong>Respuesta:</strong> <span class="answer">10.00 km/h</span></p>
+            </div>
 
-    <div id="backdrop" class="backdrop" role="dialog" aria-modal="true" aria-hidden="true">
-      <div class="viewer" role="document" aria-label="Visor multimedia">
-        <div class="v-top">
-          <div style="display:flex;gap:12px;align-items:center">
-            <button id="prev" class="icon" aria-label="Anterior">◀</button>
-            <button id="next" class="icon" aria-label="Siguiente">▶</button>
-            <div class="v-caption" id="vCaption">Título</div>
-          </div>
-          <div class="v-controls">
-            <div class="v-pos" id="vPos">0 / 0</div>
-            <a id="vDownload" class="icon" href="#" download title="Descargar">⬇</a>
-            <button id="vClose" class="icon" aria-label="Cerrar">✕</button>
-          </div>
-        </div>
+            <h3 class="text-xl mt-6">b) ¿Cuál fue su rapidez ($V_{1}$) promedio antes de detenerse para una siesta?</h3>
+            <div class="data-block">
+                <p class="mb-2"><strong>Datos clave:</strong> $D_{T} = 20\text{ km}$; $d_{1} = 15\text{ km}$; $t_{\text{siesta}} = 1\text{ h}$; $T_{T} = 2\text{ h}$.</p>
+                <p class="mb-2"><strong>Fórmula (Tiempo):</strong> $t_{\text{mov}} = t_{1} + t_{2} = \frac{d_{1}}{V_{1}} + \frac{d_{2}}{V_{2}}$, donde $V_{2} = 2V_{1}$.</p>
+                <p class="mb-1"><strong>Cálculo:</strong></p>
+                <p class="MathJax_Display">$$ 1\text{ h} = \frac{15\text{ km}}{V_{1}} + \frac{5\text{ km}}{2V_{1}} $$
+                $$ 1\text{ h} = \frac{35\text{ km}}{2V_{1}} \quad \Rightarrow \quad V_{1} = \frac{35\text{ km}}{2\text{ h}} = \mathbf{17.5\text{ km/h}} $$</p>
+                <p class="mt-2"><strong>Respuesta:</strong> <span class="answer">17.5 km/h</span></p>
+            </div>
+        </section>
+        
+        <!-- PROBLEMA 2 -->
+        <section id="problema-2" class="mb-8">
+            <h2 class="text-2xl font-bold text-gray-800">Problema 2: Caída Libre</h2>
+            <p class="mt-2 text-gray-700">Un cuerpo se deja caer desde lo alto de un edificio y tarda $6$ segundos en llegar al suelo. ($g = -9.8\text{ m/s}^{2}$)</p>
 
-        <div class="v-media" id="vMedia" tabindex="0"></div>
-        <button id="vCloseBig" class="close-big" aria-label="Cerrar visor">✕</button>
-        <button id="backToGallery" class="back-gallery" aria-label="Volver a galería">Volver a galería</button>
-      </div>
+            <h3 class="text-xl mt-4">a) ¿Cuál es la altura del edificio ($h$)?</h3>
+            <div class="data-block">
+                <p class="mb-1"><strong>Fórmula:</strong> $h = \frac{1}{2}gt^{2}$ (ya que $V_i = 0$)</p>
+                <p class="mb-1"><strong>Cálculo:</strong></p>
+                <p class="MathJax_Display">$$ h = \frac{1}{2}(9.8\text{ m/s}^{2})(6\text{ s})^{2} = 4.9 \cdot 36\text{ m} = \mathbf{176.4\text{ m}} $$</p>
+                <p class="mt-2"><strong>Respuesta:</strong> <span class="answer">176.4 m</span></p>
+            </div>
+
+            <h3 class="text-xl mt-6">b) ¿Con qué velocidad llega al suelo el cuerpo ($V_{f}$)?</h3>
+            <div class="data-block">
+                <p class="mb-1"><strong>Fórmula:</strong> $V_{f} = V_{i} + gt$</p>
+                <p class="mb-1"><strong>Cálculo:</strong></p>
+                <p class="MathJax_Display">$$ V_{f} = 0 + (-9.8\text{ m/s}^{2})(6\text{ s}) = \mathbf{-58.8\text{ m/s}} $$</p>
+                <p class="mt-2"><strong>Respuesta:</strong> <span class="answer">-58.8 m/s</span></p>
+            </div>
+        </section>
+        
+        <!-- PROBLEMA 3 -->
+        <section id="problema-3" class="mb-8">
+            <h2 class="text-2xl font-bold text-gray-800">Problema 3: Tiro Vertical hacia Arriba</h2>
+            <p class="mt-2 text-gray-700">Se lanza verticalmente hacia arriba una bala con una velocidad de $1200\text{ m/s}$. ($g = -9.8\text{ m/s}^{2}$)</p>
+
+            <h3 class="text-xl mt-4">a) La distancia que recorre a los $3$ segundos ($h$)</h3>
+            <div class="data-block">
+                <p class="mb-1"><strong>Fórmula:</strong> $h = V_{i}t + \frac{1}{2}gt^{2}$</p>
+                <p class="mb-1"><strong>Cálculo:</strong></p>
+                <p class="MathJax_Display">$$ h = (1200\text{ m/s})(3\text{ s}) + \frac{1}{2}(-9.8\text{ m/s}^{2})(3\text{ s})^{2} $$
+                $$ h = 3600\text{ m} - 44.1\text{ m} = \mathbf{3555.9\text{ m}} $$</p>
+                <p class="mt-2"><strong>Respuesta:</strong> <span class="answer">3555.9 m</span></p>
+            </div>
+
+            <h3 class="text-xl mt-6">c) La altura máxima alcanzada ($h_{\max}$)</h3>
+            <div class="data-block">
+                <p class="mb-1"><strong>Fórmula:</strong> $h_{\max} = \frac{-V_{i}^{2}}{2g}$</p>
+                <p class="mb-1"><strong>Cálculo:</strong></p>
+                <p class="MathJax_Display">$$ h_{\max} = \frac{-(1200\text{ m/s})^{2}}{2(-9.8\text{ m/s}^{2})} = \frac{-1,440,000}{-19.6}\text{ m} = \mathbf{73,469.39\text{ m}} $$</p>
+                <p class="mt-2"><strong>Respuesta:</strong> <span class="answer">73,469.39 m</span></p>
+            </div>
+            
+            <h3 class="text-xl mt-6">d) El tiempo que tardará en el aire ($t_{\text{aire}}$)</h3>
+            <div class="data-block">
+                <p class="mb-1"><strong>Fórmula:</strong> $t_{\text{subida}} = \frac{-V_{i}}{g}$; $t_{\text{aire}} = 2 \cdot t_{\text{subida}}$</p>
+                <p class="mb-1"><strong>Cálculo:</strong></p>
+                <p class="MathJax_Display">$$ t_{\text{subida}} = \frac{-1200\text{ m/s}}{-9.8\text{ m/s}^{2}} = 122.45\text{ s} \quad \Rightarrow \quad t_{\text{aire}} = 2 \cdot 122.45\text{ s} = \mathbf{244.90\text{ s}} $$</p>
+                <p class="mt-2"><strong>Respuesta:</strong> <span class="answer">244.90 s</span></p>
+            </div>
+        </section>
+
+        <!-- PROBLEMA 4 -->
+        <section id="problema-4" class="mb-8">
+            <h2 class="text-2xl font-bold text-gray-800">Problema 4: Tiro Parabólico Horizontal</h2>
+            <p class="mt-2 text-gray-700">Desde un edificio de $300\text{ m}$ de altura se lanza horizontalmente un proyectil con una velocidad de $50\text{ m/s}$. ($g = 9.8\text{ m/s}^{2}$)</p>
+
+            <h3 class="text-xl mt-4">a) El tiempo que tarda el proyectil en llegar al suelo ($t$)</h3>
+            <div class="data-block">
+                <p class="mb-1"><strong>Fórmula:</strong> $t = \sqrt{\frac{2h}{g}}$</p>
+                <p class="mb-1"><strong>Cálculo:</strong></p>
+                <p class="MathJax_Display">$$ t = \sqrt{\frac{2(300\text{ m})}{9.8\text{ m/s}^{2}}} = \sqrt{61.2245\text{ s}^{2}} \approx \mathbf{7.82\text{ s}} $$</p>
+                <p class="mt-2"><strong>Respuesta:</strong> <span class="answer">7.82 s</span></p>
+            </div>
+
+            <h3 class="text-xl mt-6">b) ¿A qué distancia de la base del edificio cae el proyectil ($x$)?</h3>
+            <div class="data-block">
+                <p class="mb-1"><strong>Fórmula:</strong> $x = V_{ix}t$</p>
+                <p class="mb-1"><strong>Cálculo:</strong></p>
+                <p class="MathJax_Display">$$ x = (50\text{ m/s})(7.8246\text{ s}) = \mathbf{391.23\text{ m}} $$</p>
+                <p class="mt-2"><strong>Respuesta:</strong> <span class="answer">391.23 m</span></p>
+            </div>
+
+            <h3 class="text-xl mt-6">c) La magnitud de la velocidad cuando el proyectil choca con el suelo ($V_{f}$)</h3>
+            <div class="data-block">
+                <p class="mb-1"><strong>Paso 1 ($V_y$):</strong> $V_{y} = gt = (9.8\text{ m/s}^{2})(7.8246\text{ s}) = 76.68\text{ m/s}$</p>
+                <p class="mb-1"><strong>Paso 2 (Fórmula):</strong> $V_{f} = \sqrt{V_{ix}^{2} + V_{y}^{2}}$</p>
+                <p class="mb-1"><strong>Cálculo:</strong></p>
+                <p class="MathJax_Display">$$ V_{f} = \sqrt{(50\text{ m/s})^{2} + (76.68\text{ m/s})^{2}} = \sqrt{8379.82}\text{ m/s} \approx \mathbf{91.54\text{ m/s}} $$</p>
+                <p class="mt-2"><strong>Respuesta:</strong> <span class="answer">91.54 m/s</span></p>
+            </div>
+        </section>
+
+        <!-- PROBLEMA 5 -->
+        <section id="problema-5" class="mb-8">
+            <h2 class="text-2xl font-bold text-gray-800">Problema 5: Movimiento Circular</h2>
+            <p class="mt-2 text-gray-700">El rotor de una lavadora gira a una velocidad angular de $1500\text{ rpm}$. El radio es $r = 0.50\text{ m}$.</p>
+
+            <h3 class="text-xl mt-4">a) Exprese esta velocidad angular en radianes por segundo ($\omega$)</h3>
+            <div class="data-block">
+                <p class="mb-1"><strong>Fórmula de conversión:</strong> $\omega [\text{rad/s}] = \omega [\text{rev/min}] \cdot \frac{2\pi\text{ rad}}{60\text{ s}}$</p>
+                <p class="mb-1"><strong>Cálculo:</strong></p>
+                <p class="MathJax_Display">$$ \omega = 1500\frac{\text{rev}}{\text{min}} \cdot \frac{2\pi\text{ rad}}{60\text{ s}} = 50\pi\text{ rad/s} \approx \mathbf{157.08\text{ rad/s}} $$</p>
+                <p class="mt-2"><strong>Respuesta:</strong> <span class="answer">157.08 rad/s</span></p>
+            </div>
+
+            <h3 class="text-xl mt-6">b) ¿Qué longitud de arco recorre el extremo del aspa en $300\text{ segundos} (S)$?</h3>
+            <div class="data-block">
+                <p class="mb-1"><strong>Paso 1 ($\Delta\theta$):</strong> $\Delta\theta = \omega t = (157.08\text{ rad/s})(300\text{ s}) = 47124\text{ rad}$</p>
+                <p class="mb-1"><strong>Paso 2 (Fórmula $S$):</strong> $S = r\Delta\theta$</p>
+                <p class="mb-1"><strong>Cálculo:</strong></p>
+                <p class="MathJax_Display">$$ S = (0.50\text{ m})(47124\text{ rad}) = \mathbf{23,562\text{ m}} $$</p>
+                <p class="mt-2"><strong>Respuesta:</strong> <span class="answer">23,562 m</span></p>
+            </div>
+        </section>
+
+        <!-- SECCIÓN DE FOOTER MODIFICADA (eliminada la nota de generación) -->
+
     </div>
-    
-    <footer>
-        <p>&copy; 2025 Grupo Ingeniambres TICS - UTGZ</p>
-    </footer>
-  </div>
-  
-  <script src="script.js"></script>
+
 </body>
 </html>
