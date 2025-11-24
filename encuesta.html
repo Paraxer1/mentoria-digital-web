@@ -5,13 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ReqGather PRO | TSU Software</title>
     
-    <!-- Tailwind CSS (Diseño) -->
+    <!-- Librerías Externas (CDN) -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Chart.js (Gráficas) -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Font Awesome (Iconos) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- SweetAlert2 (Alertas) -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
@@ -28,17 +25,51 @@
         }
     </script>
     <style>
-        /* Estilo para encuestas ya contestadas */
-        .locked { opacity: 0.6; pointer-events: none; filter: grayscale(100%); position: relative; border-color: #10b981 !important; }
-        .locked::after { content: '✅ COMPLETADO'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #10b981; color: white; padding: 5px 15px; border-radius: 20px; font-weight: bold; font-size: 0.9rem; white-space: nowrap; box-shadow: 0 4px 10px rgba(0,0,0,0.5); z-index: 10; }
+        /* Estilo para encuestas bloqueadas (ya contestadas) */
+        .locked { 
+            opacity: 0.6; 
+            pointer-events: none; 
+            filter: grayscale(100%); 
+            position: relative; 
+            border-color: #10b981 !important; 
+        }
+        .locked::after { 
+            content: '✅ COMPLETADO'; 
+            position: absolute; 
+            top: 50%; 
+            left: 50%; 
+            transform: translate(-50%, -50%); 
+            background: #10b981; 
+            color: white; 
+            padding: 5px 15px; 
+            border-radius: 20px; 
+            font-weight: bold; 
+            font-size: 0.9rem; 
+            white-space: nowrap; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5); 
+            z-index: 10; 
+        }
         
-        /* Botón seleccionado en Kiosco */
-        .kiosco-selected { transform: scale(0.98); ring-width: 4px; ring-color: #a855f7; box-shadow: 0 0 15px rgba(168, 85, 247, 0.5); border-color: #a855f7 !important; background-color: #f3e8ff !important; color: #6b21a8 !important; }
+        /* Botón seleccionado en Kiosco (CORREGIDO) */
+        .kiosco-selected { 
+            transform: scale(0.98); 
+            /* Simulamos el ring usando box-shadow estándar de CSS */
+            box-shadow: 0 0 0 4px #a855f7, 0 0 15px rgba(168, 85, 247, 0.5); 
+            border-color: #a855f7 !important; 
+            background-color: #f3e8ff !important; 
+            color: #6b21a8 !important; 
+        }
+        
+        /* Scrollbar personalizada */
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #c1c1c1; border-radius: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #a8a8a8; }
     </style>
 </head>
 <body class="bg-dark text-gray-100 font-sans min-h-screen flex flex-col">
 
-    <!-- NAVBAR -->
+    <!-- NAVBAR SUPERIOR -->
     <nav class="bg-card/90 backdrop-blur-md border-b border-gray-700 sticky top-0 z-50 shadow-lg">
         <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
             <div class="flex items-center gap-3 cursor-pointer" onclick="showView('menu')">
@@ -54,17 +85,18 @@
         </div>
     </nav>
 
-    <!-- MAIN CONTENT -->
+    <!-- CONTENIDO PRINCIPAL -->
     <main class="flex-grow container mx-auto px-4 py-8 relative">
 
-        <!-- ================= VISTA 1: MENÚ PRINCIPAL ================= -->
+        <!-- ================= VISTA 1: MENÚ PRINCIPAL (DASHBOARD) ================= -->
         <section id="view-menu" class="view-section animate-fade-in block">
             
-            <!-- HEADER ACADÉMICO -->
+            <!-- ENCABEZADO ACADÉMICO -->
             <div class="max-w-4xl mx-auto mb-10 bg-gray-800/60 border border-gray-700 p-6 rounded-2xl text-center relative overflow-hidden shadow-2xl">
                 <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500"></div>
                 <h2 class="text-2xl md:text-3xl font-bold text-blue-400 mb-2">FUNDAMENTOS DE PROGRAMACIÓN (E)</h2>
-                <p class="text-gray-300 font-mono text-sm mb-4">Grupo: 110-AE | Mtro. Sergio Sánchez Mena</p>
+                <p class="text-gray-300 font-mono text-sm mb-1">Demostración de Encuestas | Grupo: 110-AE</p>
+                <p class="text-gray-400 text-sm mb-4 font-semibold">Mtro. Sergio Sánchez Mena</p>
                 
                 <div class="flex flex-wrap justify-center gap-x-6 gap-y-2 text-xs text-gray-400 uppercase tracking-wide border-t border-gray-700 pt-4 font-semibold">
                     <span class="flex items-center gap-1 text-blue-300"><i class="fa-solid fa-user-graduate"></i> Olivares Hernández Ismael</span>
@@ -73,27 +105,33 @@
                 </div>
             </div>
 
+            <!-- TARJETAS DE SELECCIÓN -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+                
                 <!-- 1. Web -->
                 <div id="card-web" onclick="tryOpenSurvey('web')" class="bg-card p-6 rounded-xl border border-gray-700 hover:border-blue-500 cursor-pointer transition-all hover:-translate-y-2 hover:shadow-blue-900/30 shadow-lg relative group h-full">
                     <div class="absolute top-4 right-4 text-blue-500/20 group-hover:text-blue-500 transition"><i class="fa-solid fa-laptop-code text-4xl"></i></div>
                     <h3 class="text-xl font-bold mb-2 text-blue-400 group-hover:text-blue-300">1. Encuesta Web</h3>
-                    <p class="text-sm text-gray-400">Formulario digital para masificar la recolección sobre <strong>Infraestructura</strong>.</p>
+                    <p class="text-sm text-gray-400">Formulario digital auto-administrado. Enfoque en <strong>Infraestructura Tecnológica</strong>.</p>
                 </div>
 
                 <!-- 2. Teléfono -->
                 <div id="card-tel" onclick="tryOpenSurvey('tel')" class="bg-card p-6 rounded-xl border border-gray-700 hover:border-amber-500 cursor-pointer transition-all hover:-translate-y-2 hover:shadow-amber-900/30 shadow-lg relative group h-full">
                     <div class="absolute top-4 right-4 text-amber-500/20 group-hover:text-amber-500 transition"><i class="fa-solid fa-headset text-4xl"></i></div>
                     <h3 class="text-xl font-bold mb-2 text-amber-400 group-hover:text-amber-300">2. Telefónica</h3>
-                    <p class="text-sm text-gray-400">Panel CRM para operador. Entrevista guiada sobre <strong>Herramientas</strong>.</p>
+                    <p class="text-sm text-gray-400">Panel CRM para operador. Entrevista guiada sobre <strong>Herramientas de Desarrollo</strong>.</p>
                 </div>
 
                 <!-- 3. Kiosco -->
                 <div id="card-kiosco" onclick="tryOpenSurvey('kiosco')" class="bg-card p-6 rounded-xl border border-gray-700 hover:border-purple-500 cursor-pointer transition-all hover:-translate-y-2 hover:shadow-purple-900/30 shadow-lg relative group h-full">
                     <div class="absolute top-4 right-4 text-purple-500/20 group-hover:text-purple-500 transition"><i class="fa-solid fa-fingerprint text-4xl"></i></div>
                     <h3 class="text-xl font-bold mb-2 text-purple-400 group-hover:text-purple-300">3. Kiosco Táctil</h3>
-                    <p class="text-sm text-gray-400">Sistema de votación rápida en sitio para medir <strong>Satisfacción</strong>.</p>
+                    <p class="text-sm text-gray-400">Sistema de votación rápida en sitio. Medición de <strong>Satisfacción y Expectativas</strong>.</p>
                 </div>
+            </div>
+            
+            <div class="text-center mt-8">
+                <!-- Botón de reinicio eliminado para seguridad -->
             </div>
         </section>
 
@@ -198,7 +236,7 @@
             </div>
         </section>
 
-        <!-- ================= VISTA 4: KIOSCO (Graciosa y Validada) ================= -->
+        <!-- ================= VISTA 4: KIOSCO (Divertida y Validada) ================= -->
         <section id="view-kiosco" class="view-section hidden h-[800px] flex items-center justify-center animate-fade-in py-4">
             <div class="bg-white w-full max-w-md h-full rounded-[45px] border-[12px] border-gray-900 p-6 flex flex-col relative shadow-2xl overflow-hidden ring-4 ring-gray-300">
                 <!-- Notch -->
@@ -346,7 +384,7 @@
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
 
-        // --- 2. ESTADO LOCAL (Memoria) ---
+        // --- 2. ESTADO LOCAL (Memoria y Bloqueo) ---
         window.tryOpenSurvey = (id) => {
             if(localStorage.getItem(`survey_${id}_done`)) {
                 Swal.fire({
@@ -375,15 +413,6 @@
                 }
             });
         }
-        
-        // Reset Debug
-        window.resetLocalData = () => {
-            Swal.fire({
-                title: '¿Resetear sesión?', text: "Se borrará tu historial local (no los datos de Firebase).", icon: 'warning', showCancelButton: true, confirmButtonColor: '#d33', confirmButtonText: 'Sí, reiniciar'
-            }).then((result) => {
-                if (result.isConfirmed) { localStorage.clear(); location.reload(); }
-            });
-        };
 
         // --- 3. ENVÍO WEB (Validado) ---
         window.submitWeb = (e) => {
@@ -442,7 +471,6 @@
             finishSurvey('kiosco');
         };
 
-        // Función Finalizar
         function finishSurvey(id) {
             localStorage.setItem(`survey_${id}_done`, 'true');
             Swal.fire({
@@ -460,7 +488,6 @@
         const ctxIds = ['chartWeb', 'chartTel', 'chartKiosco1', 'chartKiosco2'];
         const types = ['doughnut', 'bar', 'polarArea', 'bar'];
         
-        // Inicializar Charts
         setTimeout(() => {
             ctxIds.forEach((id, i) => {
                 const ctx = document.getElementById(id);
