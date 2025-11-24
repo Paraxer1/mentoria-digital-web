@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proyecto U3 | Recolección de Requisitos</title>
+    
+    <!-- Librerías Externas -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: '#0f172a',
+                        card: '#1e293b',
+                        primary: '#3b82f6',
+                        success: '#10b981',
+                    },
+                    animation: { 'fade-in': 'fadeIn 0.4s ease-out' },
+                    keyframes: { fadeIn: { '0%': { opacity: '0', transform: 'translateY(10px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } } }
+                }
+            }
+        }
+    </script>
+    <style>
+        .locked { opacity: 0.5; pointer-events: none; filter: grayscale(100%); border-color: #475569 !important; }
+        .locked::after { content: '✅ COMPLETADO'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #10b981; color: white; padding: 5px 15px; border-radius: 20px; font-weight: bold; font-size: 0.8rem; white-space: nowrap; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
+        
+        /* Clase para botón seleccionado en Kiosco */
+        .kiosco-selected { transform: scale(0.95);  box-shadow: 0 0 15px rgba(168, 85, 247, 0.5); border-color: #a855f7 !important; background-color: #f3e8ff !important; }
+    </style>
+</head>
+<body class="bg-dark text-gray-100 font-sans min-h-screen flex flex-col">
+
+    <!-- NAVBAR -->
+    <nav class="bg-card/80 backdrop-blur-md border-b border-gray-700 sticky top-0 z-50 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center gap-3 cursor-pointer" onclick="showView('menu')">
+                <div class="bg-primary/20 p-2 rounded-lg"><i class="fa-solid fa-code text-primary"></i></div>
+                <div>
+                    <h1 class="font-bold text-sm md:text-lg tracking-wide leading-tight">TSU Desarrollo de Software</h1>
+                    <p class="text-[10px] text-gray-400 uppercase tracking-widest">Entornos Digitales</p>
+                </div>
+            </div>
+            <button onclick="showView('resultados')" class="text-sm bg-gray-800 hover:bg-gray-700 px-4 py-2 rounded-full border border-gray-600 transition flex items-center gap-2 shadow-lg">
+                <i class="fa-solid fa-chart-line text-success"></i> Resultados
+            </button>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-grow container mx-auto px-4 py-8">
+
+        <!-- ================= VISTA 1: MENÚ PRINCIPAL ================= -->
+        <section id="view-menu" class="view-section animate-fade-in block">
+            
+            <!-- DATOS ACADÉMICOS -->
+            <div class="max-w-4xl mx-auto mb-10 bg-gray-800/50 border border-gray-700 p-6 rounded-2xl text-center relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500"></div>
+                <h2 class="text-2xl font-bold text-blue-400 mb-1">FUNDAMENTOS DE PROGRAMACIÓN (E)</h2>
+                <p class="text-gray-300 font-mono text-sm mb-4">Grupo: 110-AE | Mtro. Sergio Sánchez Mena</p>
+                
+                <div class="flex flex-wrap justify-center gap-4 text-xs text-gray-400 uppercase tracking-wide border-t border-gray-700 pt-4">
+                    <span class="flex items-center gap-1"><i class="fa-solid fa-user"></i> Olivares Hernández Ismael</span>
+                    <span class="flex items-center gap-1"><i class="fa-solid fa-user"></i> Mendez Morales Carlos G.</span>
+                    <span class="flex items-center gap-1"><i class="fa-solid fa-user"></i> Fernández Hernández Jesús O.</span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+                <!-- Web Card -->
+                <div id="card-web" onclick="tryOpenSurvey('web')" class="bg-card p-6 rounded-xl border border-gray-700 hover:border-blue-500 cursor-pointer transition-all hover:-translate-y-1 hover:shadow-blue-900/20 shadow-lg relative group">
+                    <div class="absolute top-4 right-4 text-blue-500/20 group-hover:text-blue-500 transition"><i class="fa-solid fa-wifi text-4xl"></i></div>
+                    <h3 class="text-xl font-bold mb-2 text-blue-400">1. Encuesta Web</h3>
+                    <p class="text-sm text-gray-400">Formulario digital auto-administrado sobre infraestructura tecnológica.</p>
+                </div>
+
+                <!-- Teléfono Card -->
+                <div id="card-tel" onclick="tryOpenSurvey('tel')" class="bg-card p-6 rounded-xl border border-gray-700 hover:border-amber-500 cursor-pointer transition-all hover:-translate-y-1 hover:shadow-amber-900/20 shadow-lg relative group">
+                    <div class="absolute top-4 right-4 text-amber-500/20 group-hover:text-amber-500 transition"><i class="fa-solid fa-headset text-4xl"></i></div>
+                    <h3 class="text-xl font-bold mb-2 text-amber-400">2. Telefónica</h3>
+                    <p class="text-sm text-gray-400">Interfaz de operador (CRM) para recolección guiada de herramientas.</p>
+                </div>
+
+                <!-- Kiosco Card -->
+                <div id="card-kiosco" onclick="tryOpenSurvey('kiosco')" class="bg-card p-6 rounded-xl border border-gray-700 hover:border-purple-500 cursor-pointer transition-all hover:-translate-y-1 hover:shadow-purple-900/20 shadow-lg relative group">
+                    <div class="absolute top-4 right-4 text-purple-500/20 group-hover:text-purple-500 transition"><i class="fa-solid fa-fingerprint text-4xl"></i></div>
+                    <h3 class="text-xl font-bold mb-2 text-purple-400">3. Kiosco Táctil</h3>
+                    <p class="text-sm text-gray-400">Sistema de votación rápida en sitio para medir satisfacción.</p>
+                </div>
+            </div>
+            
+            <div class="text-center mt-8">
+                <button onclick="resetLocalData()" class="text-[10px] text-gray-600 hover:text-red-400 underline">Reiniciar demostración (Debug)</button>
+            </div>
+        </section>
+
+        <!-- ================= VISTA 2: WEB ================= -->
+        <section id="view-web" class="view-section hidden max-w-xl mx-auto animate-fade-in">
+            <div class="bg-card p-8 rounded-2xl border border-gray-700 shadow-2xl relative">
+                <button onclick="showView('menu')" class="absolute top-4 right-4 text-gray-500 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
+                
+                <h2 class="text-2xl font-bold text-blue-400 mb-6 border-b border-gray-700 pb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-laptop"></i> Infraestructura (Web)
+                </h2>
+                <form onsubmit="submitWeb(event)" class="space-y-6">
+                    
+                    <div>
+                        <label class="block mb-3 font-semibold text-gray-300">1. ¿Tienes equipo de cómputo propio?</label>
+                        <div class="flex gap-4">
+                            <label class="flex-1 cursor-pointer">
+                                <input type="radio" name="pc" value="Si" class="peer sr-only" required>
+                                <div class="p-4 text-center bg-gray-800 rounded-xl border border-gray-600 peer-checked:bg-blue-600 peer-checked:border-blue-400 peer-checked:text-white hover:bg-gray-700 transition flex flex-col items-center gap-2">
+                                    <i class="fa-solid fa-check-circle text-xl"></i> Sí
+                                </div>
+                            </label>
+                            <label class="flex-1 cursor-pointer">
+                                <input type="radio" name="pc" value="No" class="peer sr-only">
+                                <div class="p-4 text-center bg-gray-800 rounded-xl border border-gray-600 peer-checked:bg-gray-600 peer-checked:border-gray-400 peer-checked:text-white hover:bg-gray-700 transition flex flex-col items-center gap-2">
+                                    <i class="fa-solid fa-circle-xmark text-xl"></i> No
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block mb-3 font-semibold text-gray-300">2. Calidad de Internet en casa:</label>
+                        <select name="internet" class="w-full bg-gray-800 border border-gray-600 rounded-xl p-4 text-white focus:border-blue-500 outline-none appearance-none">
+                            <option value="Buena">🟢 Buena (Fibra Óptica)</option>
+                            <option value="Regular">🟡 Regular (A veces falla)</option>
+                            <option value="Mala">🔴 Mala / Solo Datos</option>
+                        </select>
+                    </div>
+
+                    <div class="pt-4">
+                        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-500 py-4 rounded-xl font-bold shadow-lg transition transform active:scale-95">
+                            Enviar Respuestas 🚀
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- ================= VISTA 3: TELEFÓNICA ================= -->
+        <section id="view-tel" class="view-section hidden max-w-2xl mx-auto animate-fade-in">
+            <div class="bg-gray-100 text-gray-800 rounded-xl overflow-hidden shadow-2xl border-4 border-gray-800">
+                <div class="bg-amber-500 p-4 text-white font-bold flex justify-between items-center shadow-md">
+                    <span class="font-mono"><i class="fa-solid fa-phone-volume"></i> CRM OPERADOR v2.4</span>
+                    <span class="bg-red-500 text-white text-xs px-2 py-1 rounded animate-pulse">EN LLAMADA</span>
+                </div>
+                <div class="p-8">
+                    <div class="bg-amber-50 border-l-4 border-amber-500 p-4 mb-8 text-sm text-amber-900 shadow-sm rounded-r">
+                        <strong>🗣️ SCRIPT:</strong> "Buenas tardes, le llamo de la UTGZ. Estamos validando las herramientas de desarrollo que utilizan los alumnos. ¿Podría indicarme su S.O. y Editor principal?"
+                    </div>
+                    <form onsubmit="submitTel(event)">
+                        <div class="grid grid-cols-2 gap-6 mb-8">
+                            <div>
+                                <label class="block text-xs font-bold uppercase text-gray-500 mb-1">1. Sistema Operativo</label>
+                                <select name="so" class="w-full border-2 border-gray-300 p-3 rounded-lg focus:border-amber-500 outline-none bg-white">
+                                    <option value="Windows">🪟 Windows</option>
+                                    <option value="Linux">🐧 Linux</option>
+                                    <option value="Mac">🍎 Mac</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold uppercase text-gray-500 mb-1">2. Editor Preferido</label>
+                                <select name="editor" class="w-full border-2 border-gray-300 p-3 rounded-lg focus:border-amber-500 outline-none bg-white">
+                                    <option value="VSCode">Visual Studio Code</option>
+                                    <option value="IntelliJ">IntelliJ IDEA</option>
+                                    <option value="Otros">Otros / Vim</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="flex gap-3">
+                            <button type="button" onclick="showView('menu')" class="w-1/3 border-2 border-gray-300 text-gray-500 py-3 rounded-lg font-bold hover:bg-gray-200 transition">Cancelar</button>
+                            <button type="submit" class="w-2/3 bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg font-bold shadow-md transition flex justify-center items-center gap-2">
+                                <i class="fa-solid fa-floppy-disk"></i> Guardar Registro
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= VISTA 4: KIOSCO (Corregida y Graciosa) ================= -->
+        <section id="view-kiosco" class="view-section hidden h-[750px] flex items-center justify-center animate-fade-in">
+            <div class="bg-white w-full max-w-md h-full rounded-[40px] border-[10px] border-gray-800 p-6 flex flex-col relative shadow-2xl overflow-hidden">
+                <!-- Notch simulado -->
+                <div class="absolute top-0 left-1/2 transform -translate-x-1/2 w-32 h-5 bg-gray-800 rounded-b-xl z-10"></div>
+                
+                <div class="text-center mt-6 mb-6">
+                    <h2 class="text-3xl font-black text-purple-600 tracking-tight">La Voz del Alumno 📢</h2>
+                    <p class="text-gray-400 text-sm">Toca las opciones y desliza el estrés</p>
+                </div>
+
+                <div class="space-y-6 flex-1 overflow-y-auto pb-4">
+                    <!-- Pregunta 1 -->
+                    <div class="bg-gray-50 p-4 rounded-2xl">
+                        <h3 class="font-bold text-gray-700 text-center mb-3 text-lg">🎬 ¿Qué opinas de la materia?</h3>
+                        <div class="grid grid-cols-3 gap-2" id="group-materia">
+                            <button onclick="selectKiosco('Materia', 'Buena', this)" class="kiosco-btn p-2 bg-white rounded-xl border-2 border-gray-200 text-gray-600 hover:border-purple-300 transition flex flex-col items-center justify-center h-24">
+                                <span class="text-2xl mb-1">🚬</span>
+                                <span class="text-xs font-bold leading-tight">Es Cine<br>(Arte)</span>
+                            </button>
+                            <button onclick="selectKiosco('Materia', 'Regular', this)" class="kiosco-btn p-2 bg-white rounded-xl border-2 border-gray-200 text-gray-600 hover:border-purple-300 transition flex flex-col items-center justify-center h-24">
+                                <span class="text-2xl mb-1">🤔</span>
+                                <span class="text-xs font-bold leading-tight">Ahí la<br>llevamos</span>
+                            </button>
+                            <button onclick="selectKiosco('Materia', 'Mala', this)" class="kiosco-btn p-2 bg-white rounded-xl border-2 border-gray-200 text-gray-600 hover:border-purple-300 transition flex flex-col items-center justify-center h-24">
+                                <span class="text-2xl mb-1">🏳️</span>
+                                <span class="text-xs font-bold leading-tight">¡Auxilio!<br>Sáquenme</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Pregunta 2 -->
+                    <div class="bg-gray-50 p-4 rounded-2xl">
+                        <h3 class="font-bold text-gray-700 text-center mb-3 text-lg">💯 ¿Pasarás la materia?</h3>
+                        <div class="grid grid-cols-1 gap-2" id="group-facilidad">
+                            <button onclick="selectKiosco('Facilidad', 'Facil', this)" class="kiosco-btn w-full py-3 px-4 bg-white border-2 border-gray-200 rounded-xl text-left flex items-center gap-3 hover:bg-gray-50 transition">
+                                <span class="text-xl">😎</span> <span class="font-bold text-sm text-gray-600">Izzi Pizzi (Con los ojos cerrados)</span>
+                            </button>
+                            <button onclick="selectKiosco('Facilidad', 'Media', this)" class="kiosco-btn w-full py-3 px-4 bg-white border-2 border-gray-200 rounded-xl text-left flex items-center gap-3 hover:bg-gray-50 transition">
+                                <span class="text-xl">🙏</span> <span class="font-bold text-sm text-gray-600">Rezándole al de arriba</span>
+                            </button>
+                            <button onclick="selectKiosco('Facilidad', 'Dificil', this)" class="kiosco-btn w-full py-3 px-4 bg-white border-2 border-gray-200 rounded-xl text-left flex items-center gap-3 hover:bg-gray-50 transition">
+                                <span class="text-xl">💀</span> <span class="font-bold text-sm text-gray-600">Misión Imposible (Ya valió)</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-auto pt-4 border-t border-gray-100">
+                    <button onclick="submitKiosco()" class="w-full bg-purple-600 text-white py-4 rounded-2xl font-black text-lg shadow-xl shadow-purple-200 hover:bg-purple-700 active:scale-95 transition flex justify-center items-center gap-2">
+                        ENVIAR OPINIÓN <i class="fa-solid fa-paper-plane"></i>
+                    </button>
+                    <button onclick="showView('menu')" class="w-full mt-3 text-gray-400 text-xs font-bold uppercase tracking-widest">Salir sin votar</button>
+                </div>
+                
+                <!-- Home Bar -->
+                <div class="absolute bottom-2 left-1/2 transform -translate-x-1/2 w-32 h-1 bg-gray-300 rounded-full"></div>
+            </div>
+        </section>
+
+        <!-- ================= VISTA 5: RESULTADOS ================= -->
+        <section id="view-resultados" class="view-section hidden animate-fade-in">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4 bg-card p-6 rounded-xl border border-gray-700">
+                <div>
+                    <h2 class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-success">Resultados Consolidados</h2>
+                    <p class="text-sm text-gray-400 mt-1"><i class="fa-solid fa-circle-notch fa-spin text-success mr-1"></i> Actualización en Tiempo Real</p>
+                </div>
+                <button onclick="showView('menu')" class="px-6 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-white transition font-bold border border-gray-500">
+                    <i class="fa-solid fa-arrow-left mr-2"></i> Menú Principal
+                </button>
+            </div>
+
+            <!-- Tarjetas de Gráficas -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- 1. Web -->
+                <div class="bg-card p-5 rounded-xl border border-gray-700 shadow-lg flex flex-col">
+                    <h3 class="text-center font-bold text-blue-400 mb-4 border-b border-gray-700 pb-2">💻 Infraestructura (Web)</h3>
+                    <div class="h-56 relative flex-grow"><canvas id="chartWeb"></canvas></div>
+                </div>
+
+                <!-- 2. Teléfono -->
+                <div class="bg-card p-5 rounded-xl border border-gray-700 shadow-lg flex flex-col">
+                    <h3 class="text-center font-bold text-amber-400 mb-4 border-b border-gray-700 pb-2">🛠️ Herramientas (Tel)</h3>
+                    <div class="h-56 relative flex-grow"><canvas id="chartTel"></canvas></div>
+                </div>
+
+                <!-- 3. Kiosco Materia -->
+                <div class="bg-card p-5 rounded-xl border border-gray-700 shadow-lg flex flex-col">
+                    <h3 class="text-center font-bold text-purple-400 mb-4 border-b border-gray-700 pb-2">🎬 Opinión Clase (Kiosco)</h3>
+                    <div class="h-56 relative flex-grow"><canvas id="chartKiosco1"></canvas></div>
+                </div>
+
+                <!-- 4. Kiosco Facilidad (Full Width) -->
+                <div class="bg-card p-5 rounded-xl border border-gray-700 shadow-lg md:col-span-2 lg:col-span-3">
+                    <h3 class="text-center font-bold text-pink-400 mb-4 border-b border-gray-700 pb-2">💯 Probabilidad de Pasar (Kiosco)</h3>
+                    <div class="h-40 relative"><canvas id="chartKiosco2"></canvas></div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="text-center p-6 text-gray-600 text-xs border-t border-gray-800 mt-8">
+        <p>© 2025 Equipo 3 - Fundamentos de Programación | UTGZ</p>
+    </footer>
+
+    <!-- LÓGICA JS -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+        import { getDatabase, ref, runTransaction, onValue } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
+
+        // --- 1. TU CONFIGURACIÓN DE FIREBASE ---
+        const firebaseConfig = {
+            apiKey: "AIzaSyBKCwkCmn31OOmtNM-y2EBu0FMCPxBSnUg", 
+            authDomain: "utgz-d4561.firebaseapp.com", 
+            databaseURL: "https://utgz-d4561-default-rtdb.firebaseio.com", 
+            projectId: "utgz-d4561", 
+            storageBucket: "utgz-d4561.firebasestorage.app", 
+            messagingSenderId: "286177378272", 
+            appId: "1:286177378272:web:7f2cc9a95e628234d53585", 
+            measurementId: "G-94TN09QNTP"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        // --- 2. ESTADO LOCAL ---
+        window.resetLocalData = () => { localStorage.clear(); location.reload(); };
+
+        window.tryOpenSurvey = (id) => {
+            if(localStorage.getItem(`survey_${id}_done`)) {
+                Swal.fire({icon: 'info', title: '¡Ya participaste!', text: 'Solo puedes responder esta encuesta una vez.', background: '#1e293b', color: '#fff', confirmButtonColor: '#3b82f6'});
+            } else {
+                showView(id);
+            }
+        };
+
+        window.showView = (viewId) => {
+            document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden'));
+            document.getElementById(`view-${viewId}`).classList.remove('hidden');
+            window.scrollTo(0,0);
+            if(viewId === 'menu') updateMenuStatus();
+        };
+
+        function updateMenuStatus() {
+            ['web', 'tel', 'kiosco'].forEach(id => {
+                if(localStorage.getItem(`survey_${id}_done`)) {
+                    const card = document.getElementById(`card-${id}`);
+                    if(card) card.classList.add('locked');
+                }
+            });
+        }
+
+        // --- 3. ENVÍOS ---
+        
+        // Web
+        window.submitWeb = (e) => {
+            e.preventDefault();
+            const fd = new FormData(e.target);
+            runTransaction(ref(db, `encuestas/Web/PC/${fd.get('pc')}`), v => (v||0)+1);
+            runTransaction(ref(db, `encuestas/Web/Internet/${fd.get('internet')}`), v => (v||0)+1);
+            finishSurvey('web');
+        };
+
+        // Teléfono
+        window.submitTel = (e) => {
+            e.preventDefault();
+            const fd = new FormData(e.target);
+            runTransaction(ref(db, `encuestas/Tel/SO/${fd.get('so')}`), v => (v||0)+1);
+            runTransaction(ref(db, `encuestas/Tel/Editor/${fd.get('editor')}`), v => (v||0)+1);
+            finishSurvey('tel');
+        };
+
+        // Kiosco (Selección + Envío Manual)
+        let kioscoData = { Materia: null, Facilidad: null };
+
+        window.selectKiosco = (cat, val, btn) => {
+            kioscoData[cat] = val;
+            
+            // Visual: Limpiar grupo y marcar seleccionado
+            const group = btn.parentElement;
+            group.querySelectorAll('.kiosco-btn').forEach(b => b.classList.remove('kiosco-selected'));
+            btn.classList.add('kiosco-selected');
+        };
+
+        window.submitKiosco = () => {
+            if(!kioscoData.Materia || !kioscoData.Facilidad) {
+                Swal.fire({icon: 'warning', title: 'Faltan Respuestas', text: 'Por favor responde ambas preguntas antes de enviar.', heightAuto: false});
+                return;
+            }
+            
+            // Enviar a Firebase
+            runTransaction(ref(db, `encuestas/Kiosco/Materia/${kioscoData.Materia}`), v => (v||0)+1);
+            runTransaction(ref(db, `encuestas/Kiosco/Facilidad/${kioscoData.Facilidad}`), v => (v||0)+1);
+            
+            finishSurvey('kiosco');
+        };
+
+        function finishSurvey(id) {
+            localStorage.setItem(`survey_${id}_done`, 'true');
+            Swal.fire({
+                icon: 'success', title: '¡Datos Guardados!', text: 'Regresando al menú principal...',
+                timer: 2000, showConfirmButton: false, background: '#1e293b', color: '#fff'
+            }).then(() => showView('menu'));
+        }
+
+        // --- 4. GRÁFICAS ---
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.borderColor = '#334155';
+        
+        const charts = {};
+        const ctxIds = ['chartWeb', 'chartTel', 'chartKiosco1', 'chartKiosco2'];
+        const types = ['doughnut', 'bar', 'polarArea', 'bar'];
+        
+        setTimeout(() => {
+            ctxIds.forEach((id, i) => {
+                const ctx = document.getElementById(id);
+                if(ctx) {
+                    charts[id] = new Chart(ctx, {
+                        type: types[i],
+                        data: { labels: [], datasets: [{ data: [], backgroundColor: ['#3b82f6', '#f59e0b', '#ef4444', '#10b981'], borderWidth: 0 }] },
+                        options: { 
+                            responsive: true, 
+                            maintainAspectRatio: false, 
+                            plugins: { legend: { position: 'bottom', labels: { boxWidth: 12 } } },
+                            indexAxis: id === 'chartKiosco2' ? 'y' : 'x'
+                        }
+                    });
+                }
+            });
+        }, 500); // Esperar a que cargue el DOM
+
+        // Sync Firebase
+        onValue(ref(db, 'encuestas'), (snap) => {
+            const data = snap.val() || {};
+
+            // 1. Web
+            const dWeb = data.Web?.PC || {};
+            updateChart('chartWeb', ['Si', 'No'], [dWeb.Si||0, dWeb.No||0]);
+
+            // 2. Tel
+            const dTel = data.Tel?.Editor || {};
+            updateChart('chartTel', ['VSCode', 'IntelliJ', 'Otros'], [dTel.VSCode||0, dTel.IntelliJ||0, dTel.Otros||0]);
+
+            // 3. Kiosco 1 (Materia)
+            const dKio1 = data.Kiosco?.Materia || {};
+            updateChart('chartKiosco1', ['Es Cine (Buena)', 'Pasable (Regular)', 'Auxilio (Mala)'], [dKio1.Buena||0, dKio1.Regular||0, dKio1.Mala||0]);
+
+            // 4. Kiosco 2 (Facilidad)
+            const dKio2 = data.Kiosco?.Facilidad || {};
+            updateChart('chartKiosco2', ['Izzi Pizzi', 'Rezando', 'Misión Imposible'], [dKio2.Facil||0, dKio2.Media||0, dKio2.Dificil||0]);
+        });
+
+        function updateChart(id, labels, data) {
+            if(charts[id]) {
+                charts[id].data.labels = labels;
+                charts[id].data.datasets[0].data = data;
+                charts[id].update();
+            }
+        }
+
+        // Init
+        updateMenuStatus();
+        showView('menu');
+
+    </script>
+</body>
+</html>
