@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Batalla Eterna: ¿Perros o Gatos? | UTGZ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        :root {
+            --color-perro: #3b82f6; /* Blue 500 */
+            --color-gato: #f97316; /* Orange 500 */
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0a0a0a; /* Fondo base por si algo falla */
+            line-height: 1.6;
+            overflow-x: hidden; /* Evitar scroll horizontal */
+        }
+        
+        /* Contenedor universal para todas las secciones */
+        .section-container {
+            min-height: 100vh; /* Cada sección ocupa al menos la altura de la pantalla */
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 6rem 1.5rem; /* Padding para celular (p-6) y más grande en PC (py-24 px-6) */
+        }
+        
+        /* Overlay para asegurar legibilidad en fondos de imagen */
+        .section-container::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.45); /* Overlay oscuro consistente */
+            z-index: 1;
+        }
+        
+        /* Contenido que va sobre el overlay */
+        .section-content {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+        }
+
+        /* --- Fondos de Imagen para CADA Sección (¡AHORA SÍ, CORREGIDOS Y VERIFICADOS FINALMENTE!) --- */
+        .bg-header { 
+            background-image: url('https://images.pexels.com/photos/1560424/pexels-photo-1560424.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'); /* Cachorro y gatito juntos */
+        }
+        .bg-intro  { 
+            background-image: url('https://images.pexels.com/photos/59523/pexels-photo-59523.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'); /* Gatito juguetón */
+        }
+        .bg-perro  { 
+            background-image: url('https://images.pexels.com/photos/2253275/pexels-photo-2253275.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'); /* Cachorro Pug adorable */
+        }
+        .bg-gato   { 
+            background-image: url('https://images.pexels.com/photos/45201/kitty-cat-kitten-pet-45201.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'); /* Gatito adorable con ojos grandes */
+        }
+        .bg-comparacion { 
+            background-image: url('https://images.pexels.com/photos/1056251/pexels-photo-1056251.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'); /* Gato y Perro en un sofá */
+        }
+        .bg-mitos  { 
+            /* ¡VERIFICADO! Perro y gato durmiendo juntos en un abrazo (Pexels ID: 1036620) */
+            background-image: url('https://images.pexels.com/photos/1036620/pexels-photo-1036620.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'); 
+        }
+        .bg-footer { 
+            /* ¡VERIFICADO! Perro y gato mirándose amistosamente (Pexels ID: 4056463) */
+            background-image: url('https://images.pexels.com/photos/4056463/pexels-photo-4056463.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'); 
+        }
+
+        /* --- Parallax Inteligente --- */
+        /* Por defecto (móvil), el fondo es estático (scroll) */
+        .parallax-bg {
+            background-attachment: scroll;
+        }
+        /* En pantallas grandes (lg y superior), activamos el efecto Parallax (fixed) */
+        @media (min-width: 1024px) {
+            .parallax-bg {
+                background-attachment: fixed;
+            }
+        }
+        
+        /* Cajas de contenido con efecto "vidrio esmerilado" */
+        .content-box {
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem; /* Padding más pequeño en celular */
+            border-radius: 1.5rem;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        /* Ajuste de padding para pantallas más grandes */
+        @media (min-width: 768px) {
+            .content-box {
+                padding: 3rem;
+            }
+        }
+        
+        .card {
+            background-color: #1a1a1a;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-left: 5px solid;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.4);
+        }
+
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+</head>
+<body class="text-white">
+
+    <header class="section-container bg-header">
+        <div class="section-content text-center">
+            <h1 class="text-5xl sm:text-7xl lg:text-8xl font-black mb-6 text-white" data-aos="fade-down" data-aos-duration="1200">
+                La Batalla Eterna: <br>¿Perros o Gatos?
+                
+            </h1>
+            <p class="text-xl sm:text-2xl lg:text-4xl font-light text-gray-300 mb-10" data-aos="fade-up" data-aos-delay="500">
+                Un Viaje al Corazón de la Convivencia Animal
+                
+            </p>
+            <div class="text-lg sm:text-xl text-gray-400" data-aos="fade-up" data-aos-delay="1000">
+                Presentado por: <strong class="text-white text-xl sm:text-2xl">Ismael Olivares Hernández</strong><br>
+                <span class="text-base sm:text-lg text-gray-500">Universidad Tecnológica General de Zacatecas (UTGZ)</span>
+            </div>
+        </div>
+    </header>
+
+    <section class="section-container bg-intro">
+        <div class="section-content max-w-5xl mx-auto text-center content-box" data-aos="zoom-in" data-aos-duration="1000">
+            <h2 class="text-3xl sm:text-5xl font-extrabold mb-8 text-gray-100">El Debate Más Antiguo: Una Elección de Vida</h2>
+            <p class="text-lg sm:text-xl md:text-2xl text-gray-300 leading-relaxed mb-6">
+                Desde los albores de la civilización, perros y gatos han compartido nuestras vidas. Más allá de una simple mascota, la elección entre uno y otro revela **mucho sobre nuestra propia personalidad** y estilo de vida.
+            </p>
+            <p class="text-xl sm:text-3xl font-bold mt-10 text-white animate-pulse">
+                ¿Qué criatura resuena más contigo: el compañero leal o el espíritu libre?
+            </p>
+        </div>
+    </section>
+
+    <section class="section-container parallax-bg bg-perro">
+        <div class="section-content max-w-6xl mx-auto text-center">
+            <div class="content-box mb-12" data-aos="fade-down" data-aos-offset="100">
+                <h2 class="text-3xl sm:text-5xl font-extrabold text-blue-300 mb-6">
+                    <span role="img" aria-label="perro">🐶</span> Equipo Perro: La Lealtad Incondicional
+                </h2>
+                <p class="text-lg sm:text-xl md:text-2xl text-gray-100">
+                    Explora el mundo de los compañeros más fieles y enérgicos.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10">
+                <div class="card border-blue-500" data-aos="fade-up" data-aos-delay="200">
+                    <h3 class="text-xl sm:text-2xl font-semibold mb-4 text-blue-300">1. Amor Fiel y Expresivo</h3>
+                    <p class="text-base sm:text-lg text-gray-300">
+                        Su afecto es inconfundible y constante. Un perro es un pozo inagotable de felicidad, siempre listo para recibirte con una cola que menea y una alegría contagiosa.
+                    </p>
+                </div>
+                <div class="card border-blue-500" data-aos="fade-up" data-aos-delay="400">
+                    <h3 class="text-xl sm:text-2xl font-semibold mb-4 text-blue-300">2. Estímulo para el Bienestar</h3>
+                    <p class="text-base sm:text-lg text-gray-300">
+                        Fomentan un estilo de vida activo. Los paseos, juegos y la interacción constante garantizan ejercicio tanto para ellos como para sus dueños, mejorando la salud física y mental.
+                    </p>
+                </div>
+                <div class="card border-blue-500" data-aos="fade-up" data-aos-delay="600">
+                    <h3 class="text-xl sm:text-2xl font-semibold mb-4 text-blue-300">3. Versatilidad y Servicio</h3>
+                    <p class="text-base sm:text-lg text-gray-300">
+                        Desde perros guía hasta compañeros de terapia o heroicos rescatistas, su inteligencia y capacidad de entrenamiento los hacen compañeros invaluables.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-container parallax-bg bg-gato">
+        <div class="section-content max-w-6xl mx-auto text-center">
+             <div class="content-box mb-12" data-aos="fade-down" data-aos-offset="100">
+                <h2 class="text-3xl sm:text-5xl font-extrabold text-orange-300 mb-6">
+                    <span role="img" aria-label="gato">🐱</span> Equipo Gato: La Independencia Elegante
+                </h2>
+                <p class="text-lg sm:text-xl md:text-2xl text-gray-100">
+                    Descubre el encanto de los espíritus libres, sofisticados y autónomos.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10">
+                <div class="card border-orange-500" data-aos="fade-up" data-aos-delay="200">
+                    <h3 class="text-xl sm:text-2xl font-semibold mb-4 text-orange-300">1. Maestros de la Autonomía</h3>
+                    <p class="text-base sm:text-lg text-gray-300">
+                        Perfectos para estilos de vida ajetreados o espacios pequeños. No demandan paseos diarios y son expertos en entretenerse por sí mismos.
+                    </p>
+                </div>
+                <div class="card border-orange-500" data-aos="fade-up" data-aos-delay="400">
+                    <h3 class="text-xl sm:text-2xl font-semibold mb-4 text-orange-300">2. Cuidado Sencillo</h3>
+                    <p class="text-base sm:text-lg text-gray-300">
+                        Su innata pulcritud significa que se asean solos, minimizando el esfuerzo de mantenimiento. Los costos y el tiempo dedicado a su cuidado suelen ser menores.
+                    </p>
+                </div>
+                <div class="card border-orange-500" data-aos="fade-up" data-aos-delay="600">
+                    <h3 class="text-xl sm:text-2xl font-semibold mb-4 text-orange-300">3. Comodidad Terapéutica</h3>
+                    <p class="text-base sm:text-lg text-gray-300">
+                        El suave ronroneo de un gato no es solo una señal de contento; tiene propiedades calmantes, reduciendo el estrés y la ansiedad en el hogar.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-container bg-comparacion">
+        <div class="section-content max-w-6xl mx-auto">
+            <h2 class="text-3xl sm:text-5xl font-extrabold mb-12 text-center text-gray-100" data-aos="fade-up">
+                Comparación Directa: Tu Compañero Ideal
+            </h2>
+
+            <div class="content-box shadow-2xl overflow-x-auto" data-aos="zoom-in" data-aos-delay="300">
+                <table class="w-full text-base sm:text-lg table-auto border-collapse">
+                    <thead>
+                        <tr class="text-lg sm:text-xl font-bold border-b-2 border-gray-700">
+                            <th class="p-3 sm:p-5 text-left text-gray-300">Aspecto Clave</th>
+                            <th class="p-3 sm:p-5 text-center text-blue-400 border-l border-r border-gray-700">Perros 🐕</th>
+                            <th class="p-3 sm:p-5 text-center text-orange-400">Gatos 🐈</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b border-gray-800" data-aos="fade-up" data-aos-delay="400">
+                            <td class="p-3 sm:p-5 text-left font-medium text-gray-200">Demanda de Atención</td>
+                            <td class="p-3 sm:p-5 text-center border-l border-r border-gray-800 text-blue-100">Alta y Constante</td>
+                            <td class="p-3 sm:p-5 text-center text-orange-100">Media a Baja, Independiente</td>
+                        </tr>
+                        <tr class="border-b border-gray-800" data-aos="fade-up" data-aos-delay="500">
+                            <td class="p-3 sm:p-5 text-left font-medium text-gray-200">Expresión de Afecto</td>
+                            <td class="p-3 sm:p-5 text-center border-l border-r border-gray-800 text-blue-100">Explosiva, Física</td>
+                            <td class="p-3 sm:p-5 text-center text-orange-100">Sutil, Elegida</td>
+                        </tr>
+                        <tr class="border-b border-gray-800" data-aos="fade-up" data-aos-delay="600">
+                            <td class="p-3 sm:p-5 text-left font-medium text-gray-200">Espacio y Actividad</td>
+                            <td class="p-3 sm:p-5 text-center border-l border-r border-gray-800 text-blue-100">Requiere paseos diarios</td>
+                            <td class="p-3 sm:p-5 text-center text-orange-100">Ideal para interiores</td>
+                        </tr>
+                        <tr data-aos="fade-up" data-aos-delay="700">
+                            <td class="p-3 sm:p-5 text-left font-medium text-gray-200">Coste de Mantenimiento</td>
+                            <td class="p-3 sm:p-5 text-center border-l border-r border-gray-800 text-blue-100">Generalmente más alto</td>
+                            <td class="p-3 sm:p-5 text-center text-orange-100">Generalmente menor</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-container bg-mitos">
+        <div class="section-content max-w-7xl mx-auto">
+            <h2 class="text-3xl sm:text-5xl font-extrabold mb-12 text-center text-gray-100" data-aos="fade-up">
+                Derribando Mitos
+            </h2>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-12">
+                
+                <div class="bg-gray-800 p-6 md:p-10 rounded-2xl shadow-xl border-t-8 border-blue-600" data-aos="fade-right" data-aos-delay="200">
+                    <h3 class="text-2xl sm:text-3xl font-bold mb-5 text-blue-400">Mito del Perro</h3>
+                    <p class="text-xl sm:text-2xl font-light italic mb-6 text-blue-200">
+                        "Solo es feliz en una casa con jardín."
+                    </p>
+                    <p class="text-base sm:text-lg text-gray-300">
+                        **Realidad:** El tamaño del espacio es secundario a la **calidad del tiempo**. Un perro en un apartamento, con paseos regulares, entrenamiento y mucho amor, será mucho más feliz que uno en un gran jardín ignorado.
+                    </p>
+                </div>
+
+                <div class="bg-gray-800 p-6 md:p-10 rounded-2xl shadow-xl border-t-8 border-orange-600" data-aos="fade-left" data-aos-delay="200">
+                    <h3 class="text-2xl sm:text-3xl font-bold mb-5 text-orange-400">Mito del Gato</h3>
+                    <p class="text-xl sm:text-2xl font-light italic mb-6 text-orange-200">
+                        "Los gatos son fríos y distantes."
+                    </p>
+                    <p class="text-base sm:text-lg text-gray-300">
+                        **Realidad:** Los gatos forman lazos profundos, aunque su expresión de afecto es más sutil. Pueden seguirte, dormir contigo y anhelar tu compañía. Su lealtad es silenciosa pero inquebrantable.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="section-container bg-footer">
+        <div class="section-content max-w-5xl mx-auto text-center">
+            <h2 class="text-4xl sm:text-6xl font-black mb-10 text-white" data-aos="fade-up">
+                El Veredicto Final: ¡La Elección es Tuya!
+            </h2>
+            <p class="text-xl sm:text-2xl md:text-3xl text-gray-300 mb-14 leading-relaxed" data-aos="fade-up" data-aos-delay="300">
+                Al final, no hay un "mejor" animal universal. La verdadera magia reside en encontrar a la criatura que **complementa tu alma y tu vida**.
+            </p>
+            <p class="text-2xl sm:text-4xl font-extrabold text-white mb-12 animate-pulse" data-aos="zoom-in" data-aos-delay="600">
+                ¡Gracias por su Atención! <br> ¿Preguntas?
+            </p>
+            <div class="text-sm text-gray-400 mt-16" data-aos="fade-up" data-aos-delay="900">
+                Diseñado con pasión por **Ismael Olivares Hernández**, UTGZ.
+            </div>
+            
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            once: true, // Animar solo una vez al hacer scroll
+            duration: 1000, // Duración de las animaciones
+            easing: 'ease-out-quad',
+            delay: 100, 
+        });
+    </script>
+</body>
+</html>
