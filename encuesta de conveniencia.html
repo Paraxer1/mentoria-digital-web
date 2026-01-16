@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informe Estadístico - UTGZ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&display=swap');
+        
+        body { 
+            font-family: 'Montserrat', sans-serif; 
+            overflow-x: hidden; 
+            background-color: #f8fafc;
+        }
+
+        /* --- Fondos Animados --- */
+        .animated-bg {
+            background: linear-gradient(-45deg, #0f172a, #1e3a8a, #009B3A, #064e3b);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        /* --- Efecto Glassmorphism (Vidrio) --- */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+        }
+
+        .glass-dark {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* --- Interacción 3D en Tarjetas --- */
+        .hover-3d {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+        }
+        .hover-3d:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px -5px rgba(0, 0, 0, 0.15), 0 10px 20px -5px rgba(0, 0, 0, 0.1);
+            border-color: #009B3A;
+            z-index: 10;
+        }
+
+        /* --- Cajas de Observación Animadas --- */
+        .obs-box { 
+            border-left: 4px solid #009B3A; 
+            background: linear-gradient(to right, #f0fdf4, white);
+            padding: 15px; 
+            margin-top: 15px; 
+            border-radius: 0 12px 12px 0; 
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: all 0.6s ease-out;
+        }
+        .reveal.active .obs-box {
+            opacity: 1;
+            transform: translateX(0);
+            transition-delay: 1.5s; /* Aparece después de que se dibuja la gráfica */
+        }
+        
+        .obs-title { font-size: 0.75rem; color: #166534; font-weight: 800; text-transform: uppercase; margin-bottom: 4px; letter-spacing: 0.05em; }
+        .obs-text { font-size: 0.9rem; color: #374151; font-style: italic; line-height: 1.5; }
+
+        /* --- Animaciones de Entrada (Scroll Reveal) --- */
+        .reveal { 
+            opacity: 0; 
+            transform: translateY(50px) scale(0.95); 
+            transition: all 1s cubic-bezier(0.5, 0, 0, 1); 
+        }
+        .reveal.active { 
+            opacity: 1; 
+            transform: translateY(0) scale(1); 
+        }
+        
+        /* --- Decoración --- */
+        .blob {
+            position: absolute;
+            filter: blur(50px);
+            opacity: 0.4;
+            z-index: -1;
+            animation: float 10s ease-in-out infinite;
+        }
+        @keyframes float {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(30px, 50px) rotate(180deg); }
+            100% { transform: translate(0, 0) rotate(360deg); }
+        }
+
+        canvas { cursor: crosshair; }
+    </style>
+</head>
+<body class="text-slate-800">
+
+    <!-- Navegación Flotante -->
+    <nav class="fixed top-0 w-full bg-white/80 backdrop-blur-xl shadow-lg z-50 border-b border-white/20 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-3 group cursor-pointer hover:scale-105 transition-transform">
+                <div class="bg-gradient-to-br from-green-500 to-green-700 text-white p-2.5 rounded-xl shadow-lg shadow-green-500/30">
+                    <i class="fas fa-university text-2xl"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-xl leading-none tracking-tight text-slate-800">UTGZ</h1>
+                    <p class="text-[10px] text-green-600 font-bold tracking-[0.2em] uppercase">Universidad Tecnológica</p>
+                </div>
+            </div>
+            <div class="hidden md:flex gap-8 font-bold text-xs text-slate-600 uppercase tracking-widest">
+                <a href="#inicio" class="hover:text-green-600 transition-all hover:scale-110">Inicio</a>
+                <a href="#participantes" class="hover:text-green-600 transition-all hover:scale-110">Participantes</a>
+                <a href="#metodologia" class="hover:text-green-600 transition-all hover:scale-110">Metodología</a>
+                <a href="#cuestionario" class="hover:text-green-600 transition-all hover:scale-110">Cuestionario</a>
+                <a href="#resultados" class="bg-green-100 text-green-700 px-4 py-2 rounded-full hover:bg-green-600 hover:text-white transition-all shadow-sm">Resultados</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Portada (Hero Section) con Fondo Animado -->
+    <section id="inicio" class="min-h-screen flex items-center justify-center pt-20 animated-bg text-white relative overflow-hidden">
+        <!-- Blobs decorativos -->
+        <div class="blob w-96 h-96 bg-blue-500 top-0 left-0 rounded-full mix-blend-multiply"></div>
+        <div class="blob w-96 h-96 bg-green-500 bottom-0 right-0 rounded-full mix-blend-multiply animation-delay-2000"></div>
+
+        <div class="max-w-6xl mx-auto px-6 relative z-10 text-center reveal active">
+            <div class="inline-block mb-6 relative group">
+                <div class="absolute -inset-1 bg-gradient-to-r from-green-400 to-blue-500 rounded-full blur opacity-25 group-hover:opacity-75 transition duration-1000 group-hover:duration-200"></div>
+                <span class="relative bg-black bg-opacity-50 backdrop-blur-md text-white px-8 py-2 rounded-full text-xs font-bold tracking-[0.3em] uppercase border border-white/10">
+                    Proyecto Final de Estadística
+                </span>
+            </div>
+            
+            <h2 class="text-6xl md:text-8xl font-black mb-8 leading-tight tracking-tighter drop-shadow-2xl">
+                HÁBITOS<br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-green-300 via-emerald-200 to-teal-300">DIGITALES</span>
+            </h2>
+            
+            <p class="text-xl md:text-2xl text-blue-100 font-light mb-12 max-w-3xl mx-auto leading-relaxed opacity-90">
+                Un análisis profundo sobre cómo la tecnología moldea la vida académica en el CETIS 145.
+            </p>
+            
+            <div class="flex justify-center gap-6">
+                <a href="#participantes" class="group bg-white text-green-700 font-bold py-4 px-10 rounded-full transition-all transform hover:scale-110 hover:shadow-[0_0_30px_rgba(255,255,255,0.5)] flex items-center gap-3">
+                    Explorar Datos <i class="fas fa-arrow-down group-hover:translate-y-1 transition-transform"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Participantes -->
+    <section id="participantes" class="py-32 bg-slate-50 relative overflow-hidden">
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-green-100 rounded-full blur-[120px] opacity-40 pointer-events-none"></div>
+        
+        <div class="max-w-6xl mx-auto px-6 relative z-10">
+            <div class="text-center mb-20 reveal">
+                <h3 class="text-4xl font-extrabold text-slate-900 mb-4">Protagonistas del Estudio</h3>
+                <div class="w-24 h-2 bg-gradient-to-r from-green-500 to-blue-500 mx-auto rounded-full"></div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-12">
+                <!-- Tarjeta Encuestadores -->
+                <div class="glass-card p-10 rounded-[2rem] reveal hover-3d relative overflow-hidden group">
+                    <div class="absolute -right-12 -top-12 w-32 h-32 bg-green-100 rounded-full group-hover:scale-150 transition-transform duration-700 ease-in-out z-0"></div>
+                    <div class="relative z-10">
+                        <div class="flex items-center gap-5 mb-8">
+                            <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-green-500/40">
+                                <i class="fas fa-microscope text-3xl"></i>
+                            </div>
+                            <div>
+                                <span class="text-xs font-bold text-green-600 tracking-widest uppercase">Investigadores</span>
+                                <h4 class="text-2xl font-bold text-slate-800">Alumnos UTGZ</h4>
+                            </div>
+                        </div>
+                        <p class="text-slate-600 leading-relaxed text-lg">
+                            Diseño experimental y análisis estadístico realizado por el equipo de la <strong>Universidad Tecnológica de Gutiérrez Zamora</strong>.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Tarjeta Encuestados -->
+                <div class="glass-card p-10 rounded-[2rem] reveal hover-3d relative overflow-hidden group" style="transition-delay: 200ms;">
+                    <div class="absolute -right-12 -top-12 w-32 h-32 bg-blue-100 rounded-full group-hover:scale-150 transition-transform duration-700 ease-in-out z-0"></div>
+                    <div class="relative z-10">
+                        <div class="flex items-center gap-5 mb-8">
+                            <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-blue-500/40">
+                                <i class="fas fa-users text-3xl"></i>
+                            </div>
+                            <div>
+                                <span class="text-xs font-bold text-blue-600 tracking-widest uppercase">Población Muestra</span>
+                                <h4 class="text-2xl font-bold text-slate-800">CETIS 145</h4>
+                            </div>
+                        </div>
+                        <p class="text-slate-600 leading-relaxed text-lg">
+                            Muestra seleccionada de estudiantes de bachillerato (Laboratorista Químico). Representan la voz digital de la institución.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Metodología Interactiva -->
+    <section id="metodologia" class="py-32 bg-slate-900 text-white relative overflow-hidden">
+        <!-- Grid animado de fondo -->
+        <div class="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:40px_40px]"></div>
+        
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="text-center mb-16 reveal">
+                <span class="text-green-400 font-bold tracking-[0.2em] uppercase text-sm mb-4 block animate-pulse">Paso 1: La Estrategia</span>
+                <h3 class="text-5xl font-black mb-6">Muestreo por <span class="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-teal-300">Conveniencia</span></h3>
+            </div>
+
+            <div class="grid lg:grid-cols-3 gap-8">
+                <!-- Tarjeta 1: QUÉ ES -->
+                <div class="glass-dark p-8 rounded-3xl hover-3d reveal border-t-4 border-green-500">
+                    <div class="mb-4 text-green-400 text-3xl"><i class="fas fa-book-open"></i></div>
+                    <h4 class="text-2xl font-bold mb-4">¿Qué es?</h4>
+                    <p class="text-gray-300 leading-relaxed text-sm">
+                        Es una técnica de muestreo <strong>no probabilístico</strong> donde los sujetos se seleccionan dada su accesibilidad y proximidad al investigador, sin utilizar un mecanismo aleatorio.
+                    </p>
+                </div>
+
+                <!-- Tarjeta 2: EN QUÉ CONSISTE -->
+                <div class="glass-dark p-8 rounded-3xl hover-3d reveal border-t-4 border-blue-500" style="transition-delay: 150ms;">
+                    <div class="mb-4 text-blue-400 text-3xl"><i class="fas fa-cogs"></i></div>
+                    <h4 class="text-2xl font-bold mb-4">¿En qué consiste?</h4>
+                    <p class="text-gray-300 leading-relaxed text-sm">
+                        Consiste en abordar a los participantes disponibles en el momento y lugar del estudio (pasillos, aulas). Simplemente se encuestó a los alumnos del CETIS 145 que estaban "a la mano" y dispuestos a participar.
+                    </p>
+                </div>
+
+                <!-- Tarjeta 3: POR QUÉ -->
+                <div class="glass-dark p-8 rounded-3xl hover-3d reveal border-t-4 border-purple-500" style="transition-delay: 300ms;">
+                    <div class="mb-4 text-purple-400 text-3xl"><i class="fas fa-lightbulb"></i></div>
+                    <h4 class="text-2xl font-bold mb-4">¿Por qué se usó?</h4>
+                    <ul class="text-gray-300 space-y-2 text-sm">
+                        <li class="flex items-start gap-2"><i class="fas fa-check text-green-400 mt-1"></i> <strong>Velocidad:</strong> Recolección inmediata de datos.</li>
+                        <li class="flex items-start gap-2"><i class="fas fa-check text-green-400 mt-1"></i> <strong>Costo Cero:</strong> Ideal para proyectos estudiantiles.</li>
+                        <li class="flex items-start gap-2"><i class="fas fa-check text-green-400 mt-1"></i> <strong>Acceso:</strong> Facilidad para contactar compañeros.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CUESTIONARIO (Las 10 Preguntas) -->
+    <section id="cuestionario" class="py-24 bg-white relative">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row items-center justify-between mb-16 reveal">
+                <div>
+                    <span class="text-green-600 font-bold tracking-widest uppercase text-sm">Instrumento</span>
+                    <h3 class="text-4xl font-extrabold text-slate-900 mt-2">El Cuestionario</h3>
+                    <p class="text-slate-500 mt-2">Las 10 interrogantes clave aplicadas en el estudio.</p>
+                </div>
+                <div class="bg-slate-100 p-4 rounded-full text-slate-500">
+                    <i class="fas fa-clipboard-list text-3xl"></i>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8 reveal">
+                <div class="space-y-4">
+                    <div class="flex gap-4 p-4 border-l-4 border-green-500 bg-slate-50 hover:bg-white hover:shadow-lg transition-all rounded-r-lg">
+                        <span class="font-bold text-green-600">01</span>
+                        <p class="text-sm font-medium text-slate-700">¿Cuál es el dispositivo que más utilizas durante el día?</p>
+                    </div>
+                    <div class="flex gap-4 p-4 border-l-4 border-green-500 bg-slate-50 hover:bg-white hover:shadow-lg transition-all rounded-r-lg">
+                        <span class="font-bold text-green-600">02</span>
+                        <p class="text-sm font-medium text-slate-700">En promedio, ¿cuántas horas al día pasas frente a una pantalla?</p>
+                    </div>
+                    <div class="flex gap-4 p-4 border-l-4 border-green-500 bg-slate-50 hover:bg-white hover:shadow-lg transition-all rounded-r-lg">
+                        <span class="font-bold text-green-600">03</span>
+                        <p class="text-sm font-medium text-slate-700">¿Cuál es la actividad principal para la que usas tus dispositivos?</p>
+                    </div>
+                    <div class="flex gap-4 p-4 border-l-4 border-green-500 bg-slate-50 hover:bg-white hover:shadow-lg transition-all rounded-r-lg">
+                        <span class="font-bold text-green-600">04</span>
+                        <p class="text-sm font-medium text-slate-700">¿Qué marca de celular utilizas actualmente?</p>
+                    </div>
+                    <div class="flex gap-4 p-4 border-l-4 border-green-500 bg-slate-50 hover:bg-white hover:shadow-lg transition-all rounded-r-lg">
+                        <span class="font-bold text-green-600">05</span>
+                        <p class="text-sm font-medium text-slate-700">¿Cuál es tu sistema operativo preferido?</p>
+                    </div>
+                </div>
+                <div class="space-y-4">
+                    <div class="flex gap-4 p-4 border-l-4 border-blue-500 bg-slate-50 hover:bg-white hover:shadow-lg transition-all rounded-r-lg">
+                        <span class="font-bold text-blue-600">06</span>
+                        <p class="text-sm font-medium text-slate-700">¿Qué accesorio tecnológico consideras más indispensable?</p>
+                    </div>
+                    <div class="flex gap-4 p-4 border-l-4 border-blue-500 bg-slate-50 hover:bg-white hover:shadow-lg transition-all rounded-r-lg">
+                        <span class="font-bold text-blue-600">07</span>
+                        <p class="text-sm font-medium text-slate-700">¿Cuál es la plataforma de contenido que más consumes?</p>
+                    </div>
+                    <div class="flex gap-4 p-4 border-l-4 border-blue-500 bg-slate-50 hover:bg-white hover:shadow-lg transition-all rounded-r-lg">
+                        <span class="font-bold text-blue-600">08</span>
+                        <p class="text-sm font-medium text-slate-700">¿Utilizas algún dispositivo electrónico justo antes de dormir?</p>
+                    </div>
+                    <div class="flex gap-4 p-4 border-l-4 border-blue-500 bg-slate-50 hover:bg-white hover:shadow-lg transition-all rounded-r-lg">
+                        <span class="font-bold text-blue-600">09</span>
+                        <p class="text-sm font-medium text-slate-700">¿Cómo prefieres conectarte a internet la mayor parte del tiempo?</p>
+                    </div>
+                    <div class="flex gap-4 p-4 border-l-4 border-blue-500 bg-slate-50 hover:bg-white hover:shadow-lg transition-all rounded-r-lg">
+                        <span class="font-bold text-blue-600">10</span>
+                        <p class="text-sm font-medium text-slate-700">Si pudieras comprar un dispositivo nuevo hoy mismo, ¿cuál elegirías?</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resultados (El Show Principal) -->
+    <section id="resultados" class="py-32 bg-slate-50 relative">
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="flex flex-col md:flex-row items-end justify-between mb-20 reveal">
+                <div>
+                    <span class="text-green-600 font-bold tracking-widest uppercase text-sm">Data Viz</span>
+                    <h3 class="text-5xl font-black text-slate-900 mt-2">Resultados Gráficos</h3>
+                </div>
+                <div class="text-right mt-6 md:mt-0">
+                    <div class="bg-white px-8 py-4 rounded-2xl shadow-xl border border-green-100 flex items-center gap-4">
+                        <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                        <div>
+                            <p class="text-[10px] text-slate-400 uppercase font-bold tracking-widest">Status</p>
+                            <p class="font-bold text-xl text-slate-800">N = 30 Confirmados</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Grid de Gráficas -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-16">
+                
+                <!-- G1 -->
+                <div class="reveal hover-3d" data-chart="g1">
+                    <div class="glass-card p-8 rounded-[2rem] relative bg-white">
+                        <div class="flex justify-between items-start mb-6">
+                            <div>
+                                <span class="text-xs font-bold text-green-600 uppercase tracking-wider bg-green-50 px-3 py-1 rounded-full">Pregunta 01</span>
+                                <h4 class="text-2xl font-bold text-slate-800 mt-2">Dispositivo Rey</h4>
+                            </div>
+                            <div class="bg-blue-50 p-3 rounded-xl text-blue-600"><i class="fas fa-mobile-alt text-xl"></i></div>
+                        </div>
+                        <div class="h-64 relative">
+                            <!-- El canvas se dibuja solo cuando es visible -->
+                            <canvas id="g1"></canvas> 
+                        </div>
+                        <div class="obs-box">
+                            <div class="obs-title">Interpretación del Analista:</div>
+                            <div class="obs-text">El Smartphone tiene un dominio absoluto con 28 de 30 votos. Es prácticamente la única herramienta que utilizan, lo que demuestra que la computadora ha pasado a segundo plano en su día a día.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- G2 -->
+                <div class="reveal hover-3d" data-chart="g2" style="transition-delay: 100ms;">
+                    <div class="glass-card p-8 rounded-[2rem] relative bg-white">
+                        <div class="flex justify-between items-start mb-6">
+                            <div>
+                                <span class="text-xs font-bold text-red-600 uppercase tracking-wider bg-red-50 px-3 py-1 rounded-full">Pregunta 02</span>
+                                <h4 class="text-2xl font-bold text-slate-800 mt-2">Tiempo en Pantalla</h4>
+                            </div>
+                            <div class="bg-red-50 p-3 rounded-xl text-red-600"><i class="fas fa-clock text-xl"></i></div>
+                        </div>
+                        <div class="h-64 relative">
+                            <canvas id="g2"></canvas>
+                        </div>
+                        <div class="obs-box">
+                            <div class="obs-title">Interpretación del Analista:</div>
+                            <div class="obs-text">La mayoría se ubica en el rango de 3 a 6 horas (14 alumnos), pero es alarmante ver que 11 alumnos superan las 7 horas diarias. Esto indica una jornada digital muy extensa.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- G3 -->
+                <div class="reveal hover-3d" data-chart="g3">
+                    <div class="glass-card p-8 rounded-[2rem] relative bg-white">
+                        <div class="flex justify-between items-start mb-6">
+                            <div>
+                                <span class="text-xs font-bold text-purple-600 uppercase tracking-wider bg-purple-50 px-3 py-1 rounded-full">Pregunta 03</span>
+                                <h4 class="text-2xl font-bold text-slate-800 mt-2">Uso Principal</h4>
+                            </div>
+                            <div class="bg-purple-50 p-3 rounded-xl text-purple-600"><i class="fas fa-icons text-xl"></i></div>
+                        </div>
+                        <div class="h-64 relative">
+                            <canvas id="g3"></canvas>
+                        </div>
+                        <div class="obs-box">
+                            <div class="obs-title">Interpretación del Analista:</div>
+                            <div class="obs-text">Las Redes Sociales dominan con 21 votos. El uso académico queda en segundo lugar con solo 6 votos, confirmando que el dispositivo es visto principalmente como un centro de entretenimiento.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- G4 -->
+                <div class="reveal hover-3d" data-chart="g4" style="transition-delay: 100ms;">
+                    <div class="glass-card p-8 rounded-[2rem] relative bg-white">
+                        <div class="flex justify-between items-start mb-6">
+                            <div>
+                                <span class="text-xs font-bold text-orange-600 uppercase tracking-wider bg-orange-50 px-3 py-1 rounded-full">Pregunta 04</span>
+                                <h4 class="text-2xl font-bold text-slate-800 mt-2">Guerra de Marcas</h4>
+                            </div>
+                            <div class="bg-orange-50 p-3 rounded-xl text-orange-600"><i class="fas fa-tag text-xl"></i></div>
+                        </div>
+                        <div class="h-64 relative">
+                            <canvas id="g4"></canvas>
+                        </div>
+                        <div class="obs-box">
+                            <div class="obs-title">Interpretación del Analista:</div>
+                            <div class="obs-text">El mercado está muy fragmentado. La categoría "Otro" se lleva la mayoría (17 votos), lo que sugiere una gran variedad de dispositivos (posiblemente Motorola o marcas no listadas). De las marcas específicas, Samsung lidera con 9.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- G5 -->
+                <div class="reveal hover-3d" data-chart="g5">
+                    <div class="glass-card p-8 rounded-[2rem] relative bg-white">
+                        <div class="flex justify-between items-start mb-6">
+                            <div>
+                                <span class="text-xs font-bold text-green-600 uppercase tracking-wider bg-green-50 px-3 py-1 rounded-full">Pregunta 05</span>
+                                <h4 class="text-2xl font-bold text-slate-800 mt-2">OS Favorito</h4>
+                            </div>
+                            <div class="bg-green-50 p-3 rounded-xl text-green-600"><i class="fab fa-android text-xl"></i></div>
+                        </div>
+                        <div class="h-64 relative">
+                            <canvas id="g5"></canvas>
+                        </div>
+                        <div class="obs-box">
+                            <div class="obs-title">Interpretación del Analista:</div>
+                            <div class="obs-text">Android es el claro vencedor con 16 usuarios, doblando a los usuarios de iOS (8). Esto refleja la accesibilidad y popularidad de este sistema en el entorno estudiantil.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- G6 -->
+                <div class="reveal hover-3d" data-chart="g6" style="transition-delay: 100ms;">
+                    <div class="glass-card p-8 rounded-[2rem] relative bg-white">
+                        <div class="flex justify-between items-start mb-6">
+                            <div>
+                                <span class="text-xs font-bold text-indigo-600 uppercase tracking-wider bg-indigo-50 px-3 py-1 rounded-full">Pregunta 06</span>
+                                <h4 class="text-2xl font-bold text-slate-800 mt-2">Accesorio Vital</h4>
+                            </div>
+                            <div class="bg-indigo-50 p-3 rounded-xl text-indigo-600"><i class="fas fa-mobile text-xl"></i></div>
+                        </div>
+                        <div class="h-64 relative">
+                            <canvas id="g6"></canvas>
+                        </div>
+                        <div class="obs-box">
+                            <div class="obs-title">Interpretación del Analista:</div>
+                            <div class="obs-text">Curiosamente, 25 personas eligieron "Smartphone" como el accesorio más indispensable, lo que refuerza la idea de que sin el celular, no conciben su día a día.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- G7 -->
+                <div class="reveal hover-3d" data-chart="g7">
+                    <div class="glass-card p-8 rounded-[2rem] relative bg-white">
+                        <div class="flex justify-between items-start mb-6">
+                            <div>
+                                <span class="text-xs font-bold text-pink-600 uppercase tracking-wider bg-pink-50 px-3 py-1 rounded-full">Pregunta 07</span>
+                                <h4 class="text-2xl font-bold text-slate-800 mt-2">Plataformas</h4>
+                            </div>
+                            <div class="bg-pink-50 p-3 rounded-xl text-pink-600"><i class="fab fa-tiktok text-xl"></i></div>
+                        </div>
+                        <div class="h-64 relative">
+                            <canvas id="g7"></canvas>
+                        </div>
+                        <div class="obs-box">
+                            <div class="obs-title">Interpretación del Analista:</div>
+                            <div class="obs-text">TikTok arrasa con 21 votos, superando ampliamente a YouTube (9). El formato de video corto vertical es, sin duda, el rey del consumo de contenido actual.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- G8 -->
+                <div class="reveal hover-3d" data-chart="g8" style="transition-delay: 100ms;">
+                    <div class="glass-card p-8 rounded-[2rem] relative bg-white">
+                        <div class="flex justify-between items-start mb-6">
+                            <div>
+                                <span class="text-xs font-bold text-slate-600 uppercase tracking-wider bg-slate-100 px-3 py-1 rounded-full">Pregunta 08</span>
+                                <h4 class="text-2xl font-bold text-slate-800 mt-2">Higiene de Sueño</h4>
+                            </div>
+                            <div class="bg-slate-100 p-3 rounded-xl text-slate-600"><i class="fas fa-moon text-xl"></i></div>
+                        </div>
+                        <div class="h-64 relative">
+                            <canvas id="g8"></canvas>
+                        </div>
+                        <div class="obs-box">
+                            <div class="obs-title">Interpretación del Analista:</div>
+                            <div class="obs-text">Solo 2 personas dicen "Nunca" usarlo antes de dormir. La gran mayoría (28 alumnos) se expone a pantallas en la cama, lo cual es un indicador preocupante para la calidad del descanso.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- G9 -->
+                <div class="reveal hover-3d" data-chart="g9">
+                    <div class="glass-card p-8 rounded-[2rem] relative bg-white">
+                        <div class="flex justify-between items-start mb-6">
+                            <div>
+                                <span class="text-xs font-bold text-cyan-600 uppercase tracking-wider bg-cyan-50 px-3 py-1 rounded-full">Pregunta 09</span>
+                                <h4 class="text-2xl font-bold text-slate-800 mt-2">Conectividad</h4>
+                            </div>
+                            <div class="bg-cyan-50 p-3 rounded-xl text-cyan-600"><i class="fas fa-wifi text-xl"></i></div>
+                        </div>
+                        <div class="h-64 relative">
+                            <canvas id="g9"></canvas>
+                        </div>
+                        <div class="obs-box">
+                            <div class="obs-title">Interpretación del Analista:</div>
+                            <div class="obs-text">Dependencia total del Wi-Fi (30 de 30 votos). Nadie depende de sus datos móviles como fuente principal, lo que subraya la importancia de la infraestructura fija de internet.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- G10 -->
+                <div class="reveal hover-3d" data-chart="g10" style="transition-delay: 100ms;">
+                    <div class="glass-card p-8 rounded-[2rem] relative bg-white">
+                        <div class="flex justify-between items-start mb-6">
+                            <div>
+                                <span class="text-xs font-bold text-yellow-600 uppercase tracking-wider bg-yellow-50 px-3 py-1 rounded-full">Pregunta 10</span>
+                                <h4 class="text-2xl font-bold text-slate-800 mt-2">Lista de Deseos</h4>
+                            </div>
+                            <div class="bg-yellow-50 p-3 rounded-xl text-yellow-600"><i class="fas fa-star text-xl"></i></div>
+                        </div>
+                        <div class="h-64 relative">
+                            <canvas id="g10"></canvas>
+                        </div>
+                        <div class="obs-box">
+                            <div class="obs-title">Interpretación del Analista:</div>
+                            <div class="obs-text">Lo que más desean comprar es un "Celular" nuevo (14 votos), superando a la "Laptop" (8 votos). Esto confirma que su prioridad de inversión sigue siendo mejorar su dispositivo móvil personal.</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Conclusión Final -->
+    <section class="py-40 animated-bg text-white text-center relative overflow-hidden">
+        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+        <!-- Partículas flotantes -->
+        <div class="blob w-64 h-64 bg-white opacity-10 top-20 left-20 rounded-full animate-pulse"></div>
+        <div class="blob w-96 h-96 bg-green-400 opacity-10 bottom-20 right-20 rounded-full animate-pulse" style="animation-duration: 4s;"></div>
+
+        <div class="max-w-5xl mx-auto px-6 relative z-10 reveal">
+            <h2 class="text-5xl font-black mb-12 drop-shadow-lg">CONCLUSIONES DEL ESTUDIO</h2>
+            
+            <div class="glass-dark p-12 rounded-[3rem] border border-white/20 shadow-2xl transform transition hover:scale-105 duration-500 text-left">
+                <p class="text-lg leading-relaxed font-light mb-8">
+                    El presente estudio estadístico, basado en los datos recabados de 30 alumnos del <strong>CETIS 145</strong>, revela un panorama digital contundente:
+                </p>
+
+                <div class="space-y-6">
+                    <div class="flex gap-4 items-start">
+                        <div class="bg-green-500/20 p-3 rounded-lg text-green-300"><i class="fas fa-mobile-alt text-xl"></i></div>
+                        <div>
+                            <h4 class="font-bold text-green-300 text-lg">Smartphone-Centrismo</h4>
+                            <p class="text-sm opacity-80 mt-1">El celular es el rey absoluto (28/30 usuarios) y también el objeto de deseo número uno para futuras compras. La vida digital del estudiante gira exclusivamente en torno a este dispositivo.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-4 items-start">
+                        <div class="bg-blue-500/20 p-3 rounded-lg text-blue-300"><i class="fab fa-tiktok text-xl"></i></div>
+                        <div>
+                            <h4 class="font-bold text-blue-300 text-lg">La Hegemonía de TikTok y el Wi-Fi</h4>
+                            <p class="text-sm opacity-80 mt-1">El consumo de contenido está dominado por videos cortos de TikTok (21 votos), dependiendo al 100% de conexiones Wi-Fi fijas, sin uso relevante de datos móviles.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-4 items-start">
+                        <div class="bg-yellow-500/20 p-3 rounded-lg text-yellow-300"><i class="fas fa-exclamation-triangle text-xl"></i></div>
+                        <div>
+                            <h4 class="font-bold text-yellow-300 text-lg">Alerta de Uso Excesivo</h4>
+                            <p class="text-sm opacity-80 mt-1">Con 11 alumnos reportando más de 7 horas diarias de pantalla y una mayoría usándolo antes de dormir, existen indicadores claros de una posible afectación en el descanso y la gestión del tiempo.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-10 pt-8 border-t border-white/10 text-center">
+                    <p class="text-xl italic font-serif opacity-90">
+                        "El estudiante del CETIS 145 vive conectado al Wi-Fi, con un Android en la mano y TikTok en la pantalla."
+                    </p>
+                </div>
+
+                <div class="mt-8 flex flex-col md:flex-row justify-center items-center gap-4 text-xs font-bold uppercase tracking-[0.2em] opacity-70">
+                    <span class="bg-white/10 px-4 py-2 rounded-full">Enero 2026</span>
+                    <span class="hidden md:inline text-green-400">•</span>
+                    <span class="bg-white/10 px-4 py-2 rounded-full">UTGZ x CETIS 145</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-slate-900 text-slate-500 py-12 text-center text-xs">
+        <p class="mb-2 font-bold uppercase tracking-widest">Estadística Aplicada</p>
+        <p>Desarrollado  por Alumnos UTGZ</p>
+    </footer>
+
+    <script>
+        // --- CONFIGURACIÓN DE DATOS (NO MODIFICAR, YA ESTÁN CORREGIDOS) ---
+        const chartsData = {
+            g1: { type: 'bar', labels: ['Smartphone', 'Laptop', 'Tablet','Consola'], data: [28, 1, 0, 0], colors: '#009B3A' },
+            g2: { type: 'line', labels: ['< 3h', '3-6 h', '7-10 h', '> 10 h'], data: [5, 14, 6, 5], colors: '#EF4444', borderColor: '#EF4444' },
+            g3: { type: 'pie', labels: ['Redes', 'Tareas', 'Series', 'Juegos'], data: [21, 6, 1, 2], colors: ['#F59E0B', '#10B981', '#3B82F6', '#EF4444'] },
+            g4: { type: 'doughnut', labels: ['Samsung', 'Xiaomi', 'Oppo', 'Honor', 'lg' ,'Otro'], data: [9, 2, 1, 1, 0 , 17], colors: ['#3B82F6', '#F97316', '#1F2937', '#9CA3AF', '#ffaa00', '#ff00aa'] },
+            g5: { type: 'bar', labels: ['Android', 'iOS', 'Windows','macOs'], data: [16, 8, 5, 1], colors: '#059669', indexAxis: 'y' },
+            g6: { type: 'bar', labels: ['Laptop', 'Smartphone', 'Reloj inteligente'], data: [4, 25, 1], colors: '#6366F1' },
+            g7: { type: 'polarArea', labels: ['TikTok', 'YouTube', 'Twitch'], data: [21, 9, 0], colors: ['#111111', '#EF4444', '#FFFF00'] },
+            g8: { type: 'pie', labels: ['Sí, siempre', 'No, nunca', 'A veces'], data: [16, 2, 12], colors: ['#EF4444', '#10B981', '#F59E0B'] },
+            g9: { type: 'doughnut', labels: ['Wi-Fi', 'Datos'], data: [30, 0], colors: ['#3B82F6', '#9CA3AF'] },
+            g10: { type: 'bar', labels: ['Laptop', 'Celular', 'Tablet', 'Consola'], data: [8, 14, 6, 2], colors: '#8B5CF6' }
+        };
+
+        // --- INICIALIZADOR DE GRÁFICAS ON-SCROLL ---
+        const initChart = (canvasId) => {
+            const ctx = document.getElementById(canvasId).getContext('2d');
+            const config = chartsData[canvasId];
+            
+            const commonOptions = {
+                responsive: true,
+                maintainAspectRatio: false,
+                animation: {
+                    duration: 2000, 
+                    easing: 'easeOutQuart'
+                },
+                plugins: {
+                    legend: { display: config.type === 'pie' || config.type === 'doughnut' || config.type === 'polarArea', position: 'bottom' }
+                },
+                scales: (config.type === 'bar' || config.type === 'line') ? {
+                    y: { beginAtZero: true, grid: { borderDash: [5, 5], color: '#e2e8f0' } },
+                    x: { grid: { display: false } }
+                } : {}
+            };
+
+            new Chart(ctx, {
+                type: config.type,
+                data: {
+                    labels: config.labels,
+                    datasets: [{
+                        label: 'Frecuencia',
+                        data: config.data,
+                        backgroundColor: config.colors,
+                        borderColor: config.borderColor || 'transparent',
+                        borderWidth: config.type === 'line' ? 4 : 0,
+                        pointBackgroundColor: '#fff',
+                        pointBorderWidth: 3,
+                        pointRadius: 6,
+                        hoverOffset: 10,
+                        borderRadius: 8
+                    }]
+                },
+                options: { ...commonOptions, indexAxis: config.indexAxis || 'x' }
+            });
+        };
+
+        // --- OBSERVER PARA ANIMACIONES Y CARGA DE GRÁFICAS ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const observerOptions = {
+                threshold: 0.2, 
+                rootMargin: "0px"
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        const chartId = entry.target.getAttribute('data-chart');
+                        if (chartId && !entry.target.classList.contains('chart-loaded')) {
+                            initChart(chartId);
+                            entry.target.classList.add('chart-loaded'); 
+                        }
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        });
+    </script>
+</body>
+</html>
