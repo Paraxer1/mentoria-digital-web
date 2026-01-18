@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Técnicas de Asertividad | UTGZ 210-AE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Paleta de colores Premium Dark Theme */
+            --bg-gradient: radial-gradient(circle at top right, #1e293b 0%, #0f172a 100%);
+            --glass-bg: rgba(30, 41, 59, 0.7); /* Más oscuro y elegante */
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --accent: #38bdf8; /* Sky Blue */
+            --accent-glow: rgba(56, 189, 248, 0.3);
+            --success: #10b981; /* Emerald */
+            --warning: #f59e0b; /* Amber */
+            --error: #ef4444;   /* Red */
+            --text-main: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --shadow-card: 0 20px 40px -10px rgba(0, 0, 0, 0.5);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-main);
+            overflow: hidden;
+            height: 100dvh; 
+            width: 100vw;
+            font-size: 16px;
+            position: relative;
+        }
+
+        /* Fondo animado sutil */
+        .background-blob {
+            position: absolute;
+            background: var(--accent);
+            filter: blur(80px);
+            opacity: 0.15;
+            border-radius: 50%;
+            z-index: -1;
+            animation: floatBlob 20s infinite alternate;
+        }
+        .blob-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; }
+        .blob-2 { bottom: -10%; right: -10%; width: 40vw; height: 40vw; animation-delay: -10s; background: #818cf8; }
+
+        @keyframes floatBlob {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(30px, 50px) scale(1.1); }
+        }
+
+        /* --- Estructura del Slider --- */
+        .slider-container {
+            position: relative;
+            height: 100%;
+            width: 100%;
+            touch-action: pan-y;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1); /* Easing suave */
+            transform: scale(0.92) translateY(20px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+            z-index: 0;
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1) translateY(0);
+            z-index: 1;
+        }
+
+        /* --- Diseño de Tarjetas (Glassmorphism Premium) --- */
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: clamp(2rem, 5vw, 4.5rem);
+            width: 95%; 
+            max-width: 1200px; 
+            max-height: 88vh; 
+            overflow-y: auto; 
+            box-shadow: var(--shadow-card);
+            text-align: center;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent) transparent;
+        }
+
+        .card::-webkit-scrollbar { width: 6px; }
+        .card::-webkit-scrollbar-track { background: transparent; }
+        .card::-webkit-scrollbar-thumb { background-color: rgba(255,255,255,0.1); border-radius: 20px; }
+
+        /* --- Tipografía --- */
+        h1 { 
+            font-size: clamp(2rem, 5vw, 4rem); 
+            font-weight: 800; 
+            background: linear-gradient(120deg, #e0f2fe, #38bdf8); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+            margin-bottom: 0.5rem; 
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+        }
+        h2 { 
+            font-size: clamp(1.5rem, 3.5vw, 3rem); 
+            color: var(--accent); 
+            margin-bottom: 1rem; 
+            line-height: 1.2;
+            font-weight: 600;
+        }
+        .subtitle {
+            font-size: clamp(0.9rem, 1.5vw, 1.2rem);
+            color: var(--text-secondary);
+            font-weight: 300;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 1rem;
+            display: inline-block;
+        }
+
+        p { 
+            font-size: clamp(1rem, 1.2vw, 1.25rem); 
+            color: var(--text-secondary); 
+            line-height: 1.7; 
+            margin-bottom: 1.5rem; 
+        }
+        
+        .technique-number {
+            font-size: clamp(4rem, 12vw, 12rem);
+            position: absolute;
+            top: -10px;
+            right: 20px;
+            opacity: 0.04;
+            font-weight: 900;
+            pointer-events: none;
+            line-height: 1;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* --- Elementos Educativos --- */
+        .content-section {
+            text-align: left;
+            margin-bottom: 1.5rem;
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        .content-label {
+            color: var(--text-main);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+        .content-label::before {
+            content: '';
+            display: block;
+            width: 4px;
+            height: 1.1rem;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .structure-box {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px dashed rgba(56, 189, 248, 0.3);
+            padding: 1.2rem;
+            border-radius: 12px;
+            font-family: 'Courier New', monospace;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .example-box {
+            background: linear-gradient(to right, rgba(56, 189, 248, 0.05), transparent);
+            border-left: 4px solid var(--accent);
+            padding: clamp(1rem, 2vw, 2rem);
+            text-align: left;
+            margin-top: 1rem;
+            border-radius: 0 16px 16px 0;
+            position: relative;
+        }
+        
+        .objective-tag {
+            display: inline-block;
+            background: rgba(56, 189, 248, 0.15);
+            color: var(--accent);
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* --- Controles --- */
+        .controls {
+            position: absolute;
+            bottom: 30px;
+            right: 40px;
+            display: flex;
+            gap: 15px;
+            z-index: 100;
+        }
+
+        .btn-nav {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid var(--glass-border);
+            color: white;
+            padding: 14px 28px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-weight: 600;
+            font-family: inherit;
+            font-size: clamp(0.9rem, 1.2vw, 1rem);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-nav:hover { 
+            background: var(--accent); 
+            color: #0f172a; 
+            box-shadow: 0 0 20px var(--accent-glow); 
+            transform: translateY(-3px);
+            border-color: var(--accent);
+        }
+
+        .progress-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 4px;
+            background: var(--accent);
+            width: 0%;
+            transition: width 0.5s ease-out;
+            z-index: 20;
+            box-shadow: 0 -2px 10px var(--accent);
+        }
+
+        /* --- Dinámicas (Quiz/Games) - DIFICULTAD AUMENTADA --- */
+        .quiz-container {
+            display: grid;
+            gap: 15px;
+            text-align: left;
+            margin-top: 1.5rem;
+            padding-bottom: 1rem;
+        }
+        
+        .scenario-text {
+            background: rgba(255,255,255,0.03);
+            padding: 1.5rem;
+            border-radius: 16px;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--glass-border);
+            font-size: clamp(1rem, 1.2vw, 1.3rem);
+            font-weight: 500;
+            color: #e2e8f0;
+        }
+
+        .quiz-btn {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 1.2rem;
+            border-radius: 12px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: left;
+            font-family: inherit;
+            font-size: 1rem;
+            position: relative;
+            overflow: hidden;
+            line-height: 1.5;
+        }
+        
+        .quiz-btn:hover:not(:disabled) { 
+            background: rgba(255,255,255,0.08); 
+            border-color: var(--accent); 
+            color: var(--text-main);
+            transform: translateX(5px);
+        }
+
+        .quiz-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+        
+        /* Semáforo Buttons */
+        .semaforo-grid {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+        .btn-semaforo {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            border: 4px solid rgba(255,255,255,0.1);
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            font-size: 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,255,0.05);
+        }
+        .btn-semaforo:hover { transform: scale(1.1); }
+        
+        .bg-red:hover { box-shadow: 0 0 30px rgba(239, 68, 68, 0.4); border-color: var(--error); }
+        .bg-yellow:hover { box-shadow: 0 0 30px rgba(245, 158, 11, 0.4); border-color: var(--warning); }
+        .bg-green:hover { box-shadow: 0 0 30px rgba(16, 185, 129, 0.4); border-color: var(--success); }
+
+        .feedback { 
+            margin-top: 20px; 
+            padding: 20px; 
+            border-radius: 12px; 
+            font-weight: 600; 
+            display: none; 
+            font-size: 1.1rem;
+            animation: fadeIn 0.3s ease;
+            text-align: left;
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .feedback.correct { 
+            background: rgba(16, 185, 129, 0.15); 
+            color: #34d399; 
+            border: 1px solid rgba(16, 185, 129, 0.3); 
+        }
+        .feedback.incorrect { 
+            background: rgba(239, 68, 68, 0.15); 
+            color: #fca5a5; 
+            border: 1px solid rgba(239, 68, 68, 0.3); 
+        }
+
+        /* Icon Grid */
+        .icon-grid {
+            display: flex; 
+            justify-content: space-around; 
+            margin-top: 3rem; 
+            flex-wrap: wrap; 
+            gap: 20px;
+        }
+        
+        .icon-card {
+            background: rgba(255,255,255,0.03); 
+            padding: 2rem; 
+            border-radius: 20px; 
+            width: clamp(140px, 22vw, 220px); 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid transparent;
+            transition: all 0.3s;
+        }
+        .icon-card:hover {
+            border-color: var(--glass-border);
+            background: rgba(255,255,255,0.06);
+            transform: translateY(-5px);
+        }
+        .icon-emoji { font-size: clamp(2.5rem, 6vw, 4.5rem); margin-bottom: 1rem; }
+
+        /* Teacher Info Box */
+        .info-box {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: rgba(0,0,0,0.2);
+            border-radius: 16px;
+            border: 1px solid var(--glass-border);
+            width: 100%;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .credits {
+            position: absolute;
+            bottom: 20px;
+            left: 30px;
+            font-size: 0.85rem;
+            opacity: 0.5;
+            z-index: 10;
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 480px) {
+            .card { padding: 1.5rem; width: 92%; max-height: 85dvh; }
+            .controls { 
+                right: 50%; transform: translateX(50%); bottom: 15px; 
+                width: 95%; justify-content: center;
+            }
+            .btn-nav { padding: 12px 20px; width: 45%; justify-content: center; }
+            .credits { display: none; } 
+            .technique-number { font-size: 4rem; top: 10px; right: 10px; opacity: 0.05;}
+            .icon-grid { gap: 10px; margin-top: 1.5rem;}
+            h1 { font-size: 2.2rem; }
+            .semaforo-grid { gap: 10px; }
+            .btn-semaforo { width: 60px; height: 60px; font-size: 1.5rem; }
+            .subtitle { font-size: 0.8rem; line-height: 1.4; }
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- Elementos decorativos de fondo -->
+    <div class="background-blob blob-1"></div>
+    <div class="background-blob blob-2"></div>
+
+    <div class="progress-bar" id="progressBar"></div>
+
+    <div class="slider-container" id="slider">
+        
+        <!-- SLIDE 1: Portada (Datos Actualizados) -->
+        <div class="slide active">
+            <div class="card">
+                <div style="font-size: clamp(3rem, 8vw, 6rem); margin-bottom: 1rem; filter: drop-shadow(0 0 20px rgba(56,189,248,0.4));">🎓</div>
+                <h1>Técnicas de Asertividad</h1>
+                <div class="subtitle">Habilidades Socioemocionales y Manejo de Conflictos</div>
+                
+                <div class="info-box">
+                    <p style="margin: 0; color: var(--accent); font-weight: 600;">Grupo 210-AE</p>
+                    <p style="margin: 0; font-size: 0.9rem;">Universidad Tecnológica de Gutiérrez Zamora</p>
+                    <div style="margin-top: 10px; padding-top: 10px; border-top: 1px dashed rgba(255,255,255,0.1);">
+                        <span style="font-size: 0.8rem; opacity: 0.7; text-transform: uppercase; letter-spacing: 1px;">Docente</span>
+                        <div style="font-weight: 600; font-size: 1.1rem; color: #fff;">Mtro. José López Tirzo</div>
+                    </div>
+                </div>
+
+                <p style="font-size: clamp(0.8rem, 1.2vw, 1rem); margin-top: 2rem; opacity: 0.6;">
+                    Desliza o usa las flechas ➡️ para comenzar
+                </p>
+            </div>
+        </div>
+
+        <!-- SLIDE 2: Definición -->
+        <div class="slide">
+            <div class="card">
+                <h2>El Espectro de la Comunicación</h2>
+                <div class="objective-tag">Objetivo: Encontrar el equilibrio saludable</div>
+                <p>La asertividad no es un rasgo de personalidad fijo, sino una <strong>habilidad entrenable</strong> que se ubica entre dos extremos no saludables.</p>
+                
+                <div class="icon-grid">
+                    <div class="icon-card">
+                        <div class="icon-emoji">🐢</div>
+                        <h4 style="color: var(--text-secondary);">Pasivo</h4>
+                        <span style="font-size: 0.85rem; margin-top: 5px;">Cede ante los demás.<br>"Yo no cuento."</span>
+                    </div>
+                    <div class="icon-card" style="background: rgba(56, 189, 248, 0.08); border: 1px solid var(--accent); transform: scale(1.05);">
+                        <div class="icon-emoji">⚖️</div>
+                        <h4 style="color: var(--accent);">Asertivo</h4>
+                        <span style="font-size: 0.85rem; margin-top: 5px;">Valora a ambos.<br>"Ambos contamos."</span>
+                    </div>
+                    <div class="icon-card">
+                        <div class="icon-emoji">🐅</div>
+                        <h4 style="color: var(--error);">Agresivo</h4>
+                        <span style="font-size: 0.85rem; margin-top: 5px;">Se impone al otro.<br>"Tú no cuentas."</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TÉCNICA 1 -->
+        <div class="slide">
+            <div class="card">
+                <div class="technique-number">01</div>
+                <h2>El Disco Rayado</h2>
+                <div class="objective-tag">Objetivo: Persistencia ante la presión</div>
+                
+                <div class="content-section">
+                    <span class="content-label">¿En qué consiste?</span>
+                    <p>Es la repetición serena de tu punto de vista sin dejarte desviar por las manipulaciones, ruegos o amenazas del otro. No entras en justificaciones, solo repites tu mensaje central.</p>
+                </div>
+
+                <div class="content-section">
+                    <span class="content-label">Estructura Clave:</span>
+                    <div class="structure-box">
+                        [Validación Breve] + PERO + [Repetición de la Negativa/Deseo]
+                    </div>
+                </div>
+
+                <div class="example-box">
+                    <h3>📢 Ejemplo: Rechazando una venta insistente</h3>
+                    <p><strong>Vendedor:</strong> "Si no firma hoy, perderá el descuento del 50%."</p>
+                    <p><strong>Tú:</strong> "Entiendo que es un gran descuento, <strong>pero no voy a comprar hoy</strong>."</p>
+                    <p><strong>Vendedor:</strong> "¿Acaso le gusta tirar el dinero?" (Intento de manipulación)</p>
+                    <p><strong>Tú:</strong> "Probablemente no, <strong>pero no voy a comprar hoy</strong>, gracias."</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- TÉCNICA 2 -->
+        <div class="slide">
+            <div class="card">
+                <div class="technique-number">02</div>
+                <h2>Banco de Niebla</h2>
+                <div class="objective-tag">Objetivo: Desarmar la crítica destructiva</div>
+                
+                <div class="content-section">
+                    <span class="content-label">¿En qué consiste?</span>
+                    <p>Consiste en estar de acuerdo con la parte de verdad que hay en la crítica del otro (los hechos), pero sin aceptar las etiquetas o juicios de valor. Es como la niebla: si le tiras una piedra, no rebota, la atraviesa sin hacer daño.</p>
+                </div>
+
+                <div class="content-section">
+                    <span class="content-label">Estructura Clave:</span>
+                    <div class="structure-box">
+                        "Es posible que..." / "Es cierto que..." [Solo el Hecho]
+                    </div>
+                </div>
+
+                <div class="example-box">
+                    <h3>🌫️ Ejemplo: Ataque personal en el trabajo</h3>
+                    <p><strong>Contexto:</strong> Entregaste un reporte con un error de cálculo.</p>
+                    <p><strong>Crítico:</strong> "¡Eres un incompetente, siempre te equivocas en los números!"</p>
+                    <p><strong>Tú:</strong> "Es cierto que hubo un error en este cálculo <em>(Verdad innegable)</em> y entiendo que cause problemas."</p>
+                    <p style="font-size:0.85rem; margin-top:0.5rem; opacity:0.8;">*Nota: No aceptaste ser "incompetente", solo el error específico.*</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- TÉCNICA 3 -->
+        <div class="slide">
+            <div class="card">
+                <div class="technique-number">03</div>
+                <h2>Aplazamiento Asertivo</h2>
+                <div class="objective-tag">Objetivo: Autocontrol y Prudencia</div>
+                
+                <div class="content-section">
+                    <span class="content-label">¿En qué consiste?</span>
+                    <p>Es la capacidad de posponer la respuesta para un momento en que tengas control total de tus emociones. Muy útil cuando sientes que la ira te va a hacer decir algo lamentable.</p>
+                </div>
+
+                <div class="content-section">
+                    <span class="content-label">Estructura Clave:</span>
+                    <div class="structure-box">
+                        [Reconocer Emoción] + [Pedir Tiempo Específico]
+                    </div>
+                </div>
+
+                <div class="example-box">
+                    <h3>⏸️ Ejemplo: Discusión escalada</h3>
+                    <p><strong>Pareja:</strong> "¡Siempre huyes! ¡Quiero que me contestes ahora mismo!"</p>
+                    <p><strong>Tú:</strong> "Me siento demasiado enojado en este momento y no quiero faltarte al respeto. <strong>Hablemos en una hora</strong>, cuando me haya calmado. Es importante para mí resolver esto bien."</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- TÉCNICA 4 -->
+        <div class="slide">
+            <div class="card">
+                <div class="technique-number">04</div>
+                <h2>Procesar el Cambio</h2>
+                <div class="objective-tag">Objetivo: Metacomunicación (Hablar de cómo se habla)</div>
+                
+                <div class="content-section">
+                    <span class="content-label">¿En qué consiste?</span>
+                    <p>Se utiliza cuando la conversación se estanca o el otro usa lenguaje no verbal agresivo (muecas, suspiros). Dejas de hablar del "contenido" para hablar del "proceso" o comportamiento actual.</p>
+                </div>
+
+                <div class="content-section">
+                    <span class="content-label">Estructura Clave:</span>
+                    <div class="structure-box">
+                        [Descripción objetiva del gesto/acción] + [Pregunta sobre su significado]
+                    </div>
+                </div>
+
+                <div class="example-box">
+                    <h3>🔍 Ejemplo: Comunicación pasivo-agresiva</h3>
+                    <p><strong>Situación:</strong> Tu interlocutor pone los ojos en blanco mientras hablas.</p>
+                    <p><strong>Tú:</strong> "Juan, llevamos un rato hablando del presupuesto, pero noto que cuando doy mi opinión pones los ojos en blanco. ¿Hay algo de mi propuesta que te molesta? Prefiero que me lo digas directamente."</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- TÉCNICA 5 -->
+        <div class="slide">
+            <div class="card">
+                <div class="technique-number">05</div>
+                <h2>Mensaje "Yo"</h2>
+                <div class="objective-tag">Objetivo: Expresar necesidades sin culpar</div>
+                
+                <div class="content-section">
+                    <span class="content-label">¿En qué consiste?</span>
+                    <p>Es la fórmula maestra de la asertividad. Permite expresar sentimientos negativos sin que la otra persona se sienta atacada, ya que hablas de TI, no de ÉL/ELLA.</p>
+                </div>
+
+                <div class="content-section">
+                    <span class="content-label">Estructura Clave:</span>
+                    <div class="structure-box">
+                        1. Cuando tú... (Hecho)<br>
+                        2. Yo me siento... (Sentimiento)<br>
+                        3. Porque... (Consecuencia real)<br>
+                        4. Me gustaría... (Petición concreta)
+                    </div>
+                </div>
+
+                <div class="example-box">
+                    <h3>👤 Ejemplo: Compañero impuntual en equipo</h3>
+                    <p><strong>Tú:</strong> "Ana, cuando no me envías tu parte del proyecto el viernes <em>(Hecho)</em>, yo me siento muy ansioso <em>(Sentimiento)</em> porque tengo que trabajar el fin de semana para que no nos reprueben <em>(Consecuencia)</em>. Te pido que la próxima vez lo envíes antes de las 5 PM <em>(Petición)</em>."</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- TÉCNICA 6 -->
+        <div class="slide">
+            <div class="card">
+                <div class="technique-number">06</div>
+                <h2>La Pregunta Asertiva</h2>
+                <div class="objective-tag">Objetivo: Convertir el ataque en información</div>
+                
+                <div class="content-section">
+                    <span class="content-label">¿En qué consiste?</span>
+                    <p>Ante críticas vagas o generalizadas ("todo lo haces mal"), en lugar de defenderte o contraatacar, interrogas al crítico para obligarlo a ser específico y racional.</p>
+                </div>
+
+                <div class="content-section">
+                    <span class="content-label">Estructura Clave:</span>
+                    <div class="structure-box">
+                        [Aceptar malestar del otro] + [Pregunta: ¿Qué Específicamente?]
+                    </div>
+                </div>
+
+                <div class="example-box">
+                    <h3>❓ Ejemplo: Crítica vaga del jefe</h3>
+                    <p><strong>Jefe:</strong> "Tu actitud últimamente deja mucho que desear."</p>
+                    <p><strong>Tú:</strong> "Entiendo que no esté satisfecho. Para poder corregirlo, ¿podría decirme <strong>qué comportamiento específico</strong> he tenido que le ha parecido inadecuado?"</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- TÉCNICA 7 -->
+        <div class="slide">
+            <div class="card">
+                <div class="technique-number">07</div>
+                <h2>Acuerdo Viable</h2>
+                <div class="objective-tag">Objetivo: Negociación Ganar-Ganar</div>
+                
+                <div class="content-section">
+                    <span class="content-label">¿En qué consiste?</span>
+                    <p>Cuando las posturas son irreconciliables y ambos tienen derechos válidos, se busca una tercera vía. Se cede en el terreno material, pero nunca en el respeto propio.</p>
+                </div>
+
+                <div class="content-section">
+                    <span class="content-label">Estructura Clave:</span>
+                    <div class="structure-box">
+                        [Validar necesidad ajena] + [Validar propia] + [Propuesta intermedia]
+                    </div>
+                </div>
+
+                <div class="example-box">
+                    <h3>🤝 Ejemplo: Conflicto de recursos</h3>
+                    <p><strong>Situación:</strong> Ambos necesitan el proyector a la misma hora.</p>
+                    <p><strong>Tú:</strong> "Entiendo que tu clase es importante, pero la mía también. ¿Qué tal si tú usas el proyector los primeros 30 minutos para tu presentación y luego me lo pasas para mis videos? Así ambos cubrimos lo esencial."</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- DINÁMICA 1: SEMÁFORO (Difícil) -->
+        <div class="slide">
+            <div class="card">
+                <h2 style="color:var(--text-main)">Dinámica 1: El Semáforo 🚦</h2>
+                <p><strong>Reto:</strong> Clasifica la siguiente frase. ¡Cuidado! Algunas parecen educadas pero esconden agresividad o pasividad.</p>
+                
+                <div class="scenario-text" id="semaforo-text">
+                    <!-- JS carga el texto aquí -->
+                </div>
+
+                <div class="semaforo-grid">
+                    <button class="btn-semaforo bg-red" onclick="checkSemaforo('agresivo')" title="Agresivo">😡</button>
+                    <button class="btn-semaforo bg-yellow" onclick="checkSemaforo('pasivo')" title="Pasivo">🤐</button>
+                    <button class="btn-semaforo bg-green" onclick="checkSemaforo('asertivo')" title="Asertivo">😌</button>
+                </div>
+
+                <div id="feedback-semaforo" class="feedback"></div>
+                <button class="btn-nav" style="margin-top:20px; display:none; margin-left: auto; margin-right: auto;" id="btn-next-semaforo" onclick="nextSemaforo()">Siguiente ➡️</button>
+            </div>
+        </div>
+
+        <!-- DINÁMICA 2: TRADUCTOR (Sin pistas obvias) -->
+        <div class="slide">
+            <div class="card">
+                <h2 style="color:var(--text-main)">Dinámica 2: El Traductor 🔄</h2>
+                <p><strong>Reto Avanzado:</strong> Tu compañero no ha trabajado. Tienes un pensamiento agresivo. Elige la única opción que cumple con la estructura real del <strong>Mensaje "Yo"</strong>.</p>
+                
+                <div class="scenario-text">
+                    <strong>Pensamiento:</strong> "¡Es un parásito, si no le digo nada no hace nada, estoy harto!"
+                </div>
+
+                <div class="quiz-container">
+                    <button class="quiz-btn" onclick="checkTraductor(this, 'pasivo')">
+                        A) "Oye, no te preocupes si no puedes terminar, pásamelo y yo lo hago rápido hoy en la noche."
+                    </button>
+                    <button class="quiz-btn" onclick="checkTraductor(this, 'agresivo')">
+                        B) "¿Te parece bonito dejarme todo el trabajo a mí? A ver si para la próxima te dignas a colaborar."
+                    </button>
+                    <button class="quiz-btn" onclick="checkTraductor(this, 'asertivo')">
+                        C) "He notado que falta tu parte del informe. Me siento preocupado porque esto retrasa nuestra entrega final. ¿Podrías enviarlo hoy?"
+                    </button>
+                </div>
+                <div id="feedback-traductor" class="feedback"></div>
+            </div>
+        </div>
+
+        <!-- DINÁMICA 3: SIMULADOR (Sin etiquetas) -->
+        <div class="slide">
+            <div class="card">
+                <h2 style="color:var(--text-main)">Dinámica 3: Simulador Real 🎭</h2>
+                <p><strong>Situación:</strong> Estás en un restaurante. El mesero te trae un plato que no pediste y está frío. ¿Cuál es la reacción asertiva?</p>
+
+                <div class="quiz-container">
+                    <button class="quiz-btn" onclick="checkSimulator(this, 'pasivo')">
+                        A) Te lo comes en silencio, pensando: "Mejor no molesto, seguro están muy ocupados hoy".
+                    </button>
+                    <button class="quiz-btn" onclick="checkSimulator(this, 'agresivo')">
+                        B) Le dices en voz alta: "¡Oye! ¿Es que no anotaste bien? ¡Esto está helado! ¡Lléveselo!"
+                    </button>
+                    <button class="quiz-btn" onclick="checkSimulator(this, 'asertivo')">
+                        C) Le llamas y dices: "Disculpa, creo que hubo una confusión. Pedí la pasta, no la ensalada. ¿Me lo podrías cambiar, por favor?"
+                    </button>
+                </div>
+
+                <div id="feedback-simulator" class="feedback"></div>
+            </div>
+        </div>
+        
+        <!-- SLIDE FINAL -->
+        <div class="slide">
+            <div class="card">
+                <h1 style="font-size: clamp(1.8rem, 4vw, 3rem);">¡Muchas Gracias por su Atención!</h1>
+                
+                <div style="margin: 1.5rem 0; padding: 1rem; background: rgba(56, 189, 248, 0.05); border-left: 4px solid var(--accent); border-radius: 8px; text-align: left;">
+                    <h3 style="color: var(--accent); font-size: 1.1rem; margin-bottom: 0.5rem;">Conclusión</h3>
+                    <p style="margin: 0; font-size: 0.95rem;">
+                        La asertividad es la herramienta fundamental para construir relaciones sanas y resolver conflictos de manera efectiva. Al equilibrar el respeto por uno mismo con el respeto por los demás, creamos un entorno de comunicación honesta y constructiva. ¡Practícala diariamente!
+                    </p>
+                </div>
+
+                <div class="info-box" style="margin-top: 1rem; text-align: left;">
+                    <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.5rem; text-align: center;">Elaborado por:</p>
+                    <p style="color: var(--text-main); font-weight: 600; font-size: 1.1rem; margin-bottom: 1.5rem; text-align: center;">Ismael Olivares Hernández</p>
+                    
+                    <div style="border-top: 1px solid var(--glass-border); padding-top: 1rem;">
+                        <p style="color: var(--accent); font-size: 0.9rem; margin-bottom: 0.5rem; font-weight: 600;">Integrantes del Equipo:</p>
+                        <ul style="list-style: none; font-size: 0.85rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 8px; color: var(--text-secondary);">
+                            <li>• Ismael Olivares Hernández</li>
+                            <li>• Oscar Yamir Olarte Bermudez</li>
+                            <li>• Jesús Orestes Fernández Hernández</li>
+                            <li>• Sandor Emmanuel Perez Perez</li>
+                            <li>• Carlos Giovanni Morales Mendez</li>
+                            <li>• Gael Ramires Perez</li>
+                            <li>• Esmeralda Nuñez Malpica</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px dashed rgba(255,255,255,0.1); text-align: center;">
+                        <span style="font-size: 0.8rem; opacity: 0.7; text-transform: uppercase;">Docente</span>
+                        <div style="font-weight: 600; font-size: 1rem; color: #fff;">Mtro. José López Tirzo</div>
+                    </div>
+                </div>
+
+                <button class="btn-nav" onclick="resetSlides()" style="margin: 2rem auto 0;">
+                    <span>🔄 Reiniciar</span>
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Controles Flotantes -->
+    <div class="controls">
+        <button class="btn-nav" onclick="prevSlide()">❮</button>
+        <button class="btn-nav" onclick="nextSlide()">❯</button>
+    </div>
+
+    <div class="credits">UTGZ 210-AE © 2026</div>
+
+    <script>
+        // --- Lógica del Slider ---
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const progressBar = document.getElementById('progressBar');
+
+        function updateSlide() {
+            slides.forEach((slide, index) => {
+                slide.classList.remove('active');
+                if (index === currentSlide) {
+                    slide.classList.add('active');
+                }
+            });
+            const progress = ((currentSlide + 1) / slides.length) * 100;
+            progressBar.style.width = `${progress}%`;
+        }
+
+        function nextSlide() {
+            if (currentSlide < slides.length - 1) {
+                currentSlide++;
+                updateSlide();
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateSlide();
+            }
+        }
+
+        function resetSlides() {
+            currentSlide = 0;
+            updateSlide();
+            // Resetear dinámicas
+            document.querySelectorAll('.feedback').forEach(f => f.style.display = 'none');
+            document.querySelectorAll('.quiz-btn').forEach(b => {
+                b.disabled = false;
+                b.style.background = 'rgba(255,255,255,0.03)';
+                b.style.borderColor = 'rgba(255,255,255,0.1)';
+                b.style.color = 'var(--text-secondary)';
+            });
+            // Reset semáforo
+            semaforoIndex = 0;
+            loadSemaforo();
+            document.getElementById('btn-next-semaforo').style.display = 'none';
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+        });
+
+        // Swipe support
+        let touchStartX = 0;
+        const slider = document.getElementById('slider');
+        slider.addEventListener('touchstart', e => touchStartX = e.changedTouches[0].screenX);
+        slider.addEventListener('touchend', e => {
+            if (e.changedTouches[0].screenX < touchStartX - 50) nextSlide();
+            if (e.changedTouches[0].screenX > touchStartX + 50) prevSlide();
+        });
+
+        // --- DINÁMICA 1: SEMÁFORO (Frases más ambiguas/difíciles) ---
+        const semaforoPhrases = [
+            { 
+                text: '"Lo que tú digas está bien, no quiero problemas."', 
+                type: 'pasivo',
+                hint: 'Evita el conflicto anulando su propia opinión.'
+            },
+            { 
+                text: '"Claro que lo haré, pero me parece ridículo que me lo pidas a mí."', 
+                type: 'agresivo',
+                hint: 'Acepta hacerlo, pero usa la culpa y el ataque (Agresividad pasiva).'
+            },
+            { 
+                text: '"No estoy de acuerdo con esa idea, prefiero que lo hagamos de esta otra forma."', 
+                type: 'asertivo',
+                hint: 'Expresa desacuerdo claramente sin atacar a la persona.'
+            }
+        ];
+        let semaforoIndex = 0;
+
+        function loadSemaforo() {
+            if (semaforoIndex < semaforoPhrases.length) {
+                document.getElementById('semaforo-text').textContent = semaforoPhrases[semaforoIndex].text;
+                document.getElementById('feedback-semaforo').style.display = 'none';
+                // Reset semaforo borders
+                document.querySelectorAll('.btn-semaforo').forEach(btn => btn.style.transform = "scale(1)");
+            } else {
+                document.getElementById('semaforo-text').textContent = "¡Nivel completado!";
+                document.getElementById('btn-next-semaforo').style.display = 'none';
+            }
+        }
+
+        function checkSemaforo(selectedType) {
+            const currentPhrase = semaforoPhrases[semaforoIndex];
+            const feedback = document.getElementById('feedback-semaforo');
+            const btnNext = document.getElementById('btn-next-semaforo');
+
+            if (selectedType === currentPhrase.type) {
+                feedback.innerHTML = `¡Correcto! <br><span style="font-weight:400; font-size:0.9em">${currentPhrase.hint}</span>`;
+                feedback.className = "feedback correct";
+                feedback.style.display = 'block';
+                btnNext.style.display = 'block'; // Usar block para centrar con margin auto
+            } else {
+                feedback.textContent = "Incorrecto. Analiza bien: ¿Cede? ¿Ataca? ¿O propone?";
+                feedback.className = "feedback incorrect";
+                feedback.style.display = 'block';
+            }
+        }
+
+        function nextSemaforo() {
+            semaforoIndex++;
+            if(semaforoIndex < semaforoPhrases.length){
+                loadSemaforo();
+            } else {
+                 document.getElementById('semaforo-text').textContent = "¡Excelente! Has dominado la identificación de estilos.";
+                 document.getElementById('feedback-semaforo').style.display = 'none';
+                 document.getElementById('btn-next-semaforo').style.display = 'none';
+            }
+        }
+
+        // --- DINÁMICA 2: TRADUCTOR (Lógica mejorada) ---
+        function checkTraductor(btn, type) {
+            const feedback = document.getElementById('feedback-traductor');
+            
+            if (type === 'asertivo') {
+                applyStyle(btn, 'correct');
+                feedback.innerHTML = "¡Exacto! <br>No atacaste a la persona, hablaste del problema, cómo te afecta y diste una solución.";
+                feedback.className = "feedback correct";
+                disableSiblings(btn);
+            } else if (type === 'pasivo') {
+                applyStyle(btn, 'incorrect');
+                feedback.textContent = "Eso es Pasivo. Asumes una carga que no te corresponde y validas la irresponsabilidad del otro.";
+                feedback.className = "feedback incorrect";
+            } else {
+                applyStyle(btn, 'incorrect');
+                feedback.textContent = "Eso es Agresivo. Usas sarcasmo y culpa, lo que generará una pelea defensiva.";
+                feedback.className = "feedback incorrect";
+            }
+            feedback.style.display = 'block';
+        }
+
+        // --- DINÁMICA 3: SIMULADOR ---
+        function checkSimulator(btn, type) {
+            const feedback = document.getElementById('feedback-simulator');
+            
+            if (type === 'asertivo') {
+                applyStyle(btn, 'correct');
+                feedback.textContent = "¡Correcto! Ejerces tu derecho como cliente manteniendo la educación.";
+                feedback.className = "feedback correct";
+                disableSiblings(btn);
+            } else if (type === 'pasivo') {
+                applyStyle(btn, 'incorrect');
+                feedback.textContent = "Incorrecto. Al no decir nada, acumulas frustración y no recibes lo justo.";
+                feedback.className = "feedback incorrect";
+            } else {
+                applyStyle(btn, 'incorrect');
+                feedback.textContent = "Incorrecto. Gritar solo hará que el mesero se ponga a la defensiva o te atienda peor.";
+                feedback.className = "feedback incorrect";
+            }
+            feedback.style.display = 'block';
+        }
+
+        // --- Helpers ---
+        function applyStyle(btn, status) {
+            if (status === 'correct') {
+                btn.style.background = 'rgba(16, 185, 129, 0.2)';
+                btn.style.borderColor = 'var(--success)';
+                btn.style.color = '#fff';
+            } else {
+                btn.style.background = 'rgba(239, 68, 68, 0.2)';
+                btn.style.borderColor = 'var(--error)';
+                btn.style.color = '#fff';
+                btn.disabled = true;
+            }
+        }
+
+        function disableSiblings(btn) {
+            let parent = btn.parentNode;
+            let siblings = parent.getElementsByTagName('button');
+            for(let i=0; i<siblings.length; i++) siblings[i].disabled = true;
+        }
+
+        // Init
+        updateSlide();
+        loadSemaforo(); 
+    </script>
+</body>
+</html>
