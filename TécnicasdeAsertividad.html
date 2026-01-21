@@ -527,7 +527,87 @@
             
             /* Ajuste del video en móvil (aún más chico) */
             #floating-player { width: 120px; right: 10px !important; bottom: 70px !important; }
+            
         }
+        /* --- Estilos para la Bibliografía --- */
+        .bib-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+            width: 100%;
+            margin-top: 1rem;
+            text-align: left;
+        }
+
+        .bib-item {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 1.2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bib-item:hover {
+            background: rgba(255, 255, 255, 0.07);
+            border-color: var(--accent);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
+        }
+
+        .bib-item::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 4px; height: 100%;
+            background: var(--text-secondary);
+            opacity: 0.3;
+            transition: 0.3s;
+        }
+        
+        .bib-item:hover::before {
+            background: var(--accent);
+            opacity: 1;
+        }
+
+        .bib-author {
+            color: var(--text-main);
+            font-weight: 700;
+            font-size: 1rem;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .bib-title {
+            color: var(--accent);
+            font-style: italic;
+            font-size: 0.95rem;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .bib-meta {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .bib-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(16, 185, 129, 0.1); /* Green tint default */
+            color: #34d399;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .tag-blue { background: rgba(56, 189, 248, 0.1); color: var(--accent); border-color: rgba(56, 189, 248, 0.2); }
+        .tag-orange { background: rgba(245, 158, 11, 0.1); color: var(--warning); border-color: rgba(245, 158, 11, 0.2); }
     </style>
 </head>
 <body>
@@ -853,7 +933,66 @@
                 <div id="feedback-simulator" class="feedback"></div>
             </div>
         </div>
-        
+        <div class="slide">
+            <div class="card">
+                <div class="technique-number" style="font-size: 8rem; right: 10px; opacity: 0.03;">📚</div>
+                <h2>Bibliografía y Referencias</h2>
+                <div class="subtitle">Fuentes Académicas y Origen de las Técnicas</div>
+                
+                <p style="font-size: 0.9rem; margin-bottom: 1rem;">
+                    Las técnicas presentadas se basan en la psicología conductual y modelos de comunicación asertiva validados académicamente.
+                </p>
+
+                <div class="bib-grid">
+                    
+                    <div class="bib-item">
+                        <span class="bib-author">Smith, M. J. (1975)</span>
+                        <span class="bib-title">When I say no, I feel guilty</span>
+                        <span class="bib-meta">Bantam Books.</span>
+                        <div class="bib-tag tag-blue">
+                            💿 Origen: Disco Rayado
+                        </div>
+                    </div>
+
+                    <div class="bib-item">
+                        <span class="bib-author">Caballo, V. E. (2007)</span>
+                        <span class="bib-title">Manual de evaluación y entrenamiento de las habilidades sociales</span>
+                        <span class="bib-meta">Siglo XXI Editores.</span>
+                        <div class="bib-tag tag-orange">
+                            📊 El Espectro Asertivo
+                        </div>
+                    </div>
+
+                    <div class="bib-item">
+                        <span class="bib-author">Gordon, T. (1970)</span>
+                        <span class="bib-title">Parent Effectiveness Training (P.E.T.)</span>
+                        <span class="bib-meta">Wyden Books.</span>
+                        <div class="bib-tag">
+                            🗣️ Origen: Mensajes "Yo"
+                        </div>
+                    </div>
+
+                    <div class="bib-item">
+                        <span class="bib-author">Castanyer, O. (2014)</span>
+                        <span class="bib-title">La asertividad: expresión de una sana autoestima</span>
+                        <span class="bib-meta">Desclée de Brouwer.</span>
+                        <div class="bib-tag tag-blue">
+                            🛡️ Banco de Niebla
+                        </div>
+                    </div>
+
+                    <div class="bib-item">
+                        <span class="bib-author">Rosenberg, M. B. (2015)</span>
+                        <span class="bib-title">Comunicación no violenta: un lenguaje de vida</span>
+                        <span class="bib-meta">Editorial Piatkus.</span>
+                        <div class="bib-tag tag-orange">
+                            🤝 Empatía y Necesidades
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
         <div class="slide">
             <div class="card">
                 <h1 style="font-size: clamp(1.8rem, 4vw, 3rem);">¡Muchas Gracias por su Atención!</h1>
