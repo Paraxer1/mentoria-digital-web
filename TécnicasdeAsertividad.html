@@ -9,7 +9,7 @@
         :root {
             /* Paleta de colores Premium Dark Theme */
             --bg-gradient: radial-gradient(circle at top right, #1e293b 0%, #0f172a 100%);
-            --glass-bg: rgba(30, 41, 59, 0.7); /* Más oscuro y elegante */
+            --glass-bg: rgba(30, 41, 59, 0.75); 
             --glass-border: rgba(255, 255, 255, 0.08);
             --accent: #38bdf8; /* Sky Blue */
             --accent-glow: rgba(56, 189, 248, 0.3);
@@ -68,7 +68,7 @@
             height: 100%;
             opacity: 0;
             visibility: hidden;
-            transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1); /* Easing suave */
+            transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
             transform: scale(0.92) translateY(20px);
             display: flex;
             flex-direction: column;
@@ -85,7 +85,7 @@
             z-index: 1;
         }
 
-        /* --- Diseño de Tarjetas (Glassmorphism Premium) --- */
+        /* --- Diseño de Tarjetas --- */
         .card {
             background: var(--glass-bg);
             backdrop-filter: blur(20px);
@@ -109,6 +109,100 @@
         .card::-webkit-scrollbar { width: 6px; }
         .card::-webkit-scrollbar-track { background: transparent; }
         .card::-webkit-scrollbar-thumb { background-color: rgba(255,255,255,0.1); border-radius: 20px; }
+
+        /* --- VIDEO FLOTANTE CONFIGURADO (MUY CHICO Y QUIETO) --- */
+        #floating-player {
+            position: absolute;
+            width: 140px; /* TAMAÑO REDUCIDO */
+            height: auto;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--accent);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            z-index: 50; 
+            background: #000;
+            cursor: pointer; 
+            
+            /* Estado Inicial: Invisible */
+            opacity: 0;
+            pointer-events: none;
+            
+            /* Posición Fija (Bottom-Right) */
+            bottom: 25px;
+            right: 25px;
+            
+            /* Transición suave para opacidad */
+            transition: opacity 0.5s ease;
+        }
+
+        /* Clase Activa: Visible y Transparente (SIN ANIMACION DE MOVIMIENTO) */
+        .video-active {
+            opacity: 0.85 !important; /* TRANSPARENCIA ESTETICA */
+            pointer-events: auto !important;
+        }
+
+        /* Clase Pausa: Solo afecta la opacidad y el borde */
+        .animation-paused {
+            opacity: 1 !important; /* Al pausar se vuelve sólido */
+            border-color: var(--warning);
+        }
+
+        video { width: 100%; display: block; }
+
+        /* Overlay de Pausa (Icono) */
+        .pause-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            display: flex;
+            align-items: center; justify-content: center;
+            background: rgba(0,0,0,0.4);
+            font-size: 2rem; /* Icono más chico por el tamaño del video */
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+        .animation-paused .pause-overlay { opacity: 1; }
+
+        /* Botón cerrar "X" pequeño */
+        .btn-close-video {
+            position: absolute;
+            top: 5px; right: 5px;
+            width: 20px; height: 20px;
+            background: rgba(239, 68, 68, 0.8);
+            color: white;
+            border-radius: 50%;
+            font-size: 12px;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer;
+            z-index: 60;
+            border: none;
+        }
+
+        /* Botón Play Principal */
+        .btn-simple-play {
+            background: var(--accent);
+            color: #0f172a;
+            border: none;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            margin: 20px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 20px var(--accent-glow);
+            transition: transform 0.2s;
+            animation: pulseSimple 2s infinite;
+        }
+        .btn-simple-play:hover { transform: scale(1.1); }
+
+        @keyframes pulseSimple {
+            0% { box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(56, 189, 248, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(56, 189, 248, 0); }
+        }
+
 
         /* --- Tipografía --- */
         h1 { 
@@ -268,7 +362,7 @@
             box-shadow: 0 -2px 10px var(--accent);
         }
 
-        /* --- Dinámicas (Quiz/Games) - DIFICULTAD AUMENTADA --- */
+        /* --- Dinámicas --- */
         .quiz-container {
             display: grid;
             gap: 15px;
@@ -430,12 +524,14 @@
             .semaforo-grid { gap: 10px; }
             .btn-semaforo { width: 60px; height: 60px; font-size: 1.5rem; }
             .subtitle { font-size: 0.8rem; line-height: 1.4; }
+            
+            /* Ajuste del video en móvil (aún más chico) */
+            #floating-player { width: 120px; right: 10px !important; bottom: 70px !important; }
         }
     </style>
 </head>
 <body>
     
-    <!-- Elementos decorativos de fondo -->
     <div class="background-blob blob-1"></div>
     <div class="background-blob blob-2"></div>
 
@@ -443,9 +539,20 @@
 
     <div class="slider-container" id="slider">
         
-        <!-- SLIDE 1: Portada (Datos Actualizados) -->
         <div class="slide active">
-            <div class="card">
+            <div class="card" style="position: relative;">
+                
+                <div id="floating-player" onclick="togglePauseVideo()">
+                    <button class="btn-close-video" onclick="event.stopPropagation(); stopVideo();">✕</button>
+                    
+                    <div class="pause-overlay">⏸️</div>
+
+                    <video id="intro-video" playsinline>
+                        <source src="video.mp4" type="video/mp4">
+                        Tu navegador no soporta video.
+                    </video>
+                </div>
+
                 <div style="font-size: clamp(3rem, 8vw, 6rem); margin-bottom: 1rem; filter: drop-shadow(0 0 20px rgba(56,189,248,0.4));">🎓</div>
                 <h1>Técnicas de Asertividad</h1>
                 <div class="subtitle">Habilidades Socioemocionales y Manejo de Conflictos</div>
@@ -459,13 +566,16 @@
                     </div>
                 </div>
 
+                <button class="btn-simple-play" onclick="activateVideo()" title="Reproducir Presentación">
+                    ▶️
+                </button>
+
                 <p style="font-size: clamp(0.8rem, 1.2vw, 1rem); margin-top: 2rem; opacity: 0.6;">
                     Desliza o usa las flechas ➡️ para comenzar
                 </p>
             </div>
         </div>
 
-        <!-- SLIDE 2: Definición -->
         <div class="slide">
             <div class="card">
                 <h2>El Espectro de la Comunicación</h2>
@@ -492,7 +602,6 @@
             </div>
         </div>
 
-        <!-- TÉCNICA 1 -->
         <div class="slide">
             <div class="card">
                 <div class="technique-number">01</div>
@@ -521,7 +630,6 @@
             </div>
         </div>
 
-        <!-- TÉCNICA 2 -->
         <div class="slide">
             <div class="card">
                 <div class="technique-number">02</div>
@@ -550,7 +658,6 @@
             </div>
         </div>
 
-        <!-- TÉCNICA 3 -->
         <div class="slide">
             <div class="card">
                 <div class="technique-number">03</div>
@@ -577,7 +684,6 @@
             </div>
         </div>
 
-        <!-- TÉCNICA 4 -->
         <div class="slide">
             <div class="card">
                 <div class="technique-number">04</div>
@@ -604,7 +710,6 @@
             </div>
         </div>
 
-        <!-- TÉCNICA 5 -->
         <div class="slide">
             <div class="card">
                 <div class="technique-number">05</div>
@@ -633,7 +738,6 @@
             </div>
         </div>
 
-        <!-- TÉCNICA 6 -->
         <div class="slide">
             <div class="card">
                 <div class="technique-number">06</div>
@@ -660,7 +764,6 @@
             </div>
         </div>
 
-        <!-- TÉCNICA 7 -->
         <div class="slide">
             <div class="card">
                 <div class="technique-number">07</div>
@@ -687,15 +790,13 @@
             </div>
         </div>
 
-        <!-- DINÁMICA 1: SEMÁFORO (Difícil) -->
         <div class="slide">
             <div class="card">
                 <h2 style="color:var(--text-main)">Dinámica 1: El Semáforo 🚦</h2>
                 <p><strong>Reto:</strong> Clasifica la siguiente frase. ¡Cuidado! Algunas parecen educadas pero esconden agresividad o pasividad.</p>
                 
                 <div class="scenario-text" id="semaforo-text">
-                    <!-- JS carga el texto aquí -->
-                </div>
+                    </div>
 
                 <div class="semaforo-grid">
                     <button class="btn-semaforo bg-red" onclick="checkSemaforo('agresivo')" title="Agresivo">😡</button>
@@ -708,7 +809,6 @@
             </div>
         </div>
 
-        <!-- DINÁMICA 2: TRADUCTOR (Sin pistas obvias) -->
         <div class="slide">
             <div class="card">
                 <h2 style="color:var(--text-main)">Dinámica 2: El Traductor 🔄</h2>
@@ -733,7 +833,6 @@
             </div>
         </div>
 
-        <!-- DINÁMICA 3: SIMULADOR (Sin etiquetas) -->
         <div class="slide">
             <div class="card">
                 <h2 style="color:var(--text-main)">Dinámica 3: Simulador Real 🎭</h2>
@@ -755,7 +854,6 @@
             </div>
         </div>
         
-        <!-- SLIDE FINAL -->
         <div class="slide">
             <div class="card">
                 <h1 style="font-size: clamp(1.8rem, 4vw, 3rem);">¡Muchas Gracias por su Atención!</h1>
@@ -798,7 +896,6 @@
 
     </div>
 
-    <!-- Controles Flotantes -->
     <div class="controls">
         <button class="btn-nav" onclick="prevSlide()">❮</button>
         <button class="btn-nav" onclick="nextSlide()">❯</button>
@@ -811,8 +908,14 @@
         let currentSlide = 0;
         const slides = document.querySelectorAll('.slide');
         const progressBar = document.getElementById('progressBar');
+        const introVideo = document.getElementById('intro-video');
 
         function updateSlide() {
+            // Seguridad: Si cambias de diapositiva, se para el video
+            if(currentSlide !== 0 && !introVideo.paused) {
+                stopVideo();
+            }
+
             slides.forEach((slide, index) => {
                 slide.classList.remove('active');
                 if (index === currentSlide) {
@@ -854,6 +957,51 @@
             document.getElementById('btn-next-semaforo').style.display = 'none';
         }
 
+        // --- Lógica del Video Flotante ---
+        function activateVideo() {
+            const container = document.getElementById('floating-player');
+            const btn = document.querySelector('.btn-simple-play');
+            
+            // Hacer visible y transparente
+            container.classList.add('video-active');
+            container.classList.remove('animation-paused'); 
+            
+            // Ocultar botón de play
+            btn.style.display = 'none';
+
+            // Reproducir
+            introVideo.play();
+
+            // Al terminar, volver a esconder
+            introVideo.onended = function() {
+               stopVideo();
+            };
+        }
+
+        function stopVideo() {
+            const container = document.getElementById('floating-player');
+            const btn = document.querySelector('.btn-simple-play');
+            
+            introVideo.pause();
+            introVideo.currentTime = 0; // Resetear
+            
+            container.classList.remove('video-active'); // Se vuelve invisible
+            container.classList.remove('animation-paused'); 
+            btn.style.display = 'flex'; // Vuelve el botón
+        }
+
+        function togglePauseVideo() {
+            const container = document.getElementById('floating-player');
+            
+            if (introVideo.paused) {
+                introVideo.play();
+                container.classList.remove('animation-paused'); // Quitar solidez
+            } else {
+                introVideo.pause();
+                container.classList.add('animation-paused'); // Poner sólido para ver mejor en pausa
+            }
+        }
+
         document.addEventListener('keydown', (e) => {
             if (e.key === 'ArrowRight') nextSlide();
             if (e.key === 'ArrowLeft') prevSlide();
@@ -868,7 +1016,7 @@
             if (e.changedTouches[0].screenX > touchStartX + 50) prevSlide();
         });
 
-        // --- DINÁMICA 1: SEMÁFORO (Frases más ambiguas/difíciles) ---
+        // --- DINÁMICA 1: SEMÁFORO ---
         const semaforoPhrases = [
             { 
                 text: '"Lo que tú digas está bien, no quiero problemas."', 
@@ -892,7 +1040,6 @@
             if (semaforoIndex < semaforoPhrases.length) {
                 document.getElementById('semaforo-text').textContent = semaforoPhrases[semaforoIndex].text;
                 document.getElementById('feedback-semaforo').style.display = 'none';
-                // Reset semaforo borders
                 document.querySelectorAll('.btn-semaforo').forEach(btn => btn.style.transform = "scale(1)");
             } else {
                 document.getElementById('semaforo-text').textContent = "¡Nivel completado!";
@@ -909,7 +1056,7 @@
                 feedback.innerHTML = `¡Correcto! <br><span style="font-weight:400; font-size:0.9em">${currentPhrase.hint}</span>`;
                 feedback.className = "feedback correct";
                 feedback.style.display = 'block';
-                btnNext.style.display = 'block'; // Usar block para centrar con margin auto
+                btnNext.style.display = 'block'; 
             } else {
                 feedback.textContent = "Incorrecto. Analiza bien: ¿Cede? ¿Ataca? ¿O propone?";
                 feedback.className = "feedback incorrect";
@@ -928,7 +1075,7 @@
             }
         }
 
-        // --- DINÁMICA 2: TRADUCTOR (Lógica mejorada) ---
+        // --- DINÁMICA 2: TRADUCTOR ---
         function checkTraductor(btn, type) {
             const feedback = document.getElementById('feedback-traductor');
             
