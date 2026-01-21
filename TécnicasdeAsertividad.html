@@ -154,7 +154,8 @@
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
             display: flex;
-            align-items: center; justify-content: center;
+            align-items: center;
+            justify-content: center;
             background: rgba(0,0,0,0.4);
             font-size: 2rem; /* Icono más chico por el tamaño del video */
             opacity: 0;
@@ -484,6 +485,35 @@
         }
         .icon-emoji { font-size: clamp(2.5rem, 6vw, 4.5rem); margin-bottom: 1rem; }
 
+        /* Estilos NUEVOS para la Dinámica 3 (Caja de Herramientas) */
+        .tool-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .tool-btn {
+            background: rgba(56, 189, 248, 0.05);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            color: var(--accent);
+            padding: 1.5rem;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 600;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+        .tool-btn:hover:not(:disabled) {
+            background: var(--accent);
+            color: #0f172a;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px -5px rgba(56,189,248,0.4);
+        }
+        .tool-icon { font-size: 2rem; }
+
         /* Teacher Info Box */
         .info-box {
             display: flex;
@@ -524,6 +554,7 @@
             .semaforo-grid { gap: 10px; }
             .btn-semaforo { width: 60px; height: 60px; font-size: 1.5rem; }
             .subtitle { font-size: 0.8rem; line-height: 1.4; }
+            .tool-grid { grid-template-columns: 1fr; }
             
             /* Ajuste del video en móvil (aún más chico) */
             #floating-player { width: 120px; right: 10px !important; bottom: 70px !important; }
@@ -915,24 +946,20 @@
 
         <div class="slide">
             <div class="card">
-                <h2 style="color:var(--text-main)">Dinámica 3: Simulador Real 🎭</h2>
-                <p><strong>Situación:</strong> Estás en un restaurante. El mesero te trae un plato que no pediste y está frío. ¿Cuál es la reacción asertiva?</p>
+                <h2 style="color:var(--text-main)">Dinámica 3: La Caja de Herramientas 🛠️</h2>
+                <p><strong>Desafío Final:</strong> Eres el experto. Analiza el problema y selecciona la <strong>Técnica Específica</strong> que debes aplicar para salir victorioso.</p>
 
-                <div class="quiz-container">
-                    <button class="quiz-btn" onclick="checkSimulator(this, 'pasivo')">
-                        A) Te lo comes en silencio, pensando: "Mejor no molesto, seguro están muy ocupados hoy".
-                    </button>
-                    <button class="quiz-btn" onclick="checkSimulator(this, 'agresivo')">
-                        B) Le dices en voz alta: "¡Oye! ¿Es que no anotaste bien? ¡Esto está helado! ¡Lléveselo!"
-                    </button>
-                    <button class="quiz-btn" onclick="checkSimulator(this, 'asertivo')">
-                        C) Le llamas y dices: "Disculpa, creo que hubo una confusión. Pedí la pasta, no la ensalada. ¿Me lo podrías cambiar, por favor?"
-                    </button>
-                </div>
+                <div class="scenario-text" id="tool-scenario" style="border-left: 4px solid var(--error);">
+                    </div>
 
-                <div id="feedback-simulator" class="feedback"></div>
+                <div class="tool-grid" id="tool-options">
+                    </div>
+
+                <div id="feedback-tool" class="feedback"></div>
+                <button class="btn-nav" style="margin-top:20px; display:none; margin-left: auto; margin-right: auto;" id="btn-next-tool" onclick="nextTool()">Siguiente Caso ➡️</button>
             </div>
         </div>
+
         <div class="slide">
             <div class="card">
                 <div class="technique-number" style="font-size: 8rem; right: 10px; opacity: 0.03;">📚</div>
@@ -1094,6 +1121,10 @@
             semaforoIndex = 0;
             loadSemaforo();
             document.getElementById('btn-next-semaforo').style.display = 'none';
+            // Reset Tools
+            toolIndex = 0;
+            loadToolCase();
+            document.getElementById('btn-next-tool').style.display = 'none';
         }
 
         // --- Lógica del Video Flotante ---
@@ -1235,25 +1266,86 @@
             feedback.style.display = 'block';
         }
 
-        // --- DINÁMICA 3: SIMULADOR ---
-        function checkSimulator(btn, type) {
-            const feedback = document.getElementById('feedback-simulator');
-            
-            if (type === 'asertivo') {
-                applyStyle(btn, 'correct');
-                feedback.textContent = "¡Correcto! Ejerces tu derecho como cliente manteniendo la educación.";
-                feedback.className = "feedback correct";
-                disableSiblings(btn);
-            } else if (type === 'pasivo') {
-                applyStyle(btn, 'incorrect');
-                feedback.textContent = "Incorrecto. Al no decir nada, acumulas frustración y no recibes lo justo.";
-                feedback.className = "feedback incorrect";
-            } else {
-                applyStyle(btn, 'incorrect');
-                feedback.textContent = "Incorrecto. Gritar solo hará que el mesero se ponga a la defensiva o te atienda peor.";
-                feedback.className = "feedback incorrect";
+        // --- DINÁMICA 3: LA CAJA DE HERRAMIENTAS (NUEVA) ---
+        const toolCases = [
+            {
+                scenario: "🔥 SITUACIÓN: Un vendedor te sigue por toda la tienda insistiendo: 'Llévelo, es una oferta única, no se arrepentirá, ándale anímese'. Tú ya dijiste que no.",
+                options: [
+                    { name: "Banco de Niebla", icon: "🌫️", correct: false },
+                    { name: "Disco Rayado", icon: "💿", correct: true, feedback: "¡Correcto! Ante la insistencia sin argumentos nuevos, la repetición tranquila del 'No, gracias' es lo único que funciona." },
+                    { name: "Mensaje Yo", icon: "👤", correct: false }
+                ]
+            },
+            {
+                scenario: "💣 SITUACIÓN: Tu jefe te dice frente a todos: 'Este informe es un desastre, todo lo que haces está mal'. (Crítica vaga y generalizada)",
+                options: [
+                    { name: "Aplazamiento", icon: "⏸️", correct: false },
+                    { name: "Banco de Niebla", icon: "🌫️", correct: false },
+                    { name: "Pregunta Asertiva", icon: "❓", correct: true, feedback: "¡Bien pensado! Al preguntar '¿Qué parte específicamente está mal?', obligas al crítico a dejar de insultar y empezar a dar datos útiles." }
+                ]
+            },
+            {
+                scenario: "🌪️ SITUACIÓN: Llegas tarde a una reunión y un compañero te dice sarcásticamente: 'Miren quién se dignó a aparecer, como siempre tarde'. (Es verdad que llegaste tarde)",
+                options: [
+                    { name: "Disco Rayado", icon: "💿", correct: false },
+                    { name: "Banco de Niebla", icon: "🌫️", correct: true, feedback: "¡Excelente! Aceptas la verdad ('Es cierto que llegué tarde') sin engancharte con su sarcasmo. La niebla absorbe el impacto." },
+                    { name: "Acuerdo Viable", icon: "🤝", correct: false }
+                ]
             }
-            feedback.style.display = 'block';
+        ];
+        let toolIndex = 0;
+
+        function loadToolCase() {
+            const container = document.getElementById('tool-options');
+            const scenarioText = document.getElementById('tool-scenario');
+            container.innerHTML = ''; // Limpiar
+            document.getElementById('feedback-tool').style.display = 'none';
+            document.getElementById('btn-next-tool').style.display = 'none';
+
+            if (toolIndex < toolCases.length) {
+                const currentCase = toolCases[toolIndex];
+                scenarioText.textContent = currentCase.scenario;
+
+                currentCase.options.forEach(opt => {
+                    const btn = document.createElement('button');
+                    btn.className = 'tool-btn';
+                    btn.innerHTML = `<span class="tool-icon">${opt.icon}</span> ${opt.name}`;
+                    btn.onclick = () => checkTool(btn, opt);
+                    container.appendChild(btn);
+                });
+            } else {
+                scenarioText.textContent = "¡Felicidades! Eres un maestro de la Asertividad.";
+                scenarioText.style.borderLeftColor = "var(--success)";
+            }
+        }
+
+        function checkTool(btn, option) {
+            const feedback = document.getElementById('feedback-tool');
+            const btnNext = document.getElementById('btn-next-tool');
+            const allBtns = document.querySelectorAll('.tool-btn');
+
+            if (option.correct) {
+                btn.style.background = 'var(--success)';
+                btn.style.color = '#fff';
+                feedback.innerHTML = option.feedback;
+                feedback.className = "feedback correct";
+                feedback.style.display = 'block';
+                btnNext.style.display = 'block';
+                
+                // Deshabilitar otros
+                allBtns.forEach(b => b.disabled = true);
+            } else {
+                btn.style.background = 'rgba(239, 68, 68, 0.2)';
+                btn.style.borderColor = 'var(--error)';
+                feedback.textContent = "Esa herramienta no es la más efectiva aquí. Intenta de nuevo.";
+                feedback.className = "feedback incorrect";
+                feedback.style.display = 'block';
+            }
+        }
+
+        function nextTool() {
+            toolIndex++;
+            loadToolCase();
         }
 
         // --- Helpers ---
@@ -1279,6 +1371,7 @@
         // Init
         updateSlide();
         loadSemaforo(); 
+        loadToolCase(); // Iniciar la nueva dinámica
     </script>
 </body>
 </html>
