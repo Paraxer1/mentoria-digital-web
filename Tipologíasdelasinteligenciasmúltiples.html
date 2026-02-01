@@ -1,0 +1,1906 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Equipo 3 | Tipologías de las Inteligencias Múltiples (Gardner)</title>
+
+  <!-- Tailwind + Icons -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --gold:#d4af37;
+      --gold-2:#e5c158;
+      --gold-dim: rgba(212,175,55,.16);
+      --bg:#050505;
+      --panel:#0b0b0b;
+      --panel2:#0f0f0f;
+      --border: rgba(255,255,255,.10);
+      --muted:#9ca3af;
+      --text:#e5e7eb;
+    }
+    *{ box-sizing:border-box; }
+    html{ scroll-behavior:smooth; }
+    body{
+      margin:0;
+      font-family:'Plus Jakarta Sans', sans-serif;
+      background: radial-gradient(1200px 800px at 30% 10%, rgba(212,175,55,.10), transparent 60%),
+                  radial-gradient(900px 700px at 80% 30%, rgba(255,255,255,.05), transparent 55%),
+                  var(--bg);
+      color: var(--text);
+      overflow:hidden;
+    }
+    h1,h2,h3,h4{ font-family:'Playfair Display', serif; }
+
+    /* Scroll-snap deck */
+    .deck{
+      height:100vh; width:100%;
+      overflow-y:auto;
+      scroll-snap-type:y mandatory;
+      scroll-behavior:smooth;
+    }
+    .slide{
+      height:100vh; width:100%;
+      scroll-snap-align:start;
+      position:relative;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding: clamp(16px, 3vw, 32px);
+      overflow:hidden;
+    }
+    .bg{
+      position:absolute; inset:0;
+      background-size:cover;
+      background-position:center;
+      opacity:.16;
+      filter: grayscale(100%) contrast(115%) brightness(.7);
+      z-index:0;
+    }
+    .layer{
+      position:relative; z-index:2;
+      width:min(1200px, 100%);
+      height:min(86vh, 760px);
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      gap:16px;
+    }
+    .glass{
+      background: rgba(10,10,10,.72);
+      border:1px solid var(--border);
+      border-radius:18px;
+      box-shadow: 0 40px 90px -30px rgba(0,0,0,.9);
+      backdrop-filter: blur(12px);
+    }
+
+    /* Dots navigation */
+    .dots{
+      position:fixed;
+      right:16px; top:50%;
+      transform:translateY(-50%);
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      z-index:80;
+    }
+    .dot{
+      width:7px; height:7px;
+      border-radius:999px;
+      background: rgba(255,255,255,.25);
+      cursor:pointer;
+      transition:.25s;
+    }
+    .dot.active{
+      background: var(--gold);
+      transform: scale(1.6);
+      box-shadow: 0 0 0 4px rgba(212,175,55,.18);
+    }
+
+    /* Dashboard */
+    .dash{
+      width:100%;
+      height:100%;
+      display:grid;
+      grid-template-columns: 300px 1fr;
+      overflow:hidden;
+    }
+
+    /* Sidebar */
+    .side{
+      background: rgba(6,6,6,.92);
+      border-right:1px solid var(--border);
+      display:flex;
+      flex-direction:column;
+      overflow:hidden;
+    }
+    .side-scroll{
+      overflow:auto;
+      padding: 16px 0;
+    }
+    .side-title{
+      padding: 14px 18px 10px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .22em;
+      text-transform:uppercase;
+      color: rgba(255,255,255,.35);
+      border-bottom:1px solid var(--border);
+    }
+    .navbtn{
+      width:100%;
+      background:transparent;
+      border:0;
+      color: rgba(255,255,255,.55);
+      padding: 12px 18px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      cursor:pointer;
+      transition:.2s;
+      border-left: 3px solid transparent;
+      text-align:left;
+      font-size: 14px;
+    }
+    .navbtn:hover{
+      background: rgba(255,255,255,.04);
+      color: rgba(255,255,255,.85);
+    }
+    .navbtn.active{
+      color: var(--gold);
+      background: linear-gradient(90deg, var(--gold-dim), transparent);
+      border-left-color: var(--gold);
+    }
+    .navmeta{
+      display:flex; align-items:center; gap:10px;
+      min-width:0;
+    }
+    .navmeta span.label{
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .num{
+      font-size: 11px;
+      opacity:.5;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Mobile sidebar */
+    .topbar{
+      display:none;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding: 12px 14px;
+      border-bottom:1px solid var(--border);
+      background: rgba(0,0,0,.45);
+      backdrop-filter: blur(10px);
+    }
+    .side-overlay{
+      display:none;
+      position:fixed; inset:0;
+      background: rgba(0,0,0,.6);
+      z-index:90;
+    }
+
+    /* Main panel */
+    .main{
+      background: rgba(10,10,10,.72);
+      display:flex;
+      flex-direction:column;
+      overflow:hidden;
+    }
+    .head{
+      padding: 18px 22px;
+      border-bottom:1px solid var(--border);
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:14px;
+      background: rgba(0,0,0,.35);
+      backdrop-filter: blur(10px);
+    }
+    .kicker{
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .24em;
+      text-transform:uppercase;
+      color: var(--gold);
+      opacity:.95;
+    }
+    .title{
+      margin: 6px 0 0;
+      font-size: clamp(26px, 2.8vw, 44px);
+      line-height:1.05;
+    }
+    .tabs{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+    .tab{
+      border:1px solid var(--border);
+      background: transparent;
+      color: rgba(255,255,255,.55);
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      cursor:pointer;
+      transition:.2s;
+      display:flex;
+      align-items:center;
+      gap:8px;
+      user-select:none;
+    }
+    .tab:hover{
+      border-color: rgba(255,255,255,.22);
+      color: rgba(255,255,255,.78);
+    }
+    .tab.active{
+      background: var(--gold);
+      border-color: var(--gold);
+      color: #0b0b0b;
+      font-weight: 800;
+    }
+
+    .content{
+      flex:1;
+      overflow:hidden;
+      position:relative;
+    }
+
+    .view{
+      height:100%;
+      width:100%;
+      overflow:auto;
+      padding: 18px 22px 22px;
+      display:none;
+      animation: fade .25s ease;
+      background:
+        radial-gradient(900px 600px at 80% 10%, rgba(212,175,55,.08), transparent 55%),
+        linear-gradient(180deg, rgba(255,255,255,.02), transparent 35%);
+    }
+    .view.active{ display:block; }
+    @keyframes fade{ from{opacity:0; transform: translateY(6px);} to{opacity:1; transform:none;} }
+
+    /* Cards layout */
+    .grid2{
+      display:grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap:18px;
+      align-items:start;
+    }
+    .grid3{
+      display:grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap:14px;
+      align-items:start;
+    }
+    .card{
+      border:1px solid var(--border);
+      border-radius:16px;
+      background: rgba(255,255,255,.03);
+      box-shadow: 0 20px 50px -30px rgba(0,0,0,.8);
+      overflow:hidden;
+    }
+    .card .pad{ padding: 16px 16px; }
+    .card h3{
+      font-size: 18px;
+      margin:0 0 10px;
+      color: rgba(255,255,255,.92);
+    }
+    .card h4{
+      font-size: 12px;
+      margin: 0 0 10px;
+      color: var(--gold);
+      letter-spacing:.18em;
+      text-transform:uppercase;
+    }
+    .p{
+      color: rgba(255,255,255,.72);
+      line-height: 1.75;
+      font-size: 14px;
+      margin:0;
+    }
+    .quote{
+      border-left:3px solid var(--gold);
+      padding-left:12px;
+      color: rgba(255,255,255,.82);
+      font-style:italic;
+      line-height: 1.6;
+    }
+    .list{
+      margin:0;
+      padding-left: 0;
+      list-style:none;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+    .list li{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      color: rgba(255,255,255,.72);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+    .list li::before{
+      content:"✦";
+      color: var(--gold);
+      font-size: 12px;
+      margin-top: 2px;
+      flex:0 0 auto;
+    }
+
+    .pillrow{
+      display:flex; flex-wrap:wrap;
+      gap:8px;
+      margin-top: 10px;
+    }
+    .pill{
+      border:1px solid var(--border);
+      background: rgba(0,0,0,.22);
+      color: rgba(255,255,255,.70);
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+    .pill i{ color: var(--gold); }
+
+    /* Image blocks */
+    .heroimg{
+      width:100%;
+      height: 250px;
+      border-radius: 16px;
+      border:1px solid var(--border);
+      overflow:hidden;
+      background: #111;
+      position:relative;
+    }
+    .heroimg img{
+      width:100%; height:100%;
+      object-fit:cover;
+      opacity:.92;
+      filter: contrast(110%) brightness(.9);
+    }
+    .heroimg .cap{
+      position:absolute;
+      left:12px; bottom:10px;
+      right:12px;
+      font-size: 12px;
+      color: rgba(255,255,255,.8);
+      background: rgba(0,0,0,.35);
+      border: 1px solid rgba(255,255,255,.10);
+      backdrop-filter: blur(10px);
+      padding: 8px 10px;
+      border-radius: 12px;
+      line-height:1.4;
+    }
+    .minigallery{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:10px;
+      margin-top: 12px;
+    }
+    .mini{
+      border:1px solid var(--border);
+      border-radius: 14px;
+      overflow:hidden;
+      background:#111;
+      height: 120px;
+      position:relative;
+    }
+    .mini img{ width:100%; height:100%; object-fit:cover; filter: grayscale(25%) contrast(110%) brightness(.9); opacity:.95;}
+    .mini .tag{
+      position:absolute; left:8px; bottom:8px;
+      font-size: 11px;
+      color: rgba(255,255,255,.88);
+      background: rgba(0,0,0,.35);
+      border:1px solid rgba(255,255,255,.10);
+      padding: 5px 8px;
+      border-radius: 999px;
+      backdrop-filter: blur(10px);
+    }
+
+    /* Bib styles */
+    .bib{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+    .ref{
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.03);
+      border-radius: 14px;
+      padding: 12px 14px;
+      color: rgba(255,255,255,.78);
+      line-height:1.55;
+      font-size: 14px;
+    }
+    .ref code{
+      color: rgba(255,255,255,.78);
+      background: rgba(0,0,0,.25);
+      padding: 2px 6px;
+      border-radius: 8px;
+      border:1px solid rgba(255,255,255,.10);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12px;
+    }
+
+    /* Responsive */
+    @media (max-width: 980px){
+      .dash{ grid-template-columns: 1fr; }
+      .side{
+        position:fixed;
+        top:0; left:0;
+        height:100vh;
+        width: min(360px, 88vw);
+        transform: translateX(-110%);
+        transition: transform .22s ease;
+        z-index: 100;
+        border-right:1px solid var(--border);
+        box-shadow: 30px 0 80px -30px rgba(0,0,0,.9);
+      }
+      .side.open{ transform: translateX(0); }
+      .side-overlay{ display:block; opacity:0; pointer-events:none; transition:.2s; }
+      .side-overlay.open{ opacity:1; pointer-events:auto; }
+      .topbar{ display:flex; }
+      .head{ padding: 14px 14px; }
+      .view{ padding: 14px 14px 18px; }
+      .grid2{ grid-template-columns: 1fr; }
+      .grid3{ grid-template-columns: 1fr; }
+      .minigallery{ grid-template-columns: 1fr 1fr; }
+      .heroimg{ height: 220px; }
+      .dots{ right:10px; }
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar{ width: 8px; height:8px; }
+    ::-webkit-scrollbar-track{ background: rgba(0,0,0,.18); }
+    ::-webkit-scrollbar-thumb{ background: rgba(255,255,255,.18); border-radius: 999px; }
+    ::-webkit-scrollbar-thumb:hover{ background: rgba(212,175,55,.55); }
+  </style>
+</head>
+
+<body>
+  <!-- Dots -->
+  <div class="dots" aria-label="Navegación de diapositivas">
+    <div class="dot active" data-slide="0" title="Portada"></div>
+    <div class="dot" data-slide="1" title="Agenda"></div>
+    <div class="dot" data-slide="2" title="Marco teórico"></div>
+    <div class="dot" data-slide="3" title="Explorador MI"></div>
+    <div class="dot" data-slide="4" title="Proyecto "></div>
+    <div class="dot" data-slide="5" title="Debate y bibliografía"></div>
+  </div>
+
+  <div class="deck" id="deck">
+
+    <!-- SLIDE 1: Cover -->
+    <section class="slide" id="s0">
+      <div class="bg" style="background-image:url('https://images.unsplash.com/photo-1526378722484-bd91ca387e72?q=80&w=2400&auto=format&fit=crop');"></div>
+      <div class="layer">
+        <div class="glass p-7 md:p-10">
+          <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+            <div>
+              <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-black/40 text-[11px] tracking-[0.25em] uppercase text-gray-300">
+                <i data-lucide="graduation-cap" class="w-4 h-4" style="color:var(--gold)"></i>
+                Universidad Tecnológica de Gutiérrez Zamora
+              </div>
+              <h1 class="mt-6 text-5xl md:text-7xl font-bold tracking-tight leading-none text-white">Tipologías de las</h1>
+              <h1 class="mt-2 text-5xl md:text-7xl font-bold tracking-tight leading-none text-white">
+                Inteligencias <span style="color:var(--gold)">Múltiples</span>
+              </h1>
+              <p class="mt-5 text-gray-300 max-w-2xl leading-relaxed">
+                Exposición basada en la teoría de <b>Howard Gardner</b> (1983) y aportes educativos de Project Zero (Harvard).
+              </p>
+
+              <div class="pillrow mt-6">
+                <div class="pill"><i data-lucide="check-circle" class="w-4 h-4"></i>Concepto</div>
+                <div class="pill"><i data-lucide="check-circle" class="w-4 h-4"></i>Características</div>
+                <div class="pill"><i data-lucide="check-circle" class="w-4 h-4"></i>8 Tipologías</div>
+                <div class="pill"><i data-lucide="check-circle" class="w-4 h-4"></i>Evidencias</div>
+                <div class="pill"><i data-lucide="check-circle" class="w-4 h-4"></i>Estrategias personales</div>
+              </div>
+            </div>
+
+            <div class="card w-full md:w-[420px]">
+              <div class="pad">
+                <h4>Equipo 03</h4>
+                <div class="grid grid-cols-2 gap-3 text-sm text-gray-300">
+                  <div>• Ximena</div><div>• Alondra</div>
+                  <div>• Ismael</div><div>• Yesenia</div>
+                  <div>• Erick</div><div>• Giovanni</div>
+                  <div>• Vianey</div>
+                </div>
+                <div class="mt-5 text-xs text-gray-400 leading-relaxed">
+                  <b>Nota:</b> Esta presentación está diseñada para verse en laptop y también se adapta a celular.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-7 flex items-center gap-3 text-gray-400 text-sm">
+            <i data-lucide="mouse" class="w-4 h-4"></i>
+            Desliza/scroll para avanzar • Usa el menú interactivo en la diapositiva “Explorador MI”
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 2: Agenda -->
+    <section class="slide" id="s1">
+      <div class="bg" style="background-image:url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=2400&auto=format&fit=crop');"></div>
+      <div class="layer">
+        <div class="glass p-7 md:p-10">
+          <div class="flex items-end justify-between gap-4 flex-wrap">
+            <div>
+              <div class="kicker">Estructura de la exposición</div>
+              <h2 class="title">Indice</h2>
+            </div>
+            <div class="pill"><i data-lucide="clock" class="w-4 h-4"></i></div>
+          </div>
+
+          <div class="grid2 mt-6">
+            <div class="card">
+              <div class="pad">
+                <h3>Recorrido</h3>
+                <ul class="list">
+                  <li><b>Introducción:</b> qué propone MI y por qué surge.</li>
+                  <li><b>Características:</b> cómo entender MI sin “etiquetar”.</li>
+                  <li><b>Tipologías:</b> 8 inteligencias con ejemplos y evidencias.</li>
+                  <li><b>Estrategias personales:</b> cómo desarrollar cada inteligencia.</li>
+                  <li><b>Proyecto :</b> un ejemplo donde se combinan.</li>
+                  <li><b>Debate y bibliografía:</b> uso educativo + críticas breves.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="pad">
+                <h3>Regla de oro académica</h3>
+                <p class="p quote">
+                  MI se presenta como un <b>marco pedagógico</b> para diversificar actividades y evidencias, no como un “test” definitivo para clasificar personas.
+                </p>
+                <div class="mt-4">
+                  <h4>Qué verás en cada tipología</h4>
+                  <ul class="list">
+                    <li><b>Concepto</b> (definición + cita breve)</li>
+                    <li><b>Características observables</b> (señales en clase)</li>
+                    <li><b>Ejemplos y evidencias</b> (producto/registro)</li>
+                    <li><b>Estrategias personales</b> (acciones concretas)</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 3: Marco teórico -->
+    <section class="slide" id="s2">
+      <div class="bg" style="background-image:url('https://images.unsplash.com/photo-1559757175-5700dde675bc?q=80&w=2400&auto=format&fit=crop');"></div>
+      <div class="layer">
+        <div class="glass p-7 md:p-10">
+          <div class="flex items-end justify-between gap-4 flex-wrap">
+            <div>
+              <div class="kicker">Marco teórico</div>
+              <h2 class="title">¿Qué sostiene la teoría MI?</h2>
+            </div>
+            <div class="pill"><i data-lucide="book-open" class="w-4 h-4"></i>Gardner (1983)</div>
+          </div>
+
+          <div class="grid2 mt-6">
+            <div class="card">
+              <div class="pad">
+                <h3>Definición (paráfrasis académica)</h3>
+                <p class="p">
+                  En MI, la inteligencia puede entenderse como un <b>potencial biopsicológico</b> para procesar información
+                  que se activa en un contexto cultural para <b>resolver problemas</b> o <b>crear productos valiosos</b>.
+                  <span class="text-gray-400">(Gardner, 1983; 1999; 2006)</span>
+                </p>
+
+                <div class="mt-5">
+                  <h4>Características del enfoque</h4>
+                  <ul class="list">
+                    <li><b>Plural:</b> no existe una sola inteligencia.</li>
+                    <li><b>Relativamente independiente:</b> una fortaleza no garantiza otra.</li>
+                    <li><b>Desarrollable:</b> puede mejorar con práctica y retroalimentación.</li>
+                    <li><b>Contextual:</b> cultura y experiencias influyen en su expresión.</li>
+                    <li><b>Combinable:</b> en tareas reales usamos varias a la vez.</li>
+                    <li><b>Observable en desempeño:</b> se evidencia en productos/acciones, no solo en exámenes.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="pad">
+                <h3>Uso educativo responsable</h3>
+                <p class="p">
+                  En educación, MI se usa para <b>diversificar actividades</b>, reconocer fortalezas, y diseñar oportunidades de aprendizaje y evaluación más auténticas.
+                  <span class="text-gray-400">(Project Zero, Harvard)</span>
+                </p>
+
+                <div class="mt-5">
+                  <h4>Evitar malentendidos</h4>
+                  <ul class="list">
+                    <li>No es “tienes una y no las demás”. Es un <b>perfil</b> que cambia.</li>
+                    <li>No es “estilo de aprendizaje” automático: se apoya en <b>desempeños</b> y <b>evidencias</b>.</li>
+                    <li>No reemplaza la psicometría; es un <b>marco pedagógico</b> para planear y evaluar.</li>
+                  </ul>
+                </div>
+
+                <div class="mt-5 heroimg">
+                  <img alt="Cerebro - enfoque plural" src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?q=80&w=2000&auto=format&fit=crop" loading="lazy">
+                  <div class="cap">
+                    Idea clave: “ser inteligente” puede verse en distintos tipos de desempeño (comunicar, diseñar, coordinar, investigar, crear, reflexionar…).
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-6 text-sm text-gray-400">
+            Citas completas en la última diapositiva.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 4: Explorer Dashboard -->
+    <section class="slide" id="s3">
+      <div class="layer">
+        <div class="glass dash">
+          <!-- Mobile overlay -->
+          <div class="side-overlay" id="overlay"></div>
+
+          <!-- Sidebar -->
+          <aside class="side" id="sidebar" aria-label="Menú de inteligencias">
+            <div class="topbar">
+              <div class="flex items-center gap-2">
+                <i data-lucide="layout-grid" class="w-4 h-4" style="color:var(--gold)"></i>
+                <span class="text-sm font-semibold text-gray-200">Menú MI</span>
+              </div>
+              <button id="closeSide" class="tab" style="padding:6px 10px;">
+                <i data-lucide="x" class="w-4 h-4"></i> Cerrar
+              </button>
+            </div>
+
+            <div class="side-title">Modelo Gardner</div>
+            <div class="side-scroll">
+              <button class="navbtn active" data-key="general">
+                <div class="navmeta">
+                  <i data-lucide="compass" class="w-4 h-4"></i>
+                  <span class="label">Panorama general</span>
+                </div>
+                <span class="num">00</span>
+              </button>
+
+              <div class="side-title" style="margin-top:10px;">Tipologías</div>
+
+              <button class="navbtn" data-key="ling">
+                <div class="navmeta"><i data-lucide="message-square" class="w-4 h-4"></i><span class="label">Lingüístico–Verbal</span></div>
+                <span class="num">01</span>
+              </button>
+              <button class="navbtn" data-key="log">
+                <div class="navmeta"><i data-lucide="calculator" class="w-4 h-4"></i><span class="label">Lógico–Matemática</span></div>
+                <span class="num">02</span>
+              </button>
+              <button class="navbtn" data-key="esp">
+                <div class="navmeta"><i data-lucide="map" class="w-4 h-4"></i><span class="label">Visual–Espacial</span></div>
+                <span class="num">03</span>
+              </button>
+              <button class="navbtn" data-key="mus">
+                <div class="navmeta"><i data-lucide="music" class="w-4 h-4"></i><span class="label">Musical</span></div>
+                <span class="num">04</span>
+              </button>
+              <button class="navbtn" data-key="kin">
+                <div class="navmeta"><i data-lucide="activity" class="w-4 h-4"></i><span class="label">Corporal–Cinestésica</span></div>
+                <span class="num">05</span>
+              </button>
+              <button class="navbtn" data-key="inter">
+                <div class="navmeta"><i data-lucide="users" class="w-4 h-4"></i><span class="label">Interpersonal</span></div>
+                <span class="num">06</span>
+              </button>
+              <button class="navbtn" data-key="intra">
+                <div class="navmeta"><i data-lucide="user" class="w-4 h-4"></i><span class="label">Intrapersonal</span></div>
+                <span class="num">07</span>
+              </button>
+              <button class="navbtn" data-key="nat">
+                <div class="navmeta"><i data-lucide="leaf" class="w-4 h-4"></i><span class="label">Naturalista</span></div>
+                <span class="num">08</span>
+              </button>
+            </div>
+          </aside>
+
+          <!-- Main -->
+          <main class="main" aria-label="Contenido de la inteligencia seleccionada">
+            <div class="head">
+              <div class="flex items-start gap-3">
+                <button id="openSide" class="tab" style="display:none;">
+                  <i data-lucide="menu" class="w-4 h-4"></i> Menú
+                </button>
+                <div>
+                  <div class="kicker" id="kicker">Introducción</div>
+                  <h2 class="title" id="mainTitle">Panorama general</h2>
+                </div>
+              </div>
+
+              <div class="tabs" id="tabs">
+                <button class="tab active" data-tab="concepto"><i data-lucide="book-open" class="w-4 h-4"></i>Concepto</button>
+                <button class="tab" data-tab="caracteristicas"><i data-lucide="list-checks" class="w-4 h-4"></i>Características</button>
+                <button class="tab" data-tab="ejemplos"><i data-lucide="folder-kanban" class="w-4 h-4"></i>Ejemplos y evidencias</button>
+                <button class="tab" data-tab="estrategias"><i data-lucide="target" class="w-4 h-4"></i>Estrategias personales</button>
+              </div>
+            </div>
+
+            <div class="content">
+              <section class="view active" id="view-general"></section>
+              <section class="view" id="view-concepto"></section>
+              <section class="view" id="view-caracteristicas"></section>
+              <section class="view" id="view-ejemplos"></section>
+              <section class="view" id="view-estrategias"></section>
+            </div>
+          </main>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 5: Proyecto integrador -->
+    <section class="slide" id="s4">
+      <div class="bg" style="background-image:url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2400&auto=format&fit=crop');"></div>
+      <div class="layer">
+        <div class="glass p-7 md:p-10">
+          <div class="flex items-end justify-between gap-4 flex-wrap">
+            <div>
+              <div class="kicker">Aplicación</div>
+              <h2 class="title">Proyecto (ejemplo)</h2>
+            </div>
+            <div class="pill"><i data-lucide="layers" class="w-4 h-4"></i>Las inteligencias se combinan</div>
+          </div>
+
+          <div class="grid2 mt-6">
+            <div class="card">
+              <div class="pad">
+                <h3>Proyecto: Feria científica escolar</h3>
+                <p class="p">
+                  Objetivo: investigar un problema real (por ejemplo, <b>calidad del agua</b> o <b>reciclaje</b>), presentar resultados y proponer una mejora.
+                </p>
+                <div class="mt-4">
+                  <h4>Cómo participa cada inteligencia</h4>
+                  <ul class="list">
+                    <li><b>Lingüística:</b> guion de exposición, reporte y conclusiones.</li>
+                    <li><b>Lógica:</b> mediciones, tablas, gráficas y conclusiones basadas en datos.</li>
+                    <li><b>Espacial:</b> cartel/infografía, diseño del stand, mapas o diagramas.</li>
+                    <li><b>Musical:</b> audio explicativo corto o jingle educativo (opcional).</li>
+                    <li><b>Corporal:</b> maqueta/prototipo, demostración del experimento.</li>
+                    <li><b>Interpersonal:</b> roles, coordinación, acuerdos, entrevistas.</li>
+                    <li><b>Intrapersonal:</b> bitácora, autoevaluación, metas personales.</li>
+                    <li><b>Naturalista:</b> clasificación de muestras, observación de entorno y variables ambientales.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="pad">
+                <h3>Evidencias recomendadas</h3>
+                <ul class="list">
+                  <li>Reporte breve (1–2 páginas) con datos y conclusiones.</li>
+                  <li>Infografía/cartel (visual y claro).</li>
+                  <li>Bitácora de proceso (fechas, observaciones, decisiones).</li>
+                  <li>Producto/maqueta (o registro en video si aplica).</li>
+                  <li>Rúbrica simple de participación (equipo) + autoevaluación.</li>
+                </ul>
+
+                <div class="mt-5 minigallery">
+                  <div class="mini"><img alt="Infografía" loading="lazy" src="https://images.unsplash.com/photo-1553877522-43269d4ea984?q=80&w=1200&auto=format&fit=crop"><div class="tag">Infografía</div></div>
+                  <div class="mini"><img alt="Experimento" loading="lazy" src="https://images.unsplash.com/photo-1581093588401-12bbd9c676f3?q=80&w=1200&auto=format&fit=crop"><div class="tag">Experimento</div></div>
+                  <div class="mini"><img alt="Trabajo en equipo" loading="lazy" src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=1200&auto=format&fit=crop"><div class="tag">Equipo</div></div>
+                </div>
+
+                <p class="mt-4 text-sm text-gray-400 leading-relaxed">
+                  Nota académica: estas evidencias permiten observar desempeño (no solo “saber decir”), alineado con evaluación más auténtica. <span class="text-gray-500">(Brualdi Timmins, 1996)</span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 6: Debate + Bibliografía -->
+    <section class="slide" id="s5">
+      <div class="bg" style="background-image:url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2400&auto=format&fit=crop');"></div>
+      <div class="layer">
+        <div class="glass p-7 md:p-10">
+          <div class="flex items-end justify-between gap-4 flex-wrap">
+            <div>
+              <div class="kicker">Cierre</div>
+              <h2 class="title">Debate académico y bibliografía</h2>
+            </div>
+            <div class="pill"><i data-lucide="info" class="w-4 h-4"></i>Breve y responsable</div>
+          </div>
+
+          <div class="grid2 mt-6">
+            <div class="card">
+              <div class="pad">
+                <h3>Debate (resumen neutral)</h3>
+                <p class="p">
+                  MI es muy influyente en educación por su utilidad para diversificar actividades. Sin embargo, algunos autores señalan que ciertas versiones escolares de MI
+                  pueden exagerar la “independencia” entre inteligencias y que la evidencia empírica no siempre respalda todas sus aplicaciones.
+                  <span class="text-gray-500">(Waterhouse, 2006)</span>
+                </p>
+                <div class="mt-4">
+                  <h4>Postura responsable en clase</h4>
+                  <ul class="list">
+                    <li>Usar MI como <b>marco pedagógico</b> (planeación, actividades y evidencias), no como diagnóstico.</li>
+                    <li>Evitar etiquetas (“soy X, no soy Y”). Hablar de <b>fortalezas actuales</b> y <b>metas de desarrollo</b>.</li>
+                    <li>Buscar evidencias reales de desempeño (producto/registro), no solo percepción.</li>
+                  </ul>
+                </div>
+                <div class="mt-5 text-sm text-gray-400">
+                  Project Zero enfatiza el enfoque educativo y el diseño de experiencias de aprendizaje. <span class="text-gray-500">(Project Zero, Harvard)</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="pad">
+                <h3>Bibliografía (real)</h3>
+                <div class="bib">
+                  <div class="ref">
+                    Gardner, H. (1983). <i>Frames of Mind: The Theory of Multiple Intelligences</i>. Basic Books.
+                  </div>
+                  <div class="ref">
+                    Gardner, H. (1999). <i>Intelligence Reframed: Multiple Intelligences for the 21st Century</i>. Basic Books.
+                  </div>
+                  <div class="ref">
+                    Gardner, H. (2006). <i>Multiple Intelligences: New Horizons</i>. Basic Books.
+                  </div>
+                  <div class="ref">
+                    Project Zero, Harvard Graduate School of Education. <i>Multiple Intelligences</i>. Sitio oficial del proyecto. <code>https://pz.harvard.edu/projects/multiple-intelligences</code>
+                  </div>
+                  <div class="ref">
+                    Brualdi Timmins, A. C. (1996). Multiple Intelligences: Gardner’s Theory. <i>Practical Assessment, Research, and Evaluation</i>, 5(1). DOI: <code>10.7275/7251-ea02</code>
+                  </div>
+                  <div class="ref">
+                    Waterhouse, L. (2006). Multiple intelligences, the Mozart effect, and emotional intelligence: A critical review. <i>Educational Psychologist</i>, 41(4), 207–225. (Ver también ediciones con paginación alternativa). DOI: <code>10.1207/s15326985ep4104_1</code>
+                  </div>
+                </div>
+
+                <p class="mt-4 text-xs text-gray-400 leading-relaxed">
+                  Nota: En el contenido se citan autores por apellido y año (formato breve). Las referencias completas están aquí.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    // ---------- Data (contenido teórico) ----------
+    // Textos redactados (paráfrasis) + citas cortas (autor, año).
+    const MI = {
+      general: {
+        kicker: "Introducción",
+        title: "Panorama general",
+        hero: {
+          src: "https://images.unsplash.com/photo-1559757175-5700dde675bc?q=80&w=2200&auto=format&fit=crop",
+          cap: "MI: varias capacidades relativamente diferenciadas que se combinan en tareas reales (Gardner, 1983; 1999)."
+        },
+        concepto: {
+          quote: "“La inteligencia puede entenderse como un potencial para procesar información que se activa en contextos culturales para resolver problemas o crear productos valiosos.” (paráfrasis de Gardner)",
+          body: [
+            "La teoría de las Inteligencias Múltiples (MI) propone que la inteligencia no es una sola capacidad medida por un puntaje único. En cambio, describe un conjunto de capacidades que pueden desarrollarse y combinarse según la actividad y el contexto cultural (Gardner, 1983; 1999; 2006).",
+            "En educación, MI se utiliza como un marco para diseñar experiencias de aprendizaje variadas y para observar evidencias de desempeño: productos, procesos y acciones, no únicamente exámenes (Project Zero, Harvard)."
+          ],
+          pills: [
+            "No es un test clínico",
+            "Se observa en desempeño",
+            "Se desarrolla con práctica",
+            "Se combinan en tareas reales"
+          ]
+        },
+        caracteristicas: {
+          leftTitle: "Características del enfoque MI",
+          left: [
+            "Pluralidad: no hay una sola inteligencia.",
+            "Relativa independencia: fortaleza en una no garantiza otra.",
+            "Desarrollables: mejoran con práctica, retroalimentación y ambiente.",
+            "Contextuales: cultura y experiencias influyen en su expresión.",
+            "Combinables: normalmente operan juntas en tareas reales.",
+            "Observables: se evidencian en productos y soluciones (no solo pruebas).",
+            "No etiquetas: describen capacidades actuales, no la identidad completa."
+          ],
+          rightTitle: "Cómo se usa de forma académica",
+          right: [
+            "Diseñar actividades con rutas distintas (texto, mapa, prototipo, debate, bitácora…).",
+            "Evaluar con evidencias auténticas (producto/registro), no solo con reactivos.",
+            "Reconocer fortalezas sin encasillar y proponer metas de mejora.",
+            "Relacionar MI con trabajo colaborativo y diversidad de aprendizaje."
+          ],
+          cite: "Project Zero (Harvard); Brualdi Timmins (1996)."
+        },
+        ejemplos: {
+          titleA: "Ejemplos rápidos (en clase)",
+          itemsA: [
+            "Un mismo tema puede trabajarse con: ensayo, infografía, maqueta, entrevista, bitácora, audio o demostración.",
+            "Los equipos pueden repartirse roles: redacción, datos, diseño, prototipo, coordinación y reflexión final."
+          ],
+          titleB: "Evidencias sugeridas",
+          itemsB: [
+            "Producto: cartel/infografía/maqueta/audio/reporte.",
+            "Registro: bitácora de proceso (fechas, decisiones, observaciones).",
+            "Rúbrica simple: criterios claros (claridad, datos, creatividad, colaboración)."
+          ],
+          gallery: [
+            { src:"https://images.unsplash.com/photo-1553877522-43269d4ea984?q=80&w=1200&auto=format&fit=crop", tag:"Infografía" },
+            { src:"https://images.unsplash.com/photo-1581093588401-12bbd9c676f3?q=80&w=1200&auto=format&fit=crop", tag:"Experimento" },
+            { src:"https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=1200&auto=format&fit=crop", tag:"Equipo" }
+          ]
+        },
+        estrategias: {
+          title: "Estrategias personales (en general)",
+          items: [
+            "Identificar fortalezas actuales con evidencias (qué productos te salen mejor y por qué).",
+            "Probar 1 micro-hábito por inteligencia (2 semanas) y registrar avances.",
+            "Combinar inteligencias: por ejemplo, infografía (espacial) + explicación oral (lingüística) + datos (lógica).",
+            "Pedir retroalimentación concreta y convertirla en una meta medible."
+          ],
+          cierre: "Idea clave: el objetivo es ampliar recursos de aprendizaje, no encasillar."
+        }
+      },
+
+      ling: makeIntel({
+        kicker:"Simbólica",
+        title:"Lingüístico–Verbal",
+        hero:{
+          src:"https://images.unsplash.com/photo-1455390582262-044cdead277a?q=80&w=2200&auto=format&fit=crop",
+          cap:"Capacidad para usar el lenguaje oral y escrito con eficacia (Gardner, 1983; 1999)."
+        },
+        concepto:{
+          quote:"“Sensibilidad a los significados, sonidos y estructura del lenguaje; uso eficaz de palabras.” (paráfrasis de Gardner)",
+          body:[
+            "La inteligencia lingüístico–verbal se relaciona con el manejo eficaz del lenguaje: comprender, producir y organizar ideas mediante palabras, tanto de forma oral como escrita (Gardner, 1983).",
+            "En el ámbito escolar se observa en la argumentación, la narración, la precisión al explicar y la capacidad de adaptar el discurso al público."
+          ],
+          pills:["Lectura", "Escritura", "Oratoria", "Argumentación"]
+        },
+        caracteristicas:{
+          leftTitle:"Características observables",
+          left:[
+            "Explica ideas con claridad y orden.",
+            "Comprende textos y detecta ideas principales.",
+            "Usa vocabulario con precisión (define, compara, ejemplifica).",
+            "Argumenta: da razones y evidencia.",
+            "Disfruta narrar, debatir o escribir."
+          ],
+          rightTitle:"Se nota cuando…",
+          right:[
+            "Resume un tema con sus propias palabras.",
+            "Redacta conclusiones claras y coherentes.",
+            "Sostiene un debate con ejemplos y contraargumentos.",
+            "Hace preguntas que aclaran conceptos."
+          ],
+          cite:"Gardner (1983); Brualdi Timmins (1996)."
+        },
+        ejemplos:{
+          titleA:"Ejemplos académicos",
+          itemsA:[
+            "Ensayo corto (1–2 páginas) con tesis, argumentos y conclusión.",
+            "Debate con roles: moderación, postura A/B, réplica.",
+            "Guion de exposición con introducción–desarrollo–cierre."
+          ],
+          titleB:"Evidencias (producto/registro)",
+          itemsB:[
+            "Texto final con correcciones (antes/después).",
+            "Audio o video de exposición/debate (2–3 min).",
+            "Rúbrica breve de claridad, coherencia, evidencias y lenguaje."
+          ],
+          gallery:[
+            {src:"https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1200&auto=format&fit=crop", tag:"Lectura"},
+            {src:"https://images.unsplash.com/photo-1455390582262-044cdead277a?q=80&w=1200&auto=format&fit=crop", tag:"Escritura"},
+            {src:"https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=1200&auto=format&fit=crop", tag:"Debate"}
+          ]
+        },
+        estrategias:{
+          title:"Estrategias personales",
+          items:[
+            "Leer 15–20 min diarios y anotar 5 palabras nuevas (con definición y ejemplo).",
+            "Escribir resúmenes de 8–10 líneas por tema (idea principal + 2 detalles + conclusión).",
+            "Practicar exposición de 2 min con cronómetro (voz clara, pausas, mirada).",
+            "Revisar textos con checklist: coherencia, conectores, ortografía y citas."
+          ],
+          cierre:"Meta sugerida (2 semanas): mejorar claridad de explicación con un resumen diario."
+        }
+      }),
+
+      log: makeIntel({
+        kicker:"Analítica",
+        title:"Lógico–Matemática",
+        hero:{
+          src:"https://images.unsplash.com/photo-1509228468518-180dd4864904?q=80&w=2200&auto=format&fit=crop",
+          cap:"Razonamiento, patrones, relaciones causa–efecto y resolución de problemas (Gardner, 1983)."
+        },
+        concepto:{
+          quote:"“Capacidad para razonar, reconocer patrones y manejar operaciones lógicas.” (paráfrasis de Gardner)",
+          body:[
+            "La inteligencia lógico–matemática se asocia con el razonamiento deductivo e inductivo, la identificación de patrones y la resolución de problemas mediante reglas, modelos o números (Gardner, 1983).",
+            "En clase se manifiesta al analizar datos, justificar procedimientos y elaborar conclusiones basadas en evidencia."
+          ],
+          pills:["Patrones", "Datos", "Hipótesis", "Causa–efecto"]
+        },
+        caracteristicas:{
+          leftTitle:"Características observables",
+          left:[
+            "Identifica patrones (series, relaciones, regularidades).",
+            "Organiza información en tablas y gráficas.",
+            "Explica procedimientos paso a paso.",
+            "Formula hipótesis y las contrasta con datos.",
+            "Detecta errores lógicos en un argumento."
+          ],
+          rightTitle:"Se nota cuando…",
+          right:[
+            "Resuelve un problema justificando cada paso.",
+            "Interpreta una gráfica y saca conclusiones.",
+            "Propone una regla o modelo simple para un fenómeno.",
+            "Distingue correlación vs causa (cuando aplica)."
+          ],
+          cite:"Gardner (1983); Brualdi Timmins (1996)."
+        },
+        ejemplos:{
+          titleA:"Ejemplos académicos",
+          itemsA:[
+            "Análisis de un conjunto de datos (promedio, tendencia, comparación).",
+            "Diseño de un experimento con variables y predicción.",
+            "Resolución de problemas con explicación (no solo resultado)."
+          ],
+          titleB:"Evidencias (producto/registro)",
+          itemsB:[
+            "Hoja de procedimientos con corrección.",
+            "Gráfica + interpretación escrita (5–8 líneas).",
+            "Tabla de variables/hipótesis/resultados."
+          ],
+          gallery:[
+            {src:"https://images.unsplash.com/photo-1551281044-8c76f54a2a84?q=80&w=1200&auto=format&fit=crop", tag:"Datos"},
+            {src:"https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=1200&auto=format&fit=crop", tag:"Análisis"},
+            {src:"https://images.unsplash.com/photo-1545239351-1141bd82e8a6?q=80&w=1200&auto=format&fit=crop", tag:"Patrones"}
+          ]
+        },
+        estrategias:{
+          title:"Estrategias personales",
+          items:[
+            "Resolver 3 problemas por sesión: 1 fácil, 1 medio, 1 reto (con explicación escrita).",
+            "Convertir lecturas en preguntas: ¿qué datos hay?, ¿qué falta?, ¿qué concluyo?",
+            "Practicar ‘pensamiento en voz alta’: narrar cómo llegas a una solución.",
+            "Usar verificación final: sustituir resultados, estimar si “tiene sentido”."
+          ],
+          cierre:"Meta sugerida: mejorar justificación, no solo obtener respuestas."
+        }
+      }),
+
+      esp: makeIntel({
+        kicker:"Visual",
+        title:"Visual–Espacial",
+        hero:{
+          src:"https://static.wixstatic.com/media/b4caf4_9209cf47477f4e848ad8626bdbf5c273~mv2.jpg/v1/fill/w_318,h_210,al_c,lg_1,q_80,enc_avif,quality_auto/b4caf4_9209cf47477f4e848ad8626bdbf5c273~mv2.jpg",
+          cap:"Representación mental del espacio y diseño de información (Gardner, 1983)."
+        },
+        concepto:{
+          quote:"“Capacidad para percibir, transformar y representar información espacial y visual.” (paráfrasis de Gardner)",
+          body:[
+            "La inteligencia visual–espacial se relaciona con percibir y representar el mundo en imágenes: orientación, diseño, mapas, diagramas, formas y relaciones espaciales (Gardner, 1983).",
+            "En la escuela se observa en el uso de esquemas, la lectura de mapas, la creación de infografías y la organización visual de ideas."
+          ],
+          pills:["Mapas", "Diagramas", "Diseño", "Imágenes mentales"]
+        },
+        caracteristicas:{
+          leftTitle:"Características observables",
+          left:[
+            "Organiza información con diagramas o mapas mentales.",
+            "Interpreta planos, gráficas e imágenes.",
+            "Imagina rotaciones o posiciones en el espacio.",
+            "Diseña presentaciones claras y estéticas.",
+            "Detecta proporciones, simetrías y composición."
+          ],
+          rightTitle:"Se nota cuando…",
+          right:[
+            "Explica un tema con un esquema visual propio.",
+            "Convierte texto a infografía o línea del tiempo.",
+            "Hace un croquis o mapa conceptual correcto.",
+            "Ubica relaciones (cerca/lejos, arriba/abajo, escala)."
+          ],
+          cite:"Gardner (1983); Project Zero (Harvard)."
+        },
+        ejemplos:{
+          titleA:"Ejemplos académicos",
+          itemsA:[
+            "Infografía del tema (definición, puntos clave y ejemplo).",
+            "Mapa conceptual o línea del tiempo.",
+            "Modelo/maqueta simple con etiquetas."
+          ],
+          titleB:"Evidencias (producto/registro)",
+          itemsB:[
+            "Infografía exportada en PDF/imagen.",
+            "Fotos del proceso (boceto → versión final).",
+            "Rúbrica de legibilidad: jerarquía visual, claridad, fuentes."
+          ],
+          gallery:[
+            {src:"https://images.unsplash.com/photo-1553877522-43269d4ea984?q=80&w=1200&auto=format&fit=crop", tag:"Infografía"},
+            {src:"https://images.unsplash.com/photo-1557682260-96773eb01377?q=80&w=1200&auto=format&fit=crop", tag:"Diseño"},
+            {src:"https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=1200&auto=format&fit=crop", tag:"Esquemas"}
+          ]
+        },
+        estrategias:{
+          title:"Estrategias personales",
+          items:[
+            "Convertir cada tema a un mapa mental (máx. 1 página).",
+            "Usar la regla: título grande + 3 bloques + 1 conclusión visual.",
+            "Practicar croquis: resumir un texto en 6–8 íconos/figuras.",
+            "Revisar legibilidad en pantalla: contraste, tamaño de letra y espaciado."
+          ],
+          cierre:"Meta sugerida: mejorar claridad visual sin saturar."
+        }
+      }),
+
+      mus: makeIntel({
+        kicker:"Auditiva",
+        title:"Musical",
+        hero:{
+          src:"https://images.unsplash.com/photo-1511379938547-c1f69419868d?q=80&w=2200&auto=format&fit=crop",
+          cap:"Sensibilidad a ritmo, tono y estructura sonora; uso educativo del sonido (Gardner, 1983)."
+        },
+        concepto:{
+          quote:"“Capacidad para percibir, discriminar, transformar y expresar formas musicales.” (paráfrasis de Gardner)",
+          body:[
+            "La inteligencia musical implica sensibilidad al ritmo, el tono, el timbre y la estructura sonora. Puede expresarse en interpretación, composición o análisis de patrones musicales (Gardner, 1983).",
+            "En el aula puede apoyar memoria y atención mediante ritmos, canciones educativas o recursos auditivos, siempre vinculados a evidencias."
+          ],
+          pills:["Ritmo", "Tono", "Patrones", "Memoria auditiva"]
+        },
+        caracteristicas:{
+          leftTitle:"Características observables",
+          left:[
+            "Reconoce patrones rítmicos con facilidad.",
+            "Distingue cambios de tono/volumen.",
+            "Memoriza con canciones o repetición sonora.",
+            "Mantiene tempo o sincronización.",
+            "Detecta errores en secuencias auditivas."
+          ],
+          rightTitle:"Se nota cuando…",
+          right:[
+            "Crea una canción corta para explicar un tema.",
+            "Identifica ritmo/estructura en un audio.",
+            "Usa palmas o golpes para organizar contenidos.",
+            "Recuerda información mediante melodías."
+          ],
+          cite:"Gardner (1983); Project Zero (Harvard)."
+        },
+        ejemplos:{
+          titleA:"Ejemplos académicos",
+          itemsA:[
+            "Jingle educativo (20–30 s) que resuma un tema.",
+            "Podcast breve (1–2 min) explicando una idea clave.",
+            "Análisis de un ritmo: patrón A–B–A y su función."
+          ],
+          titleB:"Evidencias (producto/registro)",
+          itemsB:[
+            "Archivo de audio + letra/guion.",
+            "Rúbrica: claridad del mensaje, estructura, creatividad y precisión.",
+            "Bitácora: por qué se eligió ese ritmo y qué facilita recordar."
+          ],
+          gallery:[
+            {src:"https://images.unsplash.com/photo-1511379938547-c1f69419868d?q=80&w=1200&auto=format&fit=crop", tag:"Audio"},
+            {src:"https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=1200&auto=format&fit=crop", tag:"Ritmo"},
+            {src:"https://images.unsplash.com/photo-1459749411175-04bf5292ceea?q=80&w=1200&auto=format&fit=crop", tag:"Interpretación"}
+          ]
+        },
+        estrategias:{
+          title:"Estrategias personales",
+          items:[
+            "Usar ritmo para memorizar: repetir definiciones con palmas (2–3 min).",
+            "Crear ‘audionotas’ de 60 s por tema (idea principal + ejemplo).",
+            "Entrenar discriminación: identificar 3 diferencias en un audio (tono/tempo).",
+            "Relacionar música con contenido: la canción debe incluir conceptos exactos."
+          ],
+          cierre:"Meta sugerida: mejorar precisión del contenido usando recursos auditivos."
+        }
+      }),
+
+      kin: makeIntel({
+        kicker:"Kinestésica",
+        title:"Corporal–Cinestésica",
+        hero:{
+          src:"https://images.unsplash.com/photo-1517649763962-0c623066013b?q=80&w=2200&auto=format&fit=crop",
+          cap:"Aprender haciendo: coordinación, manejo de objetos, demostraciones (Gardner, 1983)."
+        },
+        concepto:{
+          quote:"“Capacidad para usar el cuerpo de manera habilidosa para expresar ideas o resolver problemas.” (paráfrasis de Gardner)",
+          body:[
+            "La inteligencia corporal–cinestésica se refiere al uso del cuerpo para expresar ideas, construir, manipular o resolver tareas. Incluye coordinación, control motor y aprendizaje práctico (Gardner, 1983).",
+            "En educación se observa en demostraciones, dramatizaciones, prototipos y aprendizaje basado en actividades."
+          ],
+          pills:["Aprender haciendo", "Prototipo", "Demostración", "Coordinación"]
+        },
+        caracteristicas:{
+          leftTitle:"Características observables",
+          left:[
+            "Aprende mejor mediante práctica y manipulación.",
+            "Coordina movimientos con precisión.",
+            "Maneja herramientas/objetos con seguridad (según contexto).",
+            "Expresa ideas con gestos y demostraciones.",
+            "Mantiene atención en tareas activas."
+          ],
+          rightTitle:"Se nota cuando…",
+          right:[
+            "Construye una maqueta o prototipo sencillo.",
+            "Explica un proceso demostrando (paso a paso).",
+            "Participa en dramatizaciones para representar conceptos.",
+            "Organiza materiales y espacio de trabajo."
+          ],
+          cite:"Gardner (1983); Brualdi Timmins (1996)."
+        },
+        ejemplos:{
+          titleA:"Ejemplos académicos",
+          itemsA:[
+            "Maqueta/prototipo que represente un concepto (circuito, ecosistema, estructura).",
+            "Dramatización de un proceso (ciclo del agua, conflicto histórico).",
+            "Demostración guiada con checklist de pasos."
+          ],
+          titleB:"Evidencias (producto/registro)",
+          itemsB:[
+            "Fotos o video del proceso + explicación corta.",
+            "Lista de pasos (procedimiento) y mejoras detectadas.",
+            "Rúbrica: funcionalidad, seguridad, claridad de explicación y trabajo limpio."
+          ],
+          gallery:[
+            {src:"https://images.unsplash.com/photo-1581093588401-12bbd9c676f3?q=80&w=1200&auto=format&fit=crop", tag:"Prototipo"},
+            {src:"https://images.unsplash.com/photo-1520975958225-15d6b7f2b7b0?q=80&w=1200&auto=format&fit=crop", tag:"Manos"},
+            {src:"https://images.unsplash.com/photo-1517649763962-0c623066013b?q=80&w=1200&auto=format&fit=crop", tag:"Movimiento"}
+          ]
+        },
+        estrategias:{
+          title:"Estrategias personales",
+          items:[
+            "Aprender por ‘estaciones’: 10 min práctica + 5 min reflexión escrita (bitácora).",
+            "Usar checklist de pasos: planear → ejecutar → verificar → mejorar.",
+            "Grabar un video corto explicando el proceso (entrena claridad + control).",
+            "Diseñar prototipos pequeños: menos tamaño, más precisión y evidencia."
+          ],
+          cierre:"Meta sugerida: demostrar comprensión construyendo y explicando."
+        }
+      }),
+
+      inter: makeIntel({
+        kicker:"Social",
+        title:"Interpersonal",
+        hero:{
+          src:"https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=2200&auto=format&fit=crop",
+          cap:"Comprender a otros: cooperación, comunicación, liderazgo (Gardner, 1983)."
+        },
+        concepto:{
+          quote:"“Capacidad para comprender a otras personas y actuar eficazmente en la interacción.” (paráfrasis de Gardner)",
+          body:[
+            "La inteligencia interpersonal se relaciona con entender emociones, intenciones y puntos de vista de otras personas. Favorece la comunicación, la cooperación y la organización de actividades en grupo (Gardner, 1983).",
+            "En el aula se observa en trabajo colaborativo, mediación de conflictos y liderazgo responsable."
+          ],
+          pills:["Cooperación", "Comunicación", "Liderazgo", "Empatía"]
+        },
+        caracteristicas:{
+          leftTitle:"Características observables",
+          left:[
+            "Escucha activa y hace preguntas pertinentes.",
+            "Coordina roles y acuerdos en equipo.",
+            "Detecta necesidades del grupo y propone soluciones.",
+            "Media desacuerdos con respeto.",
+            "Motiva y organiza sin imponer."
+          ],
+          rightTitle:"Se nota cuando…",
+          right:[
+            "Facilita el trabajo grupal (roles, tiempos, metas).",
+            "Participa con respeto y promueve turnos de palabra.",
+            "Recibe retroalimentación sin conflicto y la aplica.",
+            "Negocia acuerdos y registra compromisos."
+          ],
+          cite:"Gardner (1983); Project Zero (Harvard)."
+        },
+        ejemplos:{
+          titleA:"Ejemplos académicos",
+          itemsA:[
+            "Trabajo por roles en proyecto (coordinador, investigador, diseñador, vocero).",
+            "Entrevista o encuesta a comunidad escolar y reporte de resultados.",
+            "Mesa de diálogo con reglas de participación."
+          ],
+          titleB:"Evidencias (producto/registro)",
+          itemsB:[
+            "Acta de acuerdos del equipo + evidencias de cumplimiento.",
+            "Co-evaluación (cada integrante valora aportes con criterios).",
+            "Registro de entrevistas (guion + resultados)."
+          ],
+          gallery:[
+            {src:"https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=1200&auto=format&fit=crop", tag:"Equipo"},
+            {src:"https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1200&auto=format&fit=crop", tag:"Coordinación"},
+            {src:"https://images.unsplash.com/photo-1551836022-4c4c79ecde51?q=80&w=1200&auto=format&fit=crop", tag:"Diálogo"}
+          ]
+        },
+        estrategias:{
+          title:"Estrategias personales",
+          items:[
+            "Practicar escucha activa: resumir lo que el otro dijo antes de responder.",
+            "Usar acuerdos claros: rol + tarea + fecha + evidencia (checklist del equipo).",
+            "Aplicar feedback: pedir 1 mejora concreta y registrar cómo se implementó.",
+            "Entrenar mediación: proponer 2 soluciones y elegir la más viable con el grupo."
+          ],
+          cierre:"Meta sugerida: mejorar coordinación y evidencias de trabajo colaborativo."
+        }
+      }),
+
+      intra: makeIntel({
+        kicker:"Personal",
+        title:"Intrapersonal",
+        hero:{
+          src:"https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=2200&auto=format&fit=crop",
+          cap:"Autoconocimiento, metas, autorregulación y reflexión (Gardner, 1983)."
+        },
+        concepto:{
+          quote:"“Capacidad para comprenderse a sí mismo y usar ese conocimiento para orientar acciones.” (paráfrasis de Gardner)",
+          body:[
+            "La inteligencia intrapersonal implica reconocer estados internos (motivación, emociones, fortalezas, límites) y usar esa información para planear, tomar decisiones y autorregularse (Gardner, 1983).",
+            "En lo académico se refleja en la autoevaluación, la metacognición (pensar sobre cómo aprendo) y el establecimiento de metas realistas."
+          ],
+          pills:["Metacognición", "Autoevaluación", "Metas", "Autorregulación"]
+        },
+        caracteristicas:{
+          leftTitle:"Características observables",
+          left:[
+            "Se fija metas y monitorea su avance.",
+            "Identifica qué le funciona para estudiar (y qué no).",
+            "Reconoce errores y propone mejoras.",
+            "Regula impulsos: mantiene constancia.",
+            "Reflexiona con honestidad sobre su desempeño."
+          ],
+          rightTitle:"Se nota cuando…",
+          right:[
+            "Escribe una reflexión con evidencia (qué hice, qué aprendí, qué cambiaré).",
+            "Organiza su tiempo y cumple plazos.",
+            "Pide ayuda de forma oportuna y específica.",
+            "Elabora un plan de estudio breve."
+          ],
+          cite:"Gardner (1983); Brualdi Timmins (1996)."
+        },
+        ejemplos:{
+          titleA:"Ejemplos académicos",
+          itemsA:[
+            "Bitácora de aprendizaje (3 entradas): objetivo, estrategia usada, resultado.",
+            "Autoevaluación con rúbrica (antes de entregar).",
+            "Plan semanal: 3 metas y 1 hábito para sostenerlas."
+          ],
+          titleB:"Evidencias (producto/registro)",
+          itemsB:[
+            "Bitácora firmada/fechada o archivo digital.",
+            "Comparación: borrador vs versión final con mejoras.",
+            "Checklist de hábitos (sí/no) por semana."
+          ],
+          gallery:[
+            {src:"https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1200&auto=format&fit=crop", tag:"Reflexión"},
+            {src:"https://images.unsplash.com/photo-1456324504439-367cee3b3c32?q=80&w=1200&auto=format&fit=crop", tag:"Metas"},
+            {src:"https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1200&auto=format&fit=crop", tag:"Hábitos"}
+          ]
+        },
+        estrategias:{
+          title:"Estrategias personales",
+          items:[
+            "Aplicar ‘revisión de 3 preguntas’ al estudiar: ¿qué entendí?, ¿qué me falta?, ¿cómo lo compruebo?",
+            "Establecer metas SMART (pequeñas): 1 tarea concreta + evidencia por semana.",
+            "Usar el método 25/5 (Pomodoro): 25 min + 5 min registro en bitácora.",
+            "Autoevaluación previa: calificar tu trabajo con rúbrica antes de entregar."
+          ],
+          cierre:"Meta sugerida: mejorar constancia y calidad a partir de autoevaluación."
+        }
+      }),
+
+      nat: makeIntel({
+        kicker:"Entorno",
+        title:"Naturalista",
+        hero:{
+          src:"https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2200&auto=format&fit=crop",
+          cap:"Observar, clasificar y comprender el mundo natural (incorporada por Gardner en desarrollos posteriores)."
+        },
+        concepto:{
+          quote:"“Capacidad para reconocer y clasificar elementos del entorno natural (plantas, animales, fenómenos).” (paráfrasis de Gardner)",
+          body:[
+            "La inteligencia naturalista se asocia con la observación y clasificación del entorno: reconocer patrones en la naturaleza, distinguir especies, fenómenos o categorías, y registrar cambios (Brualdi Timmins, 1996; Gardner, trabajos posteriores).",
+            "En educación se refleja en proyectos ambientales, investigación de campo, bitácoras, clasificación de muestras y análisis de variables del entorno."
+          ],
+          pills:["Observación", "Clasificación", "Registro", "Entorno"]
+        },
+        caracteristicas:{
+          leftTitle:"Características observables",
+          left:[
+            "Distingue categorías (especies, tipos, materiales).",
+            "Observa cambios y registra detalles.",
+            "Relaciona variables ambientales con resultados.",
+            "Cuida el entorno y propone mejoras.",
+            "Formula preguntas sobre fenómenos naturales."
+          ],
+          rightTitle:"Se nota cuando…",
+          right:[
+            "Hace una bitácora de observación con fechas y evidencias.",
+            "Clasifica muestras con criterios claros.",
+            "Explica relaciones simples (clima–flora, agua–suelo).",
+            "Propone acciones ambientales con justificación."
+          ],
+          cite:"Brualdi Timmins (1996); Project Zero (Harvard)."
+        },
+        ejemplos:{
+          titleA:"Ejemplos académicos",
+          itemsA:[
+            "Clasificación de plantas (hojas, tallos) con criterios y fotos.",
+            "Registro de clima local por una semana (tabla + conclusión).",
+            "Proyecto de reciclaje: categorías, medición y propuesta."
+          ],
+          titleB:"Evidencias (producto/registro)",
+          itemsB:[
+            "Bitácora con fotos (o dibujos) y observaciones.",
+            "Tabla de datos + gráfica sencilla.",
+            "Informe corto con propuesta y evidencia de implementación."
+          ],
+          gallery:[
+            {src:"https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=1200&auto=format&fit=crop", tag:"Bosque"},
+            {src:"https://images.unsplash.com/photo-1469474968028-56623f02e42e?q=80&w=1200&auto=format&fit=crop", tag:"Observación"},
+            {src:"https://images.unsplash.com/photo-1523861751938-121b5322f3f2?q=80&w=1200&auto=format&fit=crop", tag:"Clasificar"}
+          ]
+        },
+        estrategias:{
+          title:"Estrategias personales",
+          items:[
+            "Hacer 2 observaciones por semana (10 min) y registrar: qué vi, qué cambió, evidencia.",
+            "Aprender criterios de clasificación (3 categorías claras) y aplicarlos a un caso real.",
+            "Comparar variables: por ejemplo, humedad/temperatura vs resultados de un experimento.",
+            "Diseñar una acción ambiental pequeña y medible (antes/después con foto)."
+          ],
+          cierre:"Meta sugerida: pasar de observar a explicar con evidencia."
+        }
+      })
+    };
+
+    function makeIntel(obj){
+      // Pequeña normalización para asegurar campos
+      return {
+        kicker: obj.kicker || "Tipología",
+        title: obj.title || "Inteligencia",
+        hero: obj.hero || {src:"", cap:""},
+        concepto: obj.concepto || {quote:"", body:[], pills:[]},
+        caracteristicas: obj.caracteristicas || {leftTitle:"", left:[], rightTitle:"", right:[], cite:""},
+        ejemplos: obj.ejemplos || {titleA:"", itemsA:[], titleB:"", itemsB:[], gallery:[]},
+        estrategias: obj.estrategias || {title:"", items:[], cierre:""}
+      };
+    }
+
+    // ---------- DOM helpers ----------
+    const $ = (sel, root=document) => root.querySelector(sel);
+    const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
+
+    const deck = $("#deck");
+    const dots = $$(".dot");
+    const sidebar = $("#sidebar");
+    const overlay = $("#overlay");
+    const openSideBtn = $("#openSide");
+    const closeSideBtn = $("#closeSide");
+
+    const kickerEl = $("#kicker");
+    const titleEl = $("#mainTitle");
+    const tabsEl = $("#tabs");
+
+    const viewGeneral = $("#view-general");
+    const viewConcepto = $("#view-concepto");
+    const viewCarac = $("#view-caracteristicas");
+    const viewEj = $("#view-ejemplos");
+    const viewEst = $("#view-estrategias");
+
+    let currentKey = "general";
+    let currentTab = "concepto";
+
+    function setActiveDot(idx){
+      dots.forEach(d=>d.classList.remove("active"));
+      const d = dots[idx];
+      if(d) d.classList.add("active");
+    }
+
+    function scrollToSlide(idx){
+      const sec = $("#s"+idx);
+      if(!sec) return;
+      sec.scrollIntoView({behavior:"smooth", block:"start"});
+    }
+
+    // dot click
+    dots.forEach(d=>{
+      d.addEventListener("click", ()=> scrollToSlide(parseInt(d.dataset.slide,10)));
+    });
+
+    // update dot on scroll (lightweight)
+    deck.addEventListener("scroll", ()=>{
+      const sections = ["s0","s1","s2","s3","s4","s5"].map(id=>$("#"+id));
+      const mid = deck.scrollTop + (window.innerHeight/2);
+      let best = 0;
+      for(let i=0;i<sections.length;i++){
+        const el = sections[i];
+        if(!el) continue;
+        const top = el.offsetTop;
+        if(mid >= top) best = i;
+      }
+      setActiveDot(best);
+    });
+
+    // Sidebar toggle (mobile)
+    function isMobile(){
+      return window.matchMedia("(max-width: 980px)").matches;
+    }
+    function syncMobileControls(){
+      if(isMobile()){
+        openSideBtn.style.display = "inline-flex";
+      }else{
+        openSideBtn.style.display = "none";
+        sidebar.classList.remove("open");
+        overlay.classList.remove("open");
+      }
+    }
+    window.addEventListener("resize", syncMobileControls);
+
+    function openSidebar(){
+      sidebar.classList.add("open");
+      overlay.classList.add("open");
+    }
+    function closeSidebar(){
+      sidebar.classList.remove("open");
+      overlay.classList.remove("open");
+    }
+    openSideBtn.addEventListener("click", openSidebar);
+    closeSideBtn.addEventListener("click", closeSidebar);
+    overlay.addEventListener("click", closeSidebar);
+
+    // ---------- Rendering ----------
+    function renderGeneral(){
+      const g = MI.general;
+
+      const pillsHtml = g.concepto.pills.map(p=>`
+        <div class="pill"><i data-lucide="sparkles" class="w-4 h-4"></i>${escapeHtml(p)}</div>
+      `).join("");
+
+      viewGeneral.innerHTML = `
+        <div class="grid2">
+          <div class="card">
+            <div class="pad">
+              <h3>Concepto</h3>
+              <p class="p quote">${escapeHtml(g.concepto.quote)}</p>
+              <div class="mt-3" style="display:flex; flex-direction:column; gap:10px;">
+                ${g.concepto.body.map(t=>`<p class="p">${escapeHtml(t)}</p>`).join("")}
+              </div>
+              <div class="pillrow mt-4">${pillsHtml}</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="pad">
+              <h3>Vista rápida</h3>
+              <div class="heroimg">
+                <img src="${escapeAttr(g.hero.src)}" alt="Panorama MI" loading="lazy" onerror="this.style.display='none'">
+                <div class="cap">${escapeHtml(g.hero.cap)}</div>
+              </div>
+
+              <div class="mt-4">
+                <h4>Las 8 tipologías (modelo escolar)</h4>
+                <div class="pillrow">
+                  ${[
+                    "Lingüística–verbal","Lógico–matemática","Visual–espacial","Musical",
+                    "Corporal–cinestésica","Interpersonal","Intrapersonal","Naturalista"
+                  ].map(x=>`<div class="pill"><i data-lucide="check" class="w-4 h-4"></i>${escapeHtml(x)}</div>`).join("")}
+                </div>
+              </div>
+
+              <div class="mt-4">
+                <h4>Cómo leer MI (en clase)</h4>
+                <ul class="list">
+                  <li>Observa <b>desempeños</b> (acciones) y <b>productos</b> (evidencias).</li>
+                  <li>Diseña rutas diversas (texto, mapa, prototipo, diálogo, bitácora).</li>
+                  <li>Propón metas personales y registra avances con evidencias.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid2 mt-4">
+          <div class="card">
+            <div class="pad">
+              <h3>${escapeHtml(g.caracteristicas.leftTitle)}</h3>
+              <ul class="list">
+                ${g.caracteristicas.left.map(i=>`<li>${escapeHtml(i)}</li>`).join("")}
+              </ul>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="pad">
+              <h3>${escapeHtml(g.caracteristicas.rightTitle)}</h3>
+              <ul class="list">
+                ${g.caracteristicas.right.map(i=>`<li>${escapeHtml(i)}</li>`).join("")}
+              </ul>
+              <div class="mt-3 text-sm text-gray-400">Fuentes base: ${escapeHtml(g.caracteristicas.cite)}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card mt-4">
+          <div class="pad">
+            <h3>${escapeHtml(g.estrategias.title)}</h3>
+            <ul class="list">
+              ${g.estrategias.items.map(i=>`<li>${escapeHtml(i)}</li>`).join("")}
+            </ul>
+            <p class="mt-3 text-sm text-gray-400">${escapeHtml(g.estrategias.cierre)}</p>
+          </div>
+        </div>
+      `;
+
+      lucide.createIcons();
+    }
+
+    function renderIntel(key){
+      const d = MI[key];
+      if(!d) return;
+
+      kickerEl.textContent = d.kicker;
+      titleEl.textContent = d.title;
+
+      // Concepto
+      viewConcepto.innerHTML = `
+        <div class="grid2">
+          <div class="card">
+            <div class="pad">
+              <h3>Concepto</h3>
+              <p class="p quote">${escapeHtml(d.concepto.quote)}</p>
+              <div class="mt-3" style="display:flex; flex-direction:column; gap:10px;">
+                ${d.concepto.body.map(p=>`<p class="p">${escapeHtml(p)}</p>`).join("")}
+              </div>
+              <div class="pillrow mt-4">
+                ${d.concepto.pills.map(p=>`<div class="pill"><i data-lucide="sparkles" class="w-4 h-4"></i>${escapeHtml(p)}</div>`).join("")}
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="pad">
+              <h3>Apoyo visual</h3>
+              <div class="heroimg">
+                <img src="${escapeAttr(d.hero.src)}" alt="${escapeAttr(d.title)}" loading="lazy" onerror="this.style.display='none'">
+                <div class="cap">${escapeHtml(d.hero.cap)}</div>
+              </div>
+              <div class="mt-4">
+                <h4>Cita breve</h4>
+                <p class="p">Base teórica: <span class="text-gray-400">${escapeHtml(d.caracteristicas.cite)}</span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      // Características
+      viewCarac.innerHTML = `
+        <div class="grid2">
+          <div class="card">
+            <div class="pad">
+              <h3>${escapeHtml(d.caracteristicas.leftTitle)}</h3>
+              <ul class="list">
+                ${d.caracteristicas.left.map(i=>`<li>${escapeHtml(i)}</li>`).join("")}
+              </ul>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="pad">
+              <h3>${escapeHtml(d.caracteristicas.rightTitle)}</h3>
+              <ul class="list">
+                ${d.caracteristicas.right.map(i=>`<li>${escapeHtml(i)}</li>`).join("")}
+              </ul>
+
+              <div class="mt-4">
+                <h4>Enfoque académico</h4>
+                <p class="p">
+                  Para sostenerlo con evidencias, se recomienda vincular cada rasgo con un <b>producto</b> o <b>registro</b> (ej.: rúbrica, bitácora, audio, fotos del proceso).
+                  <span class="text-gray-500">(Brualdi Timmins, 1996)</span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      // Ejemplos y evidencias
+      const gallery = (d.ejemplos.gallery || []).slice(0,6);
+      viewEj.innerHTML = `
+        <div class="grid2">
+          <div class="card">
+            <div class="pad">
+              <h3>${escapeHtml(d.ejemplos.titleA)}</h3>
+              <ul class="list">
+                ${d.ejemplos.itemsA.map(i=>`<li>${escapeHtml(i)}</li>`).join("")}
+              </ul>
+
+              <div class="mt-4">
+                <h4>Galería (apoyo visual)</h4>
+                <div class="minigallery">
+                  ${gallery.map(g=>`
+                    <div class="mini">
+                      <img src="${escapeAttr(g.src)}" alt="${escapeAttr(g.tag)}" loading="lazy" onerror="this.style.display='none'">
+                      <div class="tag">${escapeHtml(g.tag)}</div>
+                    </div>
+                  `).join("")}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="pad">
+              <h3>${escapeHtml(d.ejemplos.titleB)}</h3>
+              <ul class="list">
+                ${d.ejemplos.itemsB.map(i=>`<li>${escapeHtml(i)}</li>`).join("")}
+              </ul>
+
+              <div class="mt-4">
+                <h4>Cómo presentarlo</h4>
+                <ul class="list">
+                  <li>Incluye un <b>producto final</b> + un <b>registro del proceso</b> (bocetos, fotos, bitácora).</li>
+                  <li>Usa criterios claros (rúbrica breve) para mostrar que la evidencia es “académica”.</li>
+                  <li>Explica en 30–40 s qué aprendiste y cómo lo mejorarías (con evidencia).</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      // Estrategias personales
+      viewEst.innerHTML = `
+        <div class="card">
+          <div class="pad">
+            <h3>${escapeHtml(d.estrategias.title)}</h3>
+            <ul class="list">
+              ${d.estrategias.items.map(i=>`<li>${escapeHtml(i)}</li>`).join("")}
+            </ul>
+
+            <div class="mt-4 card" style="background: rgba(212,175,55,.06); border-style:dashed; border-color: rgba(212,175,55,.45);">
+              <div class="pad">
+                <h4>Meta breve</h4>
+                <p class="p">${escapeHtml(d.estrategias.cierre)}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      lucide.createIcons();
+    }
+
+    function showTab(tab){
+      currentTab = tab;
+
+      // activate tab button
+      $$(".tab", tabsEl).forEach(b=>b.classList.toggle("active", b.dataset.tab === tab));
+
+      // show/hide views
+      const allViews = [viewGeneral, viewConcepto, viewCarac, viewEj, viewEst];
+      allViews.forEach(v=>v.classList.remove("active"));
+
+      if(currentKey === "general"){
+        // In general, always show General view; tabs are still visible but we keep it simple:
+        viewGeneral.classList.add("active");
+        return;
+      }
+
+      if(tab === "concepto") viewConcepto.classList.add("active");
+      if(tab === "caracteristicas") viewCarac.classList.add("active");
+      if(tab === "ejemplos") viewEj.classList.add("active");
+      if(tab === "estrategias") viewEst.classList.add("active");
+    }
+
+    function setActiveNav(key){
+      currentKey = key;
+
+      // nav active state
+      $$(".navbtn", sidebar).forEach(b=>b.classList.toggle("active", b.dataset.key === key));
+
+      // render
+      if(key === "general"){
+        kickerEl.textContent = MI.general.kicker;
+        titleEl.textContent = MI.general.title;
+        renderGeneral();
+        // ensure general view visible
+        $$(".view").forEach(v=>v.classList.remove("active"));
+        viewGeneral.classList.add("active");
+      }else{
+        // render content and show current tab
+        renderIntel(key);
+        showTab(currentTab);
+      }
+
+      // if mobile, close sidebar after selection
+      if(isMobile()) closeSidebar();
+    }
+
+    // ---------- Events ----------
+    // Sidebar click
+    $$(".navbtn", sidebar).forEach(btn=>{
+      btn.addEventListener("click", ()=>{
+        setActiveNav(btn.dataset.key);
+      });
+    });
+
+    // Tabs click
+    $$(".tab", tabsEl).forEach(btn=>{
+      btn.addEventListener("click", ()=>{
+        // keep general stable
+        if(currentKey === "general"){
+          // highlight tab but stay on general view (prevents "blank")
+          $$(".tab", tabsEl).forEach(b=>b.classList.toggle("active", b === btn));
+          viewGeneral.classList.add("active");
+          return;
+        }
+        showTab(btn.dataset.tab);
+      });
+    });
+
+    // ---------- Utilities ----------
+    function escapeHtml(str){
+      return String(str)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+    function escapeAttr(str){ return escapeHtml(str).replaceAll("\n"," "); }
+
+    // ---------- Init ----------
+    function init(){
+      // icons
+      lucide.createIcons();
+
+      // mobile controls
+      syncMobileControls();
+
+      // default render
+      renderGeneral();
+      showTab("concepto"); // no-op for general view
+
+      // ensure sidebar has proper active state
+      setActiveNav("general");
+
+      // Prevent accidental blank view: if someone switches tabs before selecting intelligence
+      currentTab = "concepto";
+    }
+    init();
+  </script>
+</body>
+</html>
