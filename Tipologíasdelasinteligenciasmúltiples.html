@@ -478,14 +478,14 @@
 
 <body>
   <!-- Dots -->
-  <div class="dots" aria-label="Navegación de diapositivas">
-    <div class="dot active" data-slide="0" title="Portada"></div>
-    <div class="dot" data-slide="1" title="Agenda"></div>
-    <div class="dot" data-slide="2" title="Marco teórico"></div>
-    <div class="dot" data-slide="3" title="Explorador MI"></div>
-    <div class="dot" data-slide="4" title="Proyecto "></div>
-    <div class="dot" data-slide="5" title="Debate y bibliografía"></div>
-  </div>
+<div class="dots" aria-label="Navegación de diapositivas">
+  <div class="dot active" data-slide="0" title="Portada"></div>
+  <div class="dot" data-slide="1" title="Agenda"></div>
+  <div class="dot" data-slide="2" title="Marco teórico"></div>
+  <div class="dot" data-slide="3" title="Explorador MI"></div>
+  <div class="dot" data-slide="4" title="Proyecto"></div>
+  <div class="dot" data-slide="5" title="Dinámicas grupales"></div> <div class="dot" data-slide="6" title="Debate y bibliografía"></div>
+</div>
 
   <div class="deck" id="deck">
 
@@ -827,42 +827,47 @@
     </section>
 
     <!-- SLIDE 6: Debate + Bibliografía -->
-    <section class="slide" id="s5">
-      <div class="bg" style="background-image:url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2400&auto=format&fit=crop');"></div>
-      <div class="layer">
-        <div class="glass p-7 md:p-10">
-          <div class="flex items-end justify-between gap-4 flex-wrap">
-            <div>
-              <div class="kicker">Cierre</div>
-              <h2 class="title">Debate académico y bibliografía</h2>
-            </div>
-            <div class="pill"><i data-lucide="info" class="w-4 h-4"></i>Breve y responsable</div>
+    <section class="slide" id="s5_new" style="scroll-snap-align:start;">
+  <div class="bg" style="background-image:url('https://images.unsplash.com/photo-1515187029135-18ee286d815b?q=80&w=2400&auto=format&fit=crop');"></div>
+  <div class="layer">
+    <div class="glass p-7 md:p-10">
+      <div class="flex items-end justify-between gap-4 flex-wrap">
+        <div>
+          <div class="kicker">Interacción</div>
+          <h2 class="title">Dinámicas de Aplicación</h2>
+        </div>
+        <div class="pill"><i data-lucide="users-2" class="w-4 h-4"></i>Sin desplazamiento físico</div>
+      </div>
+
+      <div class="grid3 mt-6">
+        <div class="card">
+          <div class="mini h-32"><img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=1200&auto=format&fit=crop" alt="Lógica"></div>
+          <div class="pad">
+            <h4 style="margin-bottom:4px;">1. Prioridades Críticas</h4>
+            <p style="font-size:11px; color:var(--gold); margin-bottom:8px;">Lógica / Interpersonal</p>
+            <p class="p" style="font-size:13px;"><b>Instrucciones:</b> El grupo debe elegir solo 3 objetos para sobrevivir en una isla de una lista de 10. <br><br>1. Debatirlo en su lugar. <br>2. Llegar a un consenso en 2 minutos.</p>
           </div>
+        </div>
 
-          <div class="grid2 mt-6">
-            <div class="card">
-              <div class="pad">
-                <h3>Debate (resumen neutral)</h3>
-                <p class="p">
-                  MI es muy influyente en educación por su utilidad para diversificar actividades. Sin embargo, algunos autores señalan que ciertas versiones escolares de MI
-                  pueden exagerar la “independencia” entre inteligencias y que la evidencia empírica no siempre respalda todas sus aplicaciones.
-                  <span class="text-gray-500">(Waterhouse, 2006)</span>
-                </p>
-                <div class="mt-4">
-                  <h4>Postura responsable en clase</h4>
-                  <ul class="list">
-                    <li>Usar MI como <b>marco pedagógico</b> (planeación, actividades y evidencias), no como diagnóstico.</li>
-                    <li>Evitar etiquetas (“soy X, no soy Y”). Hablar de <b>fortalezas actuales</b> y <b>metas de desarrollo</b>.</li>
-                    <li>Buscar evidencias reales de desempeño (producto/registro), no solo percepción.</li>
-                  </ul>
-                </div>
-                <div class="mt-5 text-sm text-gray-400">
-                  Project Zero enfatiza el enfoque educativo y el diseño de experiencias de aprendizaje. <span class="text-gray-500">(Project Zero, Harvard)</span>
-                </div>
-              </div>
-            </div>
+        <div class="card">
+          <div class="mini h-32"><img src="https://images.unsplash.com/photo-1506784365847-bbad939e9335?q=80&w=1200&auto=format&fit=crop" alt="Espacial"></div>
+          <div class="pad">
+            <h4 style="margin-bottom:4px;">2. Detective Visual</h4>
+            <p style="font-size:11px; color:var(--gold); margin-bottom:8px;">Espacial / Lógica</p>
+            <p class="p" style="font-size:13px;"><b>Instrucciones:</b> Se proyecta una imagen compleja por 15 segundos. <br><br>1. Al quitarla, deben mencionar 5 detalles específicos. <br>2. Gana quien recuerde el dato más irrelevante.</p>
+          </div>
+        </div>
 
-            <div class="card">
+        <div class="card">
+          <div class="mini h-32"><img src="https://images.unsplash.com/photo-1455390582262-044cdead277a?q=80&w=1200&auto=format&fit=crop" alt="Lingüística"></div>
+          <div class="pad">
+            <h4 style="margin-bottom:4px;">3. Historia en 4 Palabras</h4>
+            <p style="font-size:11px; color:var(--gold); margin-bottom:8px;">Lingüística / Musical</p>
+            <p class="p" style="font-size:13px;"><b>Instrucciones:</b> Crear una historia grupal. <br><br>1. Cada persona solo puede decir 4 palabras. <br>2. Debe mantener el ritmo del compañero anterior sin pausas largas.</p>
+          </div>
+        </div>
+      </div>
+       <div class="card">
               <div class="pad">
                 <h3>Bibliografía (real)</h3>
                 <div class="bib">
@@ -882,7 +887,7 @@
                     Brualdi Timmins, A. C. (1996). Multiple Intelligences: Gardner’s Theory. <i>Practical Assessment, Research, and Evaluation</i>, 5(1). DOI: <code>10.7275/7251-ea02</code>
                   </div>
                   <div class="ref">
-                    Waterhouse, L. (2006). Multiple intelligences, the Mozart effect, and emotional intelligence: A critical review. <i>Educational Psychologist</i>, 41(4), 207–225. (Ver también ediciones con paginación alternativa). DOI: <code>10.1207/s15326985ep4104_1</code>
+                    Waterhouse, L. (2006). Multiple intelligences, the Mozart effect, and emotional intelligence: A critical review. <i>Educational Psychologist</i>, 41(4), 207–225.  DOI: <code>10.1207/s15326985ep4104_1</code>
                   </div>
                 </div>
 
@@ -897,6 +902,11 @@
     </section>
 
   </div>
+    </div>
+  </div>
+</section>
+
+           
 
   <script>
     // ---------- Data (contenido teórico) ----------
@@ -1275,8 +1285,8 @@
             "Rúbrica: funcionalidad, seguridad, claridad de explicación y trabajo limpio."
           ],
           gallery:[
-            {src:"https://images.unsplash.com/photo-1581093588401-12bbd9c676f3?q=80&w=1200&auto=format&fit=crop", tag:"Prototipo"},
-            {src:"https://images.unsplash.com/photo-1520975958225-15d6b7f2b7b0?q=80&w=1200&auto=format&fit=crop", tag:"Manos"},
+            {src:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPO6A5L1k0kgIDraqEahellz7miOrO-UCitA&s", tag:"Prototipo"},
+            {src:"https://www.lifeder.com/wp-content/uploads/2020/10/gestos-al-hablar-min.jpg", tag:"Manos"},
             {src:"https://images.unsplash.com/photo-1517649763962-0c623066013b?q=80&w=1200&auto=format&fit=crop", tag:"Movimiento"}
           ]
         },
@@ -1469,7 +1479,7 @@
           gallery:[
             {src:"https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=1200&auto=format&fit=crop", tag:"Bosque"},
             {src:"https://images.unsplash.com/photo-1469474968028-56623f02e42e?q=80&w=1200&auto=format&fit=crop", tag:"Observación"},
-            {src:"https://images.unsplash.com/photo-1523861751938-121b5322f3f2?q=80&w=1200&auto=format&fit=crop", tag:"Clasificar"}
+            {src:"https://www.iberdrola.com/documents/20125/40687/Inteligencia_Naturalista_746x419.jpg/311cae14-f40e-5913-e6d0-39f116232236?t=1627547456318", tag:"Clasificar"}
           ]
         },
         estrategias:{
@@ -1528,11 +1538,12 @@
       if(d) d.classList.add("active");
     }
 
-    function scrollToSlide(idx){
-      const sec = $("#s"+idx);
-      if(!sec) return;
-      sec.scrollIntoView({behavior:"smooth", block:"start"});
-    }
+  function scrollToSlide(idx){
+  const ids = ["s0","s1","s2","s3","s4","s5_new","s5"];
+  const sec = $("#"+ids[idx]);
+  if(!sec) return;
+  sec.scrollIntoView({behavior:"smooth", block:"start"});
+}
 
     // dot click
     dots.forEach(d=>{
@@ -1541,17 +1552,18 @@
 
     // update dot on scroll (lightweight)
     deck.addEventListener("scroll", ()=>{
-      const sections = ["s0","s1","s2","s3","s4","s5"].map(id=>$("#"+id));
-      const mid = deck.scrollTop + (window.innerHeight/2);
-      let best = 0;
-      for(let i=0;i<sections.length;i++){
-        const el = sections[i];
-        if(!el) continue;
-        const top = el.offsetTop;
-        if(mid >= top) best = i;
-      }
-      setActiveDot(best);
-    });
+  // Añadimos el ID de la nueva sección "s5_new" y ajustamos el índice de la bibliografía
+  const sections = ["s0","s1","s2","s3","s4","s5_new","s5"].map(id=>$("#"+id));
+  const mid = deck.scrollTop + (window.innerHeight/2);
+  let best = 0;
+  for(let i=0;i<sections.length;i++){
+    const el = sections[i];
+    if(!el) continue;
+    const top = el.offsetTop;
+    if(mid >= top) best = i;
+  }
+  setActiveDot(best);
+});
 
     // Sidebar toggle (mobile)
     function isMobile(){
