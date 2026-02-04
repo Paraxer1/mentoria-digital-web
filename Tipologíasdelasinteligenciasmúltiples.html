@@ -475,6 +475,34 @@
     ::-webkit-scrollbar-track{ background: rgba(0,0,0,.18); }
     ::-webkit-scrollbar-thumb{ background: rgba(255,255,255,.18); border-radius: 999px; }
     ::-webkit-scrollbar-thumb:hover{ background: rgba(212,175,55,.55); }
+    /* Reproductor de Video Full Screen */
+.video-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.9);
+    z-index: 9999; display: none; align-items: center; justify-content: center;
+    backdrop-filter: blur(15px);
+}
+.video-overlay.active { display: flex; }
+.video-container { width: min(90%, 900px); position: relative; border: 2px solid var(--gold); border-radius: 15px; overflow: hidden; }
+.video-container video { width: 100%; display: block; }
+.close-video { position: absolute; top: -50px; right: 0; color: white; cursor: pointer; font-size: 14px; text-transform: uppercase; letter-spacing: 2px; }
+
+/* Personaje Anime */
+#konata {
+    position: fixed; bottom: 20px; right: 20px;
+    height: 200px; z-index: 500; pointer-events: none;
+    transition: all 1.5s ease-in-out; /* Para que se mueva suave */
+    display: none; /* Se activa por JS */
+}
+
+/* Botón de Play en las tarjetas */
+.btn-play {
+    background: var(--gold); color: rgb(255, 248, 248); padding: 8px 15px;
+    border-radius: 5px; cursor: pointer; font-weight: bold;
+    display: inline-flex; align-items: center; gap: 8px; margin-top: 10px;
+    font-size: 12px; transition: 0.3s;
+}
+.btn-play:hover { transform: scale(1.05); filter: brightness(1.2); }
+
   </style>
 </head>
 
@@ -924,7 +952,16 @@
     </div>
   </div>
 </section>
+<div id="videoPlayer" class="video-overlay">
+    <div class="video-container">
+        <span class="close-video" onclick="cerrarVideo()">[ Cerrar ]</span>
+        <video id="miVideo" controls>
+            <source src="" type="video/mp4">
+        </video>
+    </div>
+</div>
 
+<img id="konata" src="konata_idle.gif" alt="Konata">
            
 
   <script>
@@ -934,71 +971,37 @@
       general: {
         kicker: "Introducción",
         title: "Panorama general",
+        video: "video_teoria.mp4", // Tu video de apertura
         hero: {
           src: "https://images.unsplash.com/photo-1559757175-5700dde675bc?q=80&w=2200&auto=format&fit=crop",
           cap: "MI: varias capacidades relativamente diferenciadas que se combinan en tareas reales (Gardner, 1983; 1999)."
         },
         concepto: {
-          quote: "“La inteligencia puede entenderse como un potencial para procesar información que se activa en contextos culturales para resolver problemas o crear productos valiosos.” (paráfrasis de Gardner)",
+          quote: "“La inteligencia puede entenderse como un potencial para procesar información que se activa en contextos culturales para resolver problemas o crear productos valiosos.”",
           body: [
-            "La teoría de las Inteligencias Múltiples (MI) propone que la inteligencia no es una sola capacidad medida por un puntaje único. En cambio, describe un conjunto de capacidades que pueden desarrollarse y combinarse según la actividad y el contexto cultural (Gardner, 1983; 1999; 2006).",
-            "En educación, MI se utiliza como un marco para diseñar experiencias de aprendizaje variadas y para observar evidencias de desempeño: productos, procesos y acciones, no únicamente exámenes (Project Zero, Harvard)."
+            "La teoría de las Inteligencias Múltiples (MI) propone que la inteligencia no es una sola capacidad medida por un puntaje único.",
+            "En educación, MI se utiliza como un marco para diseñar experiencias de aprendizaje variadas y para observar evidencias de desempeño."
           ],
-          pills: [
-            "No es un test clínico",
-            "Se observa en desempeño",
-            "Se desarrolla con práctica",
-            "Se combinan en tareas reales"
-          ]
+          pills: ["No es un test clínico", "Se observa en desempeño", "Se desarrolla con práctica"]
         },
         caracteristicas: {
           leftTitle: "Características del enfoque MI",
-          left: [
-            "Pluralidad: no hay una sola inteligencia.",
-            "Relativa independencia: fortaleza en una no garantiza otra.",
-            "Desarrollables: mejoran con práctica, retroalimentación y ambiente.",
-            "Contextuales: cultura y experiencias influyen en su expresión.",
-            "Combinables: normalmente operan juntas en tareas reales.",
-            "Observables: se evidencian en productos y soluciones (no solo pruebas).",
-            "No etiquetas: describen capacidades actuales, no la identidad completa."
-          ],
-          rightTitle: "Cómo se usa de forma académica",
-          right: [
-            "Diseñar actividades con rutas distintas (texto, mapa, prototipo, debate, bitácora…).",
-            "Evaluar con evidencias auténticas (producto/registro), no solo con reactivos.",
-            "Reconocer fortalezas sin encasillar y proponer metas de mejora.",
-            "Relacionar MI con trabajo colaborativo y diversidad de aprendizaje."
-          ],
+          left: ["Pluralidad", "Relativa independencia", "Desarrollables", "Contextuales"],
+          rightTitle: "Cómo se usa",
+          right: ["Diseñar actividades con rutas distintas", "Evaluar con evidencias auténticas"],
           cite: "Project Zero (Harvard); Brualdi Timmins (1996)."
         },
-        ejemplos: {
-          titleA: "Ejemplos rápidos (en clase)",
-          itemsA: [
-            "Un mismo tema puede trabajarse con: ensayo, infografía, maqueta, entrevista, bitácora, audio o demostración.",
-            "Los equipos pueden repartirse roles: redacción, datos, diseño, prototipo, coordinación y reflexión final."
-          ],
-          titleB: "Evidencias sugeridas",
-          itemsB: [
-            "Producto: cartel/infografía/maqueta/audio/reporte.",
-            "Registro: bitácora de proceso (fechas, decisiones, observaciones).",
-            "Rúbrica simple: criterios claros (claridad, datos, creatividad, colaboración)."
-          ],
-          gallery: [
-            { src:"https://images.unsplash.com/photo-1553877522-43269d4ea984?q=80&w=1200&auto=format&fit=crop", tag:"Infografía" },
-            { src:"https://images.unsplash.com/photo-1581093588401-12bbd9c676f3?q=80&w=1200&auto=format&fit=crop", tag:"Experimento" },
-            { src:"https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=1200&auto=format&fit=crop", tag:"Equipo" }
-          ]
-        },
         estrategias: {
-          title: "Estrategias personales (en general)",
-          items: [
-            "Identificar fortalezas actuales con evidencias (qué productos te salen mejor y por qué).",
-            "Probar 1 micro-hábito por inteligencia (2 semanas) y registrar avances.",
-            "Combinar inteligencias: por ejemplo, infografía (espacial) + explicación oral (lingüística) + datos (lógica).",
-            "Pedir retroalimentación concreta y convertirla en una meta medible."
-          ],
-          cierre: "Idea clave: el objetivo es ampliar recursos de aprendizaje, no encasillar."
-        }
+          title: "Estrategias generales",
+          items: ["Identificar fortalezas actuales", "Probar micro-hábitos"],
+          cierre: "Idea clave: ampliar recursos de aprendizaje, no encasillar."
+        },ling: makeIntel({
+        title: "Lingüístico–Verbal",
+        video: "video_linguistica.mp4", // Video para lingüística
+        // ... resto de datos
+      }),
+      // ... etc
+    
       },
 
       ling: makeIntel({
@@ -1046,7 +1049,8 @@
             "Texto final con correcciones (antes/después).",
             "Audio o video de exposición/debate (2–3 min).",
             "Rúbrica breve de claridad, coherencia, evidencias y lenguaje."
-          ],
+          ],destacada: ["linguistico.png"],
+          
           gallery:[
             {src:"https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1200&auto=format&fit=crop", tag:"Lectura"},
             {src:"https://images.unsplash.com/photo-1455390582262-044cdead277a?q=80&w=1200&auto=format&fit=crop", tag:"Escritura"},
@@ -1110,7 +1114,7 @@
             "Hoja de procedimientos con corrección.",
             "Gráfica + interpretación escrita (5–8 líneas).",
             "Tabla de variables/hipótesis/resultados."
-          ],
+          ],destacada: ["logico.png"],
           gallery:[
             {src:"https://repositorio-uapa.cuaed.unam.mx/repositorio/moodle/pluginfile.php/3046/mod_resource/content/14/UAPA-Logica-matematica-base-pensamiento-analitico/img/cont/Concepto_logica.png", tag:"Datos"},
             {src:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTb-yltsDWG1J11PWGpq7Z6YsARKchUFvd5AA&s", tag:"Análisis"},
@@ -1174,7 +1178,7 @@
             "Infografía exportada en PDF/imagen.",
             "Fotos del proceso (boceto → versión final).",
             "Rúbrica de legibilidad: jerarquía visual, claridad, fuentes."
-          ],
+          ],destacada: ["visual.png"],
           gallery:[
             {src:"https://images.unsplash.com/photo-1553877522-43269d4ea984?q=80&w=1200&auto=format&fit=crop", tag:"Infografía"},
             {src:"https://images.unsplash.com/photo-1557682260-96773eb01377?q=80&w=1200&auto=format&fit=crop", tag:"Diseño"},
@@ -1238,7 +1242,7 @@
             "Archivo de audio + letra/guion.",
             "Rúbrica: claridad del mensaje, estructura, creatividad y precisión.",
             "Bitácora: por qué se eligió ese ritmo y qué facilita recordar."
-          ],
+          ],destacada: ["musical.png"],
           gallery:[
             {src:"https://images.unsplash.com/photo-1511379938547-c1f69419868d?q=80&w=1200&auto=format&fit=crop", tag:"Audio"},
             {src:"https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=1200&auto=format&fit=crop", tag:"Ritmo"},
@@ -1261,7 +1265,7 @@
         kicker:"Kinestésica",
         title:"Corporal–Cinestésica",
         hero:{
-          src:"https://images.unsplash.com/photo-1517649763962-0c623066013b?q=80&w=2200&auto=format&fit=crop",
+          src:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBXIuwvjYD7gNPSOK_ABJYay-hfhcZefcD-A&s",
           cap:"Aprender haciendo: coordinación, manejo de objetos, demostraciones (Gardner, 1983)."
         },
         concepto:{
@@ -1302,11 +1306,11 @@
             "Fotos o video del proceso + explicación corta.",
             "Lista de pasos (procedimiento) y mejoras detectadas.",
             "Rúbrica: funcionalidad, seguridad, claridad de explicación y trabajo limpio."
-          ],
+          ],destacada: ["corporal.png"],
           gallery:[
-            {src:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPO6A5L1k0kgIDraqEahellz7miOrO-UCitA&s", tag:"Prototipo"},
-            {src:"https://www.lifeder.com/wp-content/uploads/2020/10/gestos-al-hablar-min.jpg", tag:"Manos"},
-            {src:"https://images.unsplash.com/photo-1517649763962-0c623066013b?q=80&w=1200&auto=format&fit=crop", tag:"Movimiento"}
+            {src:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRzmUxhId0SbM23piA0J_ez_wpfqmx-eALYqxuXtBQK2kc07mDjq6ymNU2VAV80t0KFduUHCGMMEyx6LSvVfqJUdqv2PC_eLbSaV7dMvQ&s=10", tag:"Prototipo"},
+            {src:"https://images.meme-arsenal.com/8bb937b22acb294fef5fb372a92aaf3e.jpg", tag:"Manos"},
+            {src:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTRBHUr7ojRpImY_gA7675osDVyC79cYCPGPg&s", tag:"Movimiento"}
           ]
         },
         estrategias:{
@@ -1366,7 +1370,7 @@
             "Acta de acuerdos del equipo + evidencias de cumplimiento.",
             "Co-evaluación (cada integrante valora aportes con criterios).",
             "Registro de entrevistas (guion + resultados)."
-          ],
+          ],destacada: ["interpersonal.png"],
           gallery:[
             {src:"https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=1200&auto=format&fit=crop", tag:"Equipo"},
             {src:"https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1200&auto=format&fit=crop", tag:"Coordinación"},
@@ -1430,7 +1434,7 @@
             "Bitácora firmada/fechada o archivo digital.",
             "Comparación: borrador vs versión final con mejoras.",
             "Checklist de hábitos (sí/no) por semana."
-          ],
+          ],destacada: ["intrapersonal.png"],
           gallery:[
             {src:"https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1200&auto=format&fit=crop", tag:"Reflexión"},
             {src:"https://images.unsplash.com/photo-1456324504439-367cee3b3c32?q=80&w=1200&auto=format&fit=crop", tag:"Metas"},
@@ -1494,7 +1498,7 @@
             "Bitácora con fotos (o dibujos) y observaciones.",
             "Tabla de datos + gráfica sencilla.",
             "Informe corto con propuesta y evidencia de implementación."
-          ],
+          ],destacada: ["naturalista.png"],
           gallery:[
             {src:"https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=1200&auto=format&fit=crop", tag:"Bosque"},
             {src:"https://images.unsplash.com/photo-1469474968028-56623f02e42e?q=80&w=1200&auto=format&fit=crop", tag:"Observación"},
@@ -1515,7 +1519,7 @@
         kicker: "Goleman",
         title: "Inteligencia Emocional",
         hero: {
-          src: "https://images.unsplash.com/photo-1507537362145-9f204543329e?q=80&w=2400&auto=format&fit=crop",
+          src: "https://static.wixstatic.com/media/05bcdc_07bd08d3d65b4940af0db93f637cb672~mv2.jpeg/v1/fill/w_568,h_390,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/05bcdc_07bd08d3d65b4940af0db93f637cb672~mv2.jpeg",
           cap: "Capacidad de reconocer nuestros sentimientos y los ajenos (Goleman, 1995)."
         },
         concepto: {
@@ -1555,8 +1559,12 @@
             "Registro de manejo de conflictos en el aula.",
             "Test de autoevaluación de habilidades sociales.",
             "Bitácora de metas de automotivación semanal."
-          ],
-          gallery: []
+          ],destacada: ["inteligencia.png"],
+          gallery:[
+            {src:"https://post.medicalnewstoday.com/wp-content/uploads/sites/3/2022/01/journal-writing-for-anxiety-header.jpg", tag:""},
+            {src:"https://cms.areandina.edu.co/sites/default/files/styles/large/public/2022-04/infografia_piezas_contenido_infografia_portada.png?itok=KiKVDAm6", tag:"Tecnica de respiración"},
+            {src:"https://pymstatic.com/91906/conversions/escucha-empatica-small-16_9_webp.webp", tag:"Escucha empática"}
+          ]
         },
         estrategias: {
           title: "Desarrollo Personal",
@@ -1573,7 +1581,7 @@
         kicker: "Análisis",
         title: "Personalidad",
         hero: {
-          src: "https://images.unsplash.com/photo-1516534775068-ba3e84529519?q=80&w=2400&auto=format&fit=crop",
+          src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2tMm_agTJ2TtY5n296IJHpYFmb0u5LCHl4g&s",
           cap: "Patrones de pensamientos, sentimientos y conductas que nos hacen únicos."
         },
         concepto: {
@@ -1611,9 +1619,14 @@
           titleB: "Evidencias",
           itemsB: [
             "Perfil psicológico breve basado en autoevaluación.",
-            "Cuadro comparativo entre temperamento y carácter."
-          ],
-          gallery: []
+            "Cuadro comparativo entre temperamento y carácter.",
+            
+          ],destacada: ["personalidad.png"],
+          gallery:[
+            {src:"https://destakamarketing.com/wp-content/uploads/2024/01/Coordinacion-equipo.jpg", tag:"persona responsable"},
+            {src:"https://grupo-pya.com/wp-content/uploads/2021/10/12-Mediacion-laboral-300x200-1.jpg", tag:"Mediador de conflictos"},
+            {src:"https://pymstatic.com/91906/conversions/escucha-empatica-small-16_9_webp.webp", tag:"Escucha empática"}
+          ]
         },
         estrategias: {
           title: "Estrategias",
@@ -1672,7 +1685,7 @@
             "Matriz FODA personal.",
             "Cronograma de metas para el cuatrimestre.",
             "Carta de compromiso personal."
-          ],
+          ],destacada: ["plan.png"],
           gallery: []
         },
         estrategias: {
@@ -1876,38 +1889,36 @@
 
       kickerEl.textContent = d.kicker;
       titleEl.textContent = d.title;
+      
 
       // Concepto
-      viewConcepto.innerHTML = `
-        <div class="grid2">
-          <div class="card">
-            <div class="pad">
-              <h3>Concepto</h3>
-              <p class="p quote">${escapeHtml(d.concepto.quote)}</p>
-              <div class="mt-3" style="display:flex; flex-direction:column; gap:10px;">
-                ${d.concepto.body.map(p=>`<p class="p">${escapeHtml(p)}</p>`).join("")}
-              </div>
-              <div class="pillrow mt-4">
-                ${d.concepto.pills.map(p=>`<div class="pill"><i data-lucide="sparkles" class="w-4 h-4"></i>${escapeHtml(p)}</div>`).join("")}
-              </div>
-            </div>
-          </div>
+     // Busca esta parte dentro de renderIntel(key) y déjala así:
+viewConcepto.innerHTML = `
+  <div class="grid2">
+    <div class="card">
+      <div class="pad">
+        <h3>Concepto</h3>
+        <p class="p quote">${escapeHtml(d.concepto.quote)}</p>
+       <div class="mt-3" style="display:flex; flex-direction:column; gap:10px;">
+  ${d.concepto.body.map(p=>`<p class="p">${escapeHtml(p)}</p>`).join("")}
+</div>
 
-          <div class="card">
-            <div class="pad">
-              <h3>Apoyo visual</h3>
-              <div class="heroimg">
-                <img src="${escapeAttr(d.hero.src)}" alt="${escapeAttr(d.title)}" loading="lazy" onerror="this.style.display='none'">
-                <div class="cap">${escapeHtml(d.hero.cap)}</div>
-              </div>
-              <div class="mt-4">
-                <h4>Cita breve</h4>
-                <p class="p">Base teórica: <span class="text-gray-400">${escapeHtml(d.caracteristicas.cite)}</span></p>
-              </div>
-            </div>
+${d.video ? `
+  <div class="btn-play" onclick="reproducirVideo('${d.video}')">
+    <i data-lucide="play-circle" class="w-5 h-5"></i> Ver video de Ismael
+  </div>
+` : ''}
+        
+        ${d.video ? `
+          <div class="btn-play" onclick="reproducirVideo('${d.video}')">
+            <i data-lucide="play-circle"></i> Ver Explicación de Ismael
           </div>
-        </div>
-      `;
+        ` : ''}
+
+        <div class="pillrow mt-4">${d.concepto.pills.map(p => `<div class="pill"><i data-lucide="sparkles" class="w-4 h-4"></i>${escapeHtml(p)}</div>`).join("")}</div>
+      </div>
+    </div>
+    </div>`;
 
       // Características
       viewCarac.innerHTML = `
@@ -1940,48 +1951,47 @@
         </div>
       `;
 
-      // Ejemplos y evidencias
+// Vista Ejemplos y Evidencias (CORREGIDO CON "DESTACADA")
       const gallery = (d.ejemplos.gallery || []).slice(0,6);
       viewEj.innerHTML = `
-        <div class="grid2">
-          <div class="card">
-            <div class="pad">
+        <div class="grid2 items-start">
+          <div class="flex flex-col gap-4">
+            <div class="card"><div class="pad">
               <h3>${escapeHtml(d.ejemplos.titleA)}</h3>
-              <ul class="list">
-                ${d.ejemplos.itemsA.map(i=>`<li>${escapeHtml(i)}</li>`).join("")}
-              </ul>
-
-              <div class="mt-4">
-                <h4>Galería (apoyo visual)</h4>
-                <div class="minigallery">
-                  ${gallery.map(g=>`
-                    <div class="mini">
-                      <img src="${escapeAttr(g.src)}" alt="${escapeAttr(g.tag)}" loading="lazy" onerror="this.style.display='none'">
-                      <div class="tag">${escapeHtml(g.tag)}</div>
-                    </div>
-                  `).join("")}
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="card">
-            <div class="pad">
+              <ul class="list">${d.ejemplos.itemsA.map(i=>`<li>${escapeHtml(i)}</li>`).join("")}</ul>
+            </div></div>
+            <div class="card"><div class="pad">
               <h3>${escapeHtml(d.ejemplos.titleB)}</h3>
-              <ul class="list">
-                ${d.ejemplos.itemsB.map(i=>`<li>${escapeHtml(i)}</li>`).join("")}
-              </ul>
+              <ul class="list">${d.ejemplos.itemsB.map(i=>`<li>${escapeHtml(i)}</li>`).join("")}</ul>
+            </div></div>
+          </div>
 
-              <div class="mt-4">
-                <h4>Cómo presentarlo</h4>
-                <ul class="list">
-                  <li>Incluye un <b>producto final</b> + un <b>registro del proceso</b> (bocetos, fotos, bitácora).</li>
-                  <li>Usa criterios claros (rúbrica breve) para mostrar que la evidencia es “académica”.</li>
-                  <li>Explica en 30–40 s qué aprendiste y cómo lo mejorarías (con evidencia).</li>
-                </ul>
+          <div class="card"><div class="pad">
+            
+            <div class="flex flex-col">
+              <h4 class="text-xs uppercase tracking-widest text-gold mb-4">Evidencia Destacada</h4>
+              <div class="w-full h-[350px] rounded-2xl border border-white/10 overflow-hidden bg-black/50 shadow-2xl group relative">
+                <img src="${d.ejemplos.destacada || 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=1200'}" 
+                     class="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-all duration-700" 
+                     onerror="this.src='https://via.placeholder.com/600x350?text=Subir+Imagen+Destacada'">
               </div>
             </div>
-          </div>
+
+            ${gallery.length > 0 ? `
+            <div class="mt-8 pt-6 border-t border-white/10">
+              <h4 class="text-xs uppercase tracking-widest text-gray-500 mb-4">Otros Ejemplos</h4>
+              <div class="minigallery grid-cols-3 gap-3">
+                ${gallery.map(g=>`
+                  <div class="mini h-28 rounded-xl border-white/5">
+                    <img src="${escapeAttr(g.src)}" alt="${escapeAttr(g.tag)}" onerror="this.style.display='none'">
+                    <div class="tag text-[9px]">${escapeHtml(g.tag)}</div>
+                  </div>
+                `).join("")}
+              </div>
+            </div>
+            ` : ''}
+
+          </div></div>
         </div>
       `;
 
@@ -2105,6 +2115,55 @@
       currentTab = "concepto";
     }
     init();
+    let idleTimer;
+const konata = document.getElementById('konata');
+
+function reproducirVideo(url) {
+    const videoOverlay = document.getElementById('videoPlayer');
+    const videoTag = document.getElementById('miVideo');
+    videoTag.src = url;
+    videoOverlay.classList.add('active');
+    videoTag.play();
+    
+    videoTag.onended = () => {
+        videoOverlay.classList.remove('active');
+        lanzarKonata();
+    };
+}
+
+function lanzarKonata() {
+    konata.style.display = 'block';
+    resetIdleTimer();
+}
+
+function resetIdleTimer() {
+    clearTimeout(idleTimer);
+    // Si no hay movimiento en 6 segundos, Konata se mueve
+    idleTimer = setTimeout(deambular, 6000);
+}
+
+function deambular() {
+    if (konata.style.display === 'block') {
+        // Movimiento aleatorio
+        const x = Math.random() * (window.innerWidth - 150);
+        const y = Math.random() * (window.innerHeight - 150);
+        
+        konata.style.left = `${x}px`;
+        konata.style.top = `${y}px`;
+
+        // CAMBIO SEGÚN INTELIGENCIA:
+        // Asegúrate de tener estos archivos o usa uno general
+        if(currentKey === 'mus') konata.src = 'konata_musical.gif';
+        else if(currentKey === 'log') konata.src = 'konata_logica.gif';
+        else if(currentKey === 'kin') konata.src = 'konata_ejercicio.gif';
+        else konata.src = 'konata_idle.gif';
+    }
+    resetIdleTimer();
+}
+
+// Detectar si el usuario está activo para detener a Konata
+document.addEventListener('mousemove', resetIdleTimer);
+document.addEventListener('keydown', resetIdleTimer);
   </script>
 </body>
 </html>
