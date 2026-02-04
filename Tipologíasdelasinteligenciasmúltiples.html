@@ -65,11 +65,12 @@
     .layer{
       position:relative; z-index:2;
       width:min(1200px, 100%);
-      height:min(86vh, 760px);
+      height:min(90vh, 800px);
       display:flex;
       flex-direction:column;
       justify-content:center;
       gap:16px;
+      max-height: 100%;
     }
     .glass{
       background: rgba(10,10,10,.72);
@@ -120,8 +121,9 @@
       overflow:hidden;
     }
     .side-scroll{
-      overflow:auto;
-      padding: 16px 0;
+      flex:1;
+      overflow-y:auto;
+      padding-bottom: 20px 0;
     }
     .side-title{
       padding: 14px 18px 10px;
@@ -728,7 +730,24 @@
                 <span class="num">08</span>
               </button>
             </div>
+            <div class="side-title" style="margin-top:10px;">Psicología y Plan de Vida</div>
+
+<button class="navbtn" data-key="ie">
+  <div class="navmeta"><i data-lucide="heart" class="w-4 h-4"></i><span class="label">Inteligencia Emocional</span></div>
+  <span class="num">09</span>
+</button>
+
+<button class="navbtn" data-key="perso">
+  <div class="navmeta"><i data-lucide="fingerprint" class="w-4 h-4"></i><span class="label">Personalidad</span></div>
+  <span class="num">10</span>
+</button>
+
+<button class="navbtn" data-key="plan">
+  <div class="navmeta"><i data-lucide="flag" class="w-4 h-4"></i><span class="label">Plan de Vida (8 Aspectos)</span></div>
+  <span class="num">11</span>
+</button>
           </aside>
+          
 
           <!-- Main -->
           <main class="main" aria-label="Contenido de la inteligencia seleccionada">
@@ -1492,7 +1511,180 @@
           ],
           cierre:"Meta sugerida: pasar de observar a explicar con evidencia."
         }
-      })
+      }),ie: makeIntel({
+        kicker: "Goleman",
+        title: "Inteligencia Emocional",
+        hero: {
+          src: "https://images.unsplash.com/photo-1507537362145-9f204543329e?q=80&w=2400&auto=format&fit=crop",
+          cap: "Capacidad de reconocer nuestros sentimientos y los ajenos (Goleman, 1995)."
+        },
+        concepto: {
+          quote: "“La IE incluye el autocontrol, el entusiasmo, la persistencia y la capacidad de motivarse a uno mismo.”",
+          body: [
+            "Daniel Goleman propone que el éxito depende más de la IE que del coeficiente intelectual.",
+            "Se divide en 5 pilares: Autoconciencia, Autorregulación, Automotivación, Empatía y Habilidades Sociales."
+          ],
+          pills: ["Emociones", "Empatía", "Autocontrol", "Motivación"]
+        },
+        caracteristicas: {
+          leftTitle: "Los 5 Pilares de la IE",
+          left: [
+            "Autoconciencia: Reconocer emociones propias al momento.",
+            "Autorregulación: Manejar impulsos y estados de ánimo.",
+            "Motivación: Persistir tras metas a pesar de fallos.",
+            "Empatía: Entender señales sociales ajenas.",
+            "Habilidades Sociales: Manejar las emociones de los demás."
+          ],
+          rightTitle: "Emociones y Motivación",
+          right: [
+            "Emociones Primarias: Alegría, tristeza, ira, miedo, asco, sorpresa.",
+            "Motivación Intrínseca: Por placer o reto personal.",
+            "Motivación Extrínseca: Por recompensas externas o evitar castigos."
+          ],
+          cite: "Daniel Goleman (1995)."
+        },
+        ejemplos: {
+          titleA: "Estrategias de Mejora",
+          itemsA: [
+            "Llevar un diario de emociones para identificar 'triggers'.",
+            "Practicar técnicas de respiración antes de reaccionar.",
+            "Escucha empática sin interrumpir en trabajos de equipo."
+          ],
+          titleB: "Evidencias de IE",
+          itemsB: [
+            "Registro de manejo de conflictos en el aula.",
+            "Test de autoevaluación de habilidades sociales.",
+            "Bitácora de metas de automotivación semanal."
+          ],
+          gallery: []
+        },
+        estrategias: {
+          title: "Desarrollo Personal",
+          items: [
+            "Identificar la emoción actual y nombrarla.",
+            "Pausar 5 segundos antes de responder a una crítica.",
+            "Practicar la asertividad: decir 'no' sin culpa y con respeto."
+          ],
+          cierre: "La IE es la base para el manejo de conflictos y el liderazgo eficaz."
+        }
+      }),
+
+      perso: makeIntel({
+        kicker: "Análisis",
+        title: "Personalidad",
+        hero: {
+          src: "https://images.unsplash.com/photo-1516534775068-ba3e84529519?q=80&w=2400&auto=format&fit=crop",
+          cap: "Patrones de pensamientos, sentimientos y conductas que nos hacen únicos."
+        },
+        concepto: {
+          quote: "“La personalidad es la organización dinámica de los sistemas psicofísicos que determinan la conducta.”",
+          body: [
+            "Existen métodos de análisis como el Big Five (Los 5 Grandes) y el MBTI para caracterizar rasgos individuales.",
+            "Se compone de Temperamento (innato) y Carácter (aprendido)."
+          ],
+          pills: ["Temperamento", "Carácter", "Rasgos", "Conducta"]
+        },
+        caracteristicas: {
+          leftTitle: "Los 5 Grandes Rasgos (Big Five)",
+          left: [
+            "Apertura a la experiencia (Curiosidad).",
+            "Responsabilidad (Organización).",
+            "Extraversión (Sociabilidad).",
+            "Amabilidad (Cooperación).",
+            "Neuroticismo (Estabilidad emocional)."
+          ],
+          rightTitle: "Métodos de Análisis",
+          right: [
+            "Entrevistas clínicas.",
+            "Cuestionarios e inventarios (test psicométricos).",
+            "Observación de conducta en contextos sociales.",
+            "Métodos proyectivos."
+          ],
+          cite: "Allport; McCrae & Costa."
+        },
+        ejemplos: {
+          titleA: "Ejemplos de Caracterización",
+          itemsA: [
+            "Persona con alta responsabilidad: suele ser el coordinador del equipo.",
+            "Persona con alta amabilidad: facilita la mediación de conflictos."
+          ],
+          titleB: "Evidencias",
+          itemsB: [
+            "Perfil psicológico breve basado en autoevaluación.",
+            "Cuadro comparativo entre temperamento y carácter."
+          ],
+          gallery: []
+        },
+        estrategias: {
+          title: "Estrategias",
+          items: [
+            "Identificar rasgos dominantes para elegir roles de equipo adecuados.",
+            "Trabajar en rasgos de bajo puntaje (ej. organización) mediante hábitos.",
+            "Reflexionar sobre cómo el carácter influye en la toma de decisiones."
+          ],
+          cierre: "Conocer tu personalidad permite ajustar tu estilo de aprendizaje."
+        }
+      }),
+
+      plan: makeIntel({
+        kicker: "Integral",
+        title: "Plan de Vida",
+        hero: {
+          src: "https://images.unsplash.com/photo-1493612276216-ee3925520721?q=80&w=2400&auto=format&fit=crop",
+          cap: "Diseño estratégico del futuro basado en valores y metas en 8 áreas."
+        },
+        concepto: {
+          quote: "“Un plan de vida es la ruta que trazamos para cumplir nuestra misión personal.”",
+          body: [
+            "Requiere pensamiento crítico y responsabilidad para tomar decisiones informadas.",
+            "Se debe trabajar de forma equilibrada en los 8 aspectos del ser humano."
+          ],
+          pills: ["Metas", "Misión", "Visión", "Valores"]
+        },
+        caracteristicas: {
+          leftTitle: "Los 8 Aspectos del Ser Humano",
+          left: [
+            "Físico (Salud, deporte).",
+            "Profesional (Estudios, carrera).",
+            "Afectivo (Pareja, familia).",
+            "Social (Amigos, comunidad).",
+            "Económico (Ahorro, finanzas).",
+            "Espiritual (Sentido de vida, valores).",
+            "Cognitivo (Aprendizaje, intelecto).",
+            "Estético (Arte, orden, belleza)."
+          ],
+          rightTitle: "Elementos Críticos",
+          right: [
+            "Visión a corto, mediano y largo plazo.",
+            "Identificación de fortalezas y debilidades (FODA).",
+            "Asignación de recursos y tiempos reales."
+          ],
+          cite: "Planeación Educativa UTGZ."
+        },
+        ejemplos: {
+          titleA: "Ejemplos de Metas",
+          itemsA: [
+            "Profesional: Terminar el TSU en Software en 2 años.",
+            "Físico: Recuperación total de la lesión de pierna mediante terapia."
+          ],
+          titleB: "Evidencias",
+          itemsB: [
+            "Matriz FODA personal.",
+            "Cronograma de metas para el cuatrimestre.",
+            "Carta de compromiso personal."
+          ],
+          gallery: []
+        },
+        estrategias: {
+          title: "Acciones",
+          items: [
+            "Revisar metas mensualmente para ajustar el rumbo.",
+            "Priorizar acciones según la urgencia y la importancia.",
+            "Mantener un equilibrio entre lo económico y lo afectivo."
+          ],
+          cierre: "El plan de vida no es estático; evoluciona contigo."
+        }
+      }),
     };
 
     function makeIntel(obj){
