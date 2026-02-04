@@ -475,34 +475,69 @@
     ::-webkit-scrollbar-track{ background: rgba(0,0,0,.18); }
     ::-webkit-scrollbar-thumb{ background: rgba(255,255,255,.18); border-radius: 999px; }
     ::-webkit-scrollbar-thumb:hover{ background: rgba(212,175,55,.55); }
-    /* Reproductor de Video Full Screen */
-.video-overlay {
-    position: fixed; inset: 0; background: rgba(0,0,0,0.9);
-    z-index: 9999; display: none; align-items: center; justify-content: center;
-    backdrop-filter: blur(15px);
+    /* ===== Video overlay (invisible hasta play) ===== */
+.video-overlay{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.72);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 18px;
 }
-.video-overlay.active { display: flex; }
-.video-container { width: min(90%, 900px); position: relative; border: 2px solid var(--gold); border-radius: 15px; overflow: hidden; }
-.video-container video { width: 100%; display: block; }
-.close-video { position: absolute; top: -50px; right: 0; color: white; cursor: pointer; font-size: 14px; text-transform: uppercase; letter-spacing: 2px; }
+.video-overlay.active{ display:flex; }
 
-/* Personaje Anime */
-#konata {
-    position: fixed; bottom: 20px; right: 20px;
-    height: 200px; z-index: 500; pointer-events: none;
-    transition: all 1.5s ease-in-out; /* Para que se mueva suave */
-    display: none; /* Se activa por JS */
+.video-container{
+  width: min(520px, 92vw);
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: 16px;
+  background: rgba(10,10,10,.86);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 40px 110px -40px rgba(0,0,0,.95);
+  overflow:hidden;
+  position: relative;
+}
+.video-container video{
+  width: 100%;
+  height: auto;
+  display:block;
+  background:#000;
+}
+.close-video{
+  position:absolute;
+  top:10px;
+  right:12px;
+  font-size: 12px;
+  letter-spacing:.08em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.78);
+  background: rgba(0,0,0,.35);
+  border: 1px solid rgba(255,255,255,.14);
+  padding: 6px 10px;
+  border-radius: 999px;
+  cursor: pointer;
+  user-select:none;
+}
+.close-video:hover{
+  color: #000;
+  background: rgba(212,175,55,.95);
+  border-color: rgba(212,175,55,.95);
 }
 
-/* Botón de Play en las tarjetas */
-.btn-play {
-    background: var(--gold); color: rgb(255, 248, 248); padding: 8px 15px;
-    border-radius: 5px; cursor: pointer; font-weight: bold;
-    display: inline-flex; align-items: center; gap: 8px; margin-top: 10px;
-    font-size: 12px; transition: 0.3s;
+/* ===== Konata (personaje) ===== */
+#konata{
+  position: fixed;
+  width: 110px;
+  height: auto;
+  left: 14px;
+  bottom: 14px;
+  z-index: 9998;
+  display: none;          /* oculto al inicio */
+  pointer-events: none;   /* no estorba clicks */
+  transition: left 1.1s ease, top 1.1s ease, transform .2s ease;
+  filter: drop-shadow(0 18px 18px rgba(0,0,0,.55));
 }
-.btn-play:hover { transform: scale(1.05); filter: brightness(1.2); }
-
   </style>
 </head>
 
@@ -597,6 +632,7 @@
                   <li><b>Debate y bibliografía:</b> uso educativo + críticas breves.</li>
                 </ul>
               </div>
+              
             </div>
 
             <div class="card">
@@ -616,6 +652,7 @@
                 </div>
               </div>
             </div>
+            
           </div>
 
           
@@ -657,7 +694,11 @@
                     <li><b>Observable en desempeño:</b> se evidencia en productos/acciones, no solo en exámenes.</li>
                   </ul>
                 </div>
+                
               </div>
+              <button onclick="openVideo('teoria.mp4')" style="padding:10px 16px;border-radius:999px;background:#d4af37;color:#000;border:none;cursor:pointer;">
+▶ Ver video
+</button>
             </div>
 
             <div class="card">
@@ -720,7 +761,9 @@
                   <i data-lucide="compass" class="w-4 h-4"></i>
                   <span class="label">Panorama general</span>
                 </div>
-                <span class="num">00</span>
+                <span class="num">00</span><button onclick="openVideo(' panorama.mp4')" style="padding:10px 16px;border-radius:999px;background:#d4af37;color:#000;border:none;cursor:pointer;">
+▶ Ver video
+</button>
               </button>
 
               <div class="side-title" style="margin-top:10px;">Tipologías</div>
@@ -787,10 +830,12 @@
                 <div>
                   <div class="kicker" id="kicker">Introducción</div>
                   <h2 class="title" id="mainTitle">Panorama general</h2>
+                 
                 </div>
               </div>
 
               <div class="tabs" id="tabs">
+                
                 <button class="tab active" data-tab="concepto"><i data-lucide="book-open" class="w-4 h-4"></i>Concepto</button>
                 <button class="tab" data-tab="caracteristicas"><i data-lucide="list-checks" class="w-4 h-4"></i>Características</button>
                 <button class="tab" data-tab="ejemplos"><i data-lucide="folder-kanban" class="w-4 h-4"></i>Ejemplos y evidencias</button>
@@ -799,6 +844,7 @@
             </div>
 
             <div class="content">
+              
               <section class="view active" id="view-general"></section>
               <section class="view" id="view-concepto"></section>
               <section class="view" id="view-caracteristicas"></section>
@@ -952,16 +998,42 @@
     </div>
   </div>
 </section>
-<div id="videoPlayer" class="video-overlay">
-    <div class="video-container">
-        <span class="close-video" onclick="cerrarVideo()">[ Cerrar ]</span>
-        <video id="miVideo" controls>
-            <source src="" type="video/mp4">
-        </video>
-    </div>
+<!-- VIDEO FLOTANTE -->
+<div id="videoOverlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,.6); z-index:9999; align-items:flex-end; justify-content:flex-end; padding:20px;">
+  <div style="width:320px; background:#000; border-radius:12px; overflow:hidden; position:relative;">
+    <video id="floatingVideo" width="100%" controls>
+      <source id="videoSource" src="" type="video/mp4">
+    </video>
+    <button onclick="closeVideo()" style="position:absolute;top:6px;right:6px;background:#000;color:#fff;border:1px solid #fff;padding:4px 8px;border-radius:999px;cursor:pointer;">
+      ✕
+    </button>
+  </div>
 </div>
 
-<img id="konata" src="konata_idle.gif" alt="Konata">
+<script>
+function openVideo(url){
+  const overlay = document.getElementById("videoOverlay");
+  const video = document.getElementById("floatingVideo");
+  const source = document.getElementById("videoSource");
+
+  source.src = url;
+  video.load();
+  overlay.style.display = "flex";
+  video.play();
+
+  video.onended = () => {
+    closeVideo();
+  };
+}
+
+function closeVideo(){
+  const overlay = document.getElementById("videoOverlay");
+  const video = document.getElementById("floatingVideo");
+  video.pause();
+  video.currentTime = 0;
+  overlay.style.display = "none";
+}
+</script>
            
 
   <script>
@@ -971,37 +1043,74 @@
       general: {
         kicker: "Introducción",
         title: "Panorama general",
-        video: "video_teoria.mp4", // Tu video de apertura
         hero: {
           src: "https://images.unsplash.com/photo-1559757175-5700dde675bc?q=80&w=2200&auto=format&fit=crop",
           cap: "MI: varias capacidades relativamente diferenciadas que se combinan en tareas reales (Gardner, 1983; 1999)."
+          
         },
+
         concepto: {
-          quote: "“La inteligencia puede entenderse como un potencial para procesar información que se activa en contextos culturales para resolver problemas o crear productos valiosos.”",
+          quote: "“La inteligencia puede entenderse como un potencial para procesar información que se activa en contextos culturales para resolver problemas o crear productos valiosos.” (paráfrasis de Gardner)",
           body: [
-            "La teoría de las Inteligencias Múltiples (MI) propone que la inteligencia no es una sola capacidad medida por un puntaje único.",
-            "En educación, MI se utiliza como un marco para diseñar experiencias de aprendizaje variadas y para observar evidencias de desempeño."
+            "La teoría de las Inteligencias Múltiples (MI) propone que la inteligencia no es una sola capacidad medida por un puntaje único. En cambio, describe un conjunto de capacidades que pueden desarrollarse y combinarse según la actividad y el contexto cultural (Gardner, 1983; 1999; 2006).",
+            "En educación, MI se utiliza como un marco para diseñar experiencias de aprendizaje variadas y para observar evidencias de desempeño: productos, procesos y acciones, no únicamente exámenes (Project Zero, Harvard)."
           ],
-          pills: ["No es un test clínico", "Se observa en desempeño", "Se desarrolla con práctica"]
+          pills: [
+            "No es un test clínico",
+            "Se observa en desempeño",
+            "Se desarrolla con práctica",
+            "Se combinan en tareas reales"
+          ]
         },
         caracteristicas: {
           leftTitle: "Características del enfoque MI",
-          left: ["Pluralidad", "Relativa independencia", "Desarrollables", "Contextuales"],
-          rightTitle: "Cómo se usa",
-          right: ["Diseñar actividades con rutas distintas", "Evaluar con evidencias auténticas"],
+          left: [
+            "Pluralidad: no hay una sola inteligencia.",
+            "Relativa independencia: fortaleza en una no garantiza otra.",
+            "Desarrollables: mejoran con práctica, retroalimentación y ambiente.",
+            "Contextuales: cultura y experiencias influyen en su expresión.",
+            "Combinables: normalmente operan juntas en tareas reales.",
+            "Observables: se evidencian en productos y soluciones (no solo pruebas).",
+            "No etiquetas: describen capacidades actuales, no la identidad completa."
+          ],
+          rightTitle: "Cómo se usa de forma académica",
+          right: [
+            "Diseñar actividades con rutas distintas (texto, mapa, prototipo, debate, bitácora…).",
+            "Evaluar con evidencias auténticas (producto/registro), no solo con reactivos.",
+            "Reconocer fortalezas sin encasillar y proponer metas de mejora.",
+            "Relacionar MI con trabajo colaborativo y diversidad de aprendizaje."
+          ],
           cite: "Project Zero (Harvard); Brualdi Timmins (1996)."
         },
+        ejemplos: {
+          titleA: "Ejemplos rápidos (en clase)",
+          itemsA: [
+            "Un mismo tema puede trabajarse con: ensayo, infografía, maqueta, entrevista, bitácora, audio o demostración.",
+            "Los equipos pueden repartirse roles: redacción, datos, diseño, prototipo, coordinación y reflexión final."
+          ],
+          titleB: "Evidencias sugeridas",
+          itemsB: [
+            "Producto: cartel/infografía/maqueta/audio/reporte.",
+            "Registro: bitácora de proceso (fechas, decisiones, observaciones).",
+            "Rúbrica simple: criterios claros (claridad, datos, creatividad, colaboración)."
+          ],
+          
+          gallery: [
+            { src:"https://images.unsplash.com/photo-1553877522-43269d4ea984?q=80&w=1200&auto=format&fit=crop", tag:"Infografía" },
+            { src:"https://images.unsplash.com/photo-1581093588401-12bbd9c676f3?q=80&w=1200&auto=format&fit=crop", tag:"Experimento" },
+            { src:"https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=1200&auto=format&fit=crop", tag:"Equipo" }
+          ]
+        },
         estrategias: {
-          title: "Estrategias generales",
-          items: ["Identificar fortalezas actuales", "Probar micro-hábitos"],
-          cierre: "Idea clave: ampliar recursos de aprendizaje, no encasillar."
-        },ling: makeIntel({
-        title: "Lingüístico–Verbal",
-        video: "video_linguistica.mp4", // Video para lingüística
-        // ... resto de datos
-      }),
-      // ... etc
-    
+          title: "Estrategias personales (en general)",
+          items: [
+            "Identificar fortalezas actuales con evidencias (qué productos te salen mejor y por qué).",
+            "Probar 1 micro-hábito por inteligencia (2 semanas) y registrar avances.",
+            "Combinar inteligencias: por ejemplo, infografía (espacial) + explicación oral (lingüística) + datos (lógica).",
+            "Pedir retroalimentación concreta y convertirla en una meta medible."
+          ],
+          cierre: "Idea clave: el objetivo es ampliar recursos de aprendizaje, no encasillar."
+        }
       },
 
       ling: makeIntel({
@@ -1839,7 +1948,7 @@
               <div class="mt-4">
                 <h4>Cómo leer MI (en clase)</h4>
                 <ul class="list">
-                  <li>Observa <b>desempeños</b> (acciones) y <b>productos</b> (evidencias).</li>
+                  <li>Observa desempeños (acciones) y productos (evidencias).</li>
                   <li>Diseña rutas diversas (texto, mapa, prototipo, diálogo, bitácora).</li>
                   <li>Propón metas personales y registra avances con evidencias.</li>
                 </ul>
@@ -1889,36 +1998,38 @@
 
       kickerEl.textContent = d.kicker;
       titleEl.textContent = d.title;
-      
 
       // Concepto
-     // Busca esta parte dentro de renderIntel(key) y déjala así:
-viewConcepto.innerHTML = `
-  <div class="grid2">
-    <div class="card">
-      <div class="pad">
-        <h3>Concepto</h3>
-        <p class="p quote">${escapeHtml(d.concepto.quote)}</p>
-       <div class="mt-3" style="display:flex; flex-direction:column; gap:10px;">
-  ${d.concepto.body.map(p=>`<p class="p">${escapeHtml(p)}</p>`).join("")}
-</div>
-
-${d.video ? `
-  <div class="btn-play" onclick="reproducirVideo('${d.video}')">
-    <i data-lucide="play-circle" class="w-5 h-5"></i> Ver video de Ismael
-  </div>
-` : ''}
-        
-        ${d.video ? `
-          <div class="btn-play" onclick="reproducirVideo('${d.video}')">
-            <i data-lucide="play-circle"></i> Ver Explicación de Ismael
+      viewConcepto.innerHTML = `
+        <div class="grid2">
+          <div class="card">
+            <div class="pad">
+              <h3>Concepto</h3>
+              <p class="p quote">${escapeHtml(d.concepto.quote)}</p>
+              <div class="mt-3" style="display:flex; flex-direction:column; gap:10px;">
+                ${d.concepto.body.map(p=>`<p class="p">${escapeHtml(p)}</p>`).join("")}
+              </div>
+              <div class="pillrow mt-4">
+                ${d.concepto.pills.map(p=>`<div class="pill"><i data-lucide="sparkles" class="w-4 h-4"></i>${escapeHtml(p)}</div>`).join("")}
+              </div>
+            </div>
           </div>
-        ` : ''}
 
-        <div class="pillrow mt-4">${d.concepto.pills.map(p => `<div class="pill"><i data-lucide="sparkles" class="w-4 h-4"></i>${escapeHtml(p)}</div>`).join("")}</div>
-      </div>
-    </div>
-    </div>`;
+          <div class="card">
+            <div class="pad">
+              <h3>Apoyo visual</h3>
+              <div class="heroimg">
+                <img src="${escapeAttr(d.hero.src)}" alt="${escapeAttr(d.title)}" loading="lazy" onerror="this.style.display='none'">
+                <div class="cap">${escapeHtml(d.hero.cap)}</div>
+              </div>
+              <div class="mt-4">
+                <h4>Cita breve</h4>
+                <p class="p">Base teórica: <span class="text-gray-400">${escapeHtml(d.caracteristicas.cite)}</span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
 
       // Características
       viewCarac.innerHTML = `
@@ -2115,55 +2226,6 @@ ${d.video ? `
       currentTab = "concepto";
     }
     init();
-    let idleTimer;
-const konata = document.getElementById('konata');
-
-function reproducirVideo(url) {
-    const videoOverlay = document.getElementById('videoPlayer');
-    const videoTag = document.getElementById('miVideo');
-    videoTag.src = url;
-    videoOverlay.classList.add('active');
-    videoTag.play();
-    
-    videoTag.onended = () => {
-        videoOverlay.classList.remove('active');
-        lanzarKonata();
-    };
-}
-
-function lanzarKonata() {
-    konata.style.display = 'block';
-    resetIdleTimer();
-}
-
-function resetIdleTimer() {
-    clearTimeout(idleTimer);
-    // Si no hay movimiento en 6 segundos, Konata se mueve
-    idleTimer = setTimeout(deambular, 6000);
-}
-
-function deambular() {
-    if (konata.style.display === 'block') {
-        // Movimiento aleatorio
-        const x = Math.random() * (window.innerWidth - 150);
-        const y = Math.random() * (window.innerHeight - 150);
-        
-        konata.style.left = `${x}px`;
-        konata.style.top = `${y}px`;
-
-        // CAMBIO SEGÚN INTELIGENCIA:
-        // Asegúrate de tener estos archivos o usa uno general
-        if(currentKey === 'mus') konata.src = 'konata_musical.gif';
-        else if(currentKey === 'log') konata.src = 'konata_logica.gif';
-        else if(currentKey === 'kin') konata.src = 'konata_ejercicio.gif';
-        else konata.src = 'konata_idle.gif';
-    }
-    resetIdleTimer();
-}
-
-// Detectar si el usuario está activo para detener a Konata
-document.addEventListener('mousemove', resetIdleTimer);
-document.addEventListener('keydown', resetIdleTimer);
   </script>
 </body>
 </html>

@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Equipo 3 | Tipologías de las Inteligencias Múltiples</title>
+
+  <style>
+    :root{
+      --bg:#0b1020;
+      --card:#0f1733;
+      --card2:#101a3b;
+      --text:#e9eeff;
+      --muted:#b8c2ff;
+      --accent:#7aa2ff;
+      --accent2:#55f2d0;
+      --danger:#ff5a6d;
+      --shadow: 0 20px 40px rgba(0,0,0,.35);
+      --radius: 18px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji";
+      background: radial-gradient(1200px 800px at 20% 10%, #17224a 0%, var(--bg) 50%, #070a14 100%);
+      color:var(--text);
+      min-height:100vh;
+      overflow-x:hidden;
+    }
+    header{
+      padding: 28px 18px 10px;
+      text-align:center;
+    }
+    header h1{
+      margin:0;
+      font-weight: 800;
+      letter-spacing: .4px;
+      font-size: clamp(24px, 3vw, 40px);
+      text-shadow: 0 10px 20px rgba(0,0,0,.35);
+    }
+    header p{
+      margin: 10px auto 0;
+      max-width: 1000px;
+      color: var(--muted);
+      line-height: 1.55;
+      font-size: 15.5px;
+    }
+
+    .wrap{
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 18px 16px 60px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 320px 1fr;
+      gap: 18px;
+      align-items:start;
+    }
+    @media (max-width: 980px){
+      .grid{grid-template-columns: 1fr}
+    }
+
+    .panel{
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      backdrop-filter: blur(10px);
+    }
+
+    .panel .hd{
+      padding: 14px 14px 10px;
+      display:flex;
+      gap:10px;
+      align-items:center;
+      justify-content:space-between;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      background: rgba(0,0,0,.12);
+    }
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      color: rgba(255,255,255,.85);
+      background: rgba(122,162,255,.15);
+      border: 1px solid rgba(122,162,255,.25);
+    }
+    .small{
+      color: rgba(255,255,255,.65);
+      font-size: 12px;
+    }
+
+    .menu{
+      padding: 12px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+    .menu button{
+      width:100%;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(16,26,59,.6);
+      color:var(--text);
+      text-align:left;
+      padding: 12px 12px;
+      border-radius: 14px;
+      cursor:pointer;
+      transition: transform .12s ease, background .12s ease, border-color .12s ease;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+    }
+    .menu button:hover{
+      transform: translateY(-1px);
+      background: rgba(16,26,59,.8);
+      border-color: rgba(122,162,255,.35);
+    }
+    .menu button.active{
+      background: rgba(122,162,255,.16);
+      border-color: rgba(122,162,255,.5);
+      box-shadow: 0 10px 25px rgba(122,162,255,.18);
+    }
+    .menu button span{
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+    }
+    .menu button .t{
+      font-weight: 700;
+      font-size: 14px;
+    }
+    .menu button .d{
+      font-size: 12px;
+      color: rgba(255,255,255,.65);
+      line-height:1.25;
+    }
+    .pill{
+      font-size: 11px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      border:1px solid rgba(255,255,255,.12);
+      color: rgba(255,255,255,.75);
+      background: rgba(0,0,0,.15);
+      white-space:nowrap;
+    }
+
+    .content{ padding: 16px; }
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      backdrop-filter: blur(10px);
+    }
+    .card .top{
+      padding: 16px 16px 12px;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      background: rgba(0,0,0,.10);
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+    }
+    .card h2{
+      margin:0;
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: .25px;
+    }
+    .card p{
+      margin: 8px 0 0;
+      color: rgba(255,255,255,.72);
+      line-height: 1.55;
+      font-size: 14.5px;
+      max-width: 980px;
+    }
+    .card .body{
+      padding: 14px 16px 18px;
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .info{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    @media (max-width: 980px){
+      .info{grid-template-columns: 1fr}
+    }
+    .box{
+      padding: 14px 14px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.14);
+    }
+    .box h3{
+      margin:0 0 6px;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: .2px;
+    }
+    .box ul{
+      margin:0;
+      padding-left: 18px;
+      color: rgba(255,255,255,.75);
+      line-height:1.6;
+      font-size: 14px;
+    }
+    .box li{margin: 4px 0}
+
+    .actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      padding: 12px 16px 16px;
+      border-top: 1px solid rgba(255,255,255,.08);
+      background: rgba(0,0,0,.08);
+    }
+    .btn{
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(16,26,59,.65);
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 14px;
+      cursor:pointer;
+      font-weight: 700;
+      font-size: 13px;
+      transition: transform .12s ease, background .12s ease, border-color .12s ease;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      background: rgba(16,26,59,.85);
+      border-color: rgba(122,162,255,.35);
+    }
+    .btn.primary{
+      background: rgba(122,162,255,.18);
+      border-color: rgba(122,162,255,.45);
+    }
+    .btn.danger{
+      background: rgba(255,90,109,.14);
+      border-color: rgba(255,90,109,.35);
+    }
+
+    /* VIDEO FLOTANTE */
+    #floatingVideo{
+      position: fixed;
+      left: 16px;
+      bottom: 16px;
+      width: min(360px, 92vw);
+      background: rgba(8,12,28,.78);
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 18px;
+      box-shadow: 0 20px 50px rgba(0,0,0,.45);
+      backdrop-filter: blur(10px);
+      overflow:hidden;
+      z-index: 9999;
+      display:none; /* INVISIBLE HASTA PLAY */
+    }
+    #floatingVideo .vh{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding: 10px 12px;
+      gap:10px;
+      background: rgba(0,0,0,.20);
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    #floatingVideo .vh .ttl{
+      font-weight: 800;
+      font-size: 13px;
+      color: rgba(255,255,255,.9);
+      letter-spacing:.2px;
+      overflow:hidden;
+      text-overflow: ellipsis;
+      white-space:nowrap;
+      max-width: 210px;
+    }
+    #floatingVideo .vh .vbtns{
+      display:flex;
+      gap:8px;
+      align-items:center;
+      flex-shrink:0;
+    }
+    #floatingVideo .vbtn{
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(16,26,59,.55);
+      color: rgba(255,255,255,.9);
+      padding: 6px 10px;
+      border-radius: 12px;
+      cursor:pointer;
+      font-weight: 800;
+      font-size: 12px;
+      transition: transform .12s ease, background .12s ease, border-color .12s ease;
+    }
+    #floatingVideo .vbtn:hover{
+      transform: translateY(-1px);
+      background: rgba(16,26,59,.85);
+      border-color: rgba(122,162,255,.35);
+    }
+    #floatingVideo .vbtn.close{
+      background: rgba(255,90,109,.14);
+      border-color: rgba(255,90,109,.35);
+    }
+    #floatingVideo video{
+      width: 100%;
+      height: auto;
+      display:block;
+      background:#000;
+    }
+    #floatingVideo .hint{
+      padding: 10px 12px;
+      color: rgba(255,255,255,.65);
+      font-size: 12px;
+      line-height: 1.35;
+      background: rgba(0,0,0,.10);
+      border-top: 1px solid rgba(255,255,255,.07);
+    }
+
+    /* PERSONAJE ANIME */
+    #animeChar{
+      position: fixed;
+      width: 86px;
+      height: 86px;
+      left: 18px;
+      top: 55vh;
+      transform: translate(-0px,-50%);
+      z-index: 9998;
+      pointer-events:none;
+      filter: drop-shadow(0 20px 30px rgba(0,0,0,.55));
+      transition: left 900ms ease, top 900ms ease;
+    }
+    #animeChar img{
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      image-rendering: auto;
+      border-radius: 18px;
+      background: rgba(0,0,0,.12);
+      border: 1px solid rgba(255,255,255,.08);
+      backdrop-filter: blur(4px);
+    }
+    #animeChar .bubble{
+      position:absolute;
+      left: 88px;
+      top: 8px;
+      padding: 8px 10px;
+      background: rgba(8,12,28,.75);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 14px;
+      color: rgba(255,255,255,.88);
+      font-weight: 800;
+      font-size: 12px;
+      max-width: 220px;
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity .25s ease, transform .25s ease;
+      box-shadow: 0 20px 40px rgba(0,0,0,.35);
+      backdrop-filter: blur(10px);
+      white-space: nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    #animeChar.showBubble .bubble{
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Tipologías de las Inteligencias Múltiples</h1>
+    <p>
+      Interfaz interactiva para explorar diferentes inteligencias: conceptos clave, fortalezas, ejemplos y actividades.
+      (Se agregó un video flotante que aparece solo al darle Play y un personaje anime que deambula y señala la inteligencia activa.)
+    </p>
+  </header>
+
+  <div class="wrap">
+    <div class="grid">
+
+      <aside class="panel" id="leftPanel">
+        <div class="hd">
+          <div class="badge">📚 Menú</div>
+          <div class="small">Equipo 3</div>
+        </div>
+
+        <div class="menu" id="menuButtons">
+          <button data-key="intro" class="active" onclick="showContent('intro')">
+            <span>
+              <span class="t">General</span>
+              <span class="d">¿Qué son las inteligencias múltiples?</span>
+            </span>
+            <span class="pill">Inicio</span>
+          </button>
+
+          <button data-key="linguistica" onclick="showContent('linguistica')">
+            <span>
+              <span class="t">Lingüística</span>
+              <span class="d">Lenguaje, lectura, escritura</span>
+            </span>
+            <span class="pill">📝</span>
+          </button>
+
+          <button data-key="logico" onclick="showContent('logico')">
+            <span>
+              <span class="t">Lógico-matemática</span>
+              <span class="d">Razonamiento, números, patrones</span>
+            </span>
+            <span class="pill">➗</span>
+          </button>
+
+          <button data-key="espacial" onclick="showContent('espacial')">
+            <span>
+              <span class="t">Espacial</span>
+              <span class="d">Visualización, mapas, diseño</span>
+            </span>
+            <span class="pill">🧭</span>
+          </button>
+
+          <button data-key="musical" onclick="showContent('musical')">
+            <span>
+              <span class="t">Musical</span>
+              <span class="d">Ritmo, melodía, sonido</span>
+            </span>
+            <span class="pill">🎵</span>
+          </button>
+
+          <button data-key="corporal" onclick="showContent('corporal')">
+            <span>
+              <span class="t">Corporal-kinestésica</span>
+              <span class="d">Movimiento, destreza, acción</span>
+            </span>
+            <span class="pill">🏃</span>
+          </button>
+
+          <button data-key="interpersonal" onclick="showContent('interpersonal')">
+            <span>
+              <span class="t">Interpersonal</span>
+              <span class="d">Convivencia, empatía, liderazgo</span>
+            </span>
+            <span class="pill">🤝</span>
+          </button>
+
+          <button data-key="intrapersonal" onclick="showContent('intrapersonal')">
+            <span>
+              <span class="t">Intrapersonal</span>
+              <span class="d">Autoconocimiento, emociones</span>
+            </span>
+            <span class="pill">🧠</span>
+          </button>
+
+          <button data-key="naturalista" onclick="showContent('naturalista')">
+            <span>
+              <span class="t">Naturalista</span>
+              <span class="d">Naturaleza, observación, clasificación</span>
+            </span>
+            <span class="pill">🌿</span>
+          </button>
+
+          <button data-key="actividad" onclick="showContent('actividad')">
+            <span>
+              <span class="t">Actividad</span>
+              <span class="d">Ejercicio interactivo</span>
+            </span>
+            <span class="pill">🎮</span>
+          </button>
+        </div>
+      </aside>
+
+      <main class="content">
+        <section class="card" id="card">
+          <div class="top">
+            <div>
+              <h2 id="title">General</h2>
+              <p id="desc">
+                Explora las inteligencias múltiples de Howard Gardner. Selecciona un tipo en el menú para ver sus características.
+              </p>
+            </div>
+            <div class="badge" id="tag">Inicio</div>
+          </div>
+
+          <div class="body" id="bodyContent">
+            <div class="info">
+              <div class="box">
+                <h3>¿Qué es?</h3>
+                <ul>
+                  <li>La teoría propone que no existe una sola inteligencia general.</li>
+                  <li>Hay múltiples formas de aprender, resolver problemas y crear.</li>
+                  <li>Cada persona combina inteligencias en distintos niveles.</li>
+                </ul>
+              </div>
+              <div class="box">
+                <h3>¿Para qué sirve?</h3>
+                <ul>
+                  <li>Reconocer fortalezas y estilos de aprendizaje.</li>
+                  <li>Diversificar actividades en la enseñanza.</li>
+                  <li>Mejorar motivación y desempeño.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="box">
+              <h3>Tip rápido</h3>
+              <ul>
+                <li>Puedes mostrar un video flotante (invisible hasta Play) desde los botones de abajo.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button class="btn primary" onclick="reproducirVideo('video_teoria.mp4','Video: Teoría de Gardner')">▶️ Ver video</button>
+            <button class="btn" onclick="toggleFloatingVideo()">⏯️ Play/Pausa</button>
+            <button class="btn danger" onclick="cerrarVideo()">✖ Cerrar video</button>
+          </div>
+        </section>
+      </main>
+
+    </div>
+  </div>
+
+  <div id="floatingVideo" aria-hidden="true">
+    <div class="vh">
+      <div class="ttl" id="floatingVideoTitle">Video</div>
+      <div class="vbtns">
+        <button class="vbtn" onclick="toggleFloatingVideo()">⏯️</button>
+        <button class="vbtn close" onclick="cerrarVideo()">✖</button>
+      </div>
+    </div>
+    <video id="floatingVideoEl" controls preload="metadata"></video>
+    <div class="hint">Tip: usa ⏯️ para pausar o reanudar. ✖ lo oculta sin estorbar el contenido.</div>
+  </div>
+
+  <div id="animeChar" aria-hidden="true">
+    <img id="animeImg" src="konata_idle.gif" alt="personaje anime" />
+    <div class="bubble" id="animeBubble">¡Selecciona una inteligencia! 🧠✨</div>
+  </div>
+  <script>
+    const CONTENT = {
+      intro: {
+        title: "General",
+        tag: "Inicio",
+        desc: "Explora las inteligencias múltiples de Howard Gardner. Selecciona un tipo en el menú para ver sus características.",
+        body: `
+          <div class="info">
+            <div class="box">
+              <h3>¿Qué es?</h3>
+              <ul>
+                <li>La teoría propone que no existe una sola inteligencia general.</li>
+                <li>Hay múltiples formas de aprender, resolver problemas y crear.</li>
+                <li>Cada persona combina inteligencias en distintos niveles.</li>
+              </ul>
+            </div>
+            <div class="box">
+              <h3>¿Para qué sirve?</h3>
+              <ul>
+                <li>Reconocer fortalezas y estilos de aprendizaje.</li>
+                <li>Diversificar actividades en la enseñanza.</li>
+                <li>Mejorar motivación y desempeño.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="box">
+            <h3>Tip rápido</h3>
+            <ul>
+              <li>Puedes mostrar un video flotante (invisible hasta Play) desde los botones de abajo.</li>
+            </ul>
+          </div>
+        `,
+        actions: `
+          <button class="btn primary" onclick="reproducirVideo('video_teoria.mp4','Video: Teoría de Gardner')">▶️ Ver video</button>
+          <button class="btn" onclick="toggleFloatingVideo()">⏯️ Play/Pausa</button>
+          <button class="btn danger" onclick="cerrarVideo()">✖ Cerrar video</button>
+        `
+      },
+
+      linguistica: {
+        title: "Inteligencia Lingüística",
+        tag: "📝",
+        desc: "Capacidad para usar el lenguaje de manera efectiva: hablar, leer, escribir y argumentar.",
+        body: `
+          <div class="info">
+            <div class="box">
+              <h3>Fortalezas</h3>
+              <ul>
+                <li>Buena comprensión lectora.</li>
+                <li>Expresión oral clara.</li>
+                <li>Redacción y vocabulario.</li>
+              </ul>
+            </div>
+            <div class="box">
+              <h3>Ejemplos</h3>
+              <ul>
+                <li>Debates, narraciones, ensayos.</li>
+                <li>Juegos de palabras.</li>
+                <li>Resúmenes y mapas conceptuales.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="box">
+            <h3>Actividad sugerida</h3>
+            <ul>
+              <li>Escribe un cuento corto donde expliques una inteligencia a tu estilo.</li>
+            </ul>
+          </div>
+        `,
+        actions: `
+          <button class="btn primary" onclick="reproducirVideo('video_linguistica.mp4','Video: Lingüística')">▶️ Video</button>
+          <button class="btn" onclick="toggleFloatingVideo()">⏯️</button>
+          <button class="btn danger" onclick="cerrarVideo()">✖</button>
+        `
+      },
+
+      logico: {
+        title: "Inteligencia Lógico-matemática",
+        tag: "➗",
+        desc: "Capacidad para razonar, analizar problemas, identificar patrones y trabajar con números.",
+        body: `
+          <div class="info">
+            <div class="box">
+              <h3>Fortalezas</h3>
+              <ul>
+                <li>Resolución de problemas.</li>
+                <li>Pensamiento crítico.</li>
+                <li>Uso de fórmulas y lógica.</li>
+              </ul>
+            </div>
+            <div class="box">
+              <h3>Ejemplos</h3>
+              <ul>
+                <li>Rompecabezas, acertijos.</li>
+                <li>Experimentos con variables.</li>
+                <li>Organizar datos en tablas.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="box">
+            <h3>Actividad sugerida</h3>
+            <ul>
+              <li>Resuelve un problema usando pasos lógicos y explica tu razonamiento.</li>
+            </ul>
+          </div>
+        `,
+        actions: `
+          <button class="btn primary" onclick="reproducirVideo('video_logica.mp4','Video: Lógico-matemática')">▶️ Video</button>
+          <button class="btn" onclick="toggleFloatingVideo()">⏯️</button>
+          <button class="btn danger" onclick="cerrarVideo()">✖</button>
+        `
+      },
+
+      espacial: {
+        title: "Inteligencia Espacial",
+        tag: "🧭",
+        desc: "Capacidad para percibir el mundo visual-espacial, imaginar, diseñar y orientarse.",
+        body: `
+          <div class="info">
+            <div class="box">
+              <h3>Fortalezas</h3>
+              <ul>
+                <li>Visualización mental.</li>
+                <li>Diseño, dibujo, planos.</li>
+                <li>Interpretación de mapas.</li>
+              </ul>
+            </div>
+            <div class="box">
+              <h3>Ejemplos</h3>
+              <ul>
+                <li>Maquetas y modelado.</li>
+                <li>Mapas conceptuales visuales.</li>
+                <li>Fotografía y edición.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="box">
+            <h3>Actividad sugerida</h3>
+            <ul>
+              <li>Crea un póster visual que explique una inteligencia.</li>
+            </ul>
+          </div>
+        `,
+        actions: `
+          <button class="btn primary" onclick="reproducirVideo('video_espacial.mp4','Video: Espacial')">▶️ Video</button>
+          <button class="btn" onclick="toggleFloatingVideo()">⏯️</button>
+          <button class="btn danger" onclick="cerrarVideo()">✖</button>
+        `
+      },
+
+      musical: {
+        title: "Inteligencia Musical",
+        tag: "🎵",
+        desc: "Capacidad para percibir, discriminar y crear ritmos, tonos, melodías y timbres.",
+        body: `
+          <div class="info">
+            <div class="box">
+              <h3>Fortalezas</h3>
+              <ul>
+                <li>Buen oído musical.</li>
+                <li>Ritmo y coordinación.</li>
+                <li>Memoria auditiva.</li>
+              </ul>
+            </div>
+            <div class="box">
+              <h3>Ejemplos</h3>
+              <ul>
+                <li>Componer o tocar instrumentos.</li>
+                <li>Aprender con canciones.</li>
+                <li>Identificar patrones sonoros.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="box">
+            <h3>Actividad sugerida</h3>
+            <ul>
+              <li>Escribe una letra corta que explique un concepto escolar y ponle ritmo.</li>
+            </ul>
+          </div>
+        `,
+        actions: `
+          <button class="btn primary" onclick="reproducirVideo('video_musical.mp4','Video: Musical')">▶️ Video</button>
+          <button class="btn" onclick="toggleFloatingVideo()">⏯️</button>
+          <button class="btn danger" onclick="cerrarVideo()">✖</button>
+        `
+      },
+
+      corporal: {
+        title: "Inteligencia Corporal-Kinestésica",
+        tag: "🏃",
+        desc: "Capacidad para usar el cuerpo para expresar ideas, resolver problemas y crear productos.",
+        body: `
+          <div class="info">
+            <div class="box">
+              <h3>Fortalezas</h3>
+              <ul>
+                <li>Coordinación y destreza.</li>
+                <li>Aprendizaje por práctica.</li>
+                <li>Expresión corporal.</li>
+              </ul>
+            </div>
+            <div class="box">
+              <h3>Ejemplos</h3>
+              <ul>
+                <li>Deporte, danza, teatro.</li>
+                <li>Actividades manuales.</li>
+                <li>Experimentos prácticos.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="box">
+            <h3>Actividad sugerida</h3>
+            <ul>
+              <li>Representa con mímica una inteligencia y que el grupo la adivine.</li>
+            </ul>
+          </div>
+        `,
+        actions: `
+          <button class="btn primary" onclick="reproducirVideo('video_corporal.mp4','Video: Corporal')">▶️ Video</button>
+          <button class="btn" onclick="toggleFloatingVideo()">⏯️</button>
+          <button class="btn danger" onclick="cerrarVideo()">✖</button>
+        `
+      },
+
+      interpersonal: {
+        title: "Inteligencia Interpersonal",
+        tag: "🤝",
+        desc: "Capacidad para comprender a los demás, trabajar en equipo, liderar y comunicarse efectivamente.",
+        body: `
+          <div class="info">
+            <div class="box">
+              <h3>Fortalezas</h3>
+              <ul>
+                <li>Empatía y escucha.</li>
+                <li>Trabajo colaborativo.</li>
+                <li>Resolución de conflictos.</li>
+              </ul>
+            </div>
+            <div class="box">
+              <h3>Ejemplos</h3>
+              <ul>
+                <li>Proyectos en equipo.</li>
+                <li>Debates respetuosos.</li>
+                <li>Dinámicas de grupo.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="box">
+            <h3>Actividad sugerida</h3>
+            <ul>
+              <li>Organiza roles de equipo para crear una presentación sobre una inteligencia.</li>
+            </ul>
+          </div>
+        `,
+        actions: `
+          <button class="btn primary" onclick="reproducirVideo('video_interpersonal.mp4','Video: Interpersonal')">▶️ Video</button>
+          <button class="btn" onclick="toggleFloatingVideo()">⏯️</button>
+          <button class="btn danger" onclick="cerrarVideo()">✖</button>
+        `
+      },
+
+      intrapersonal: {
+        title: "Inteligencia Intrapersonal",
+        tag: "🧠",
+        desc: "Capacidad para entenderse a sí mismo: emociones, motivaciones, metas y autoconocimiento.",
+        body: `
+          <div class="info">
+            <div class="box">
+              <h3>Fortalezas</h3>
+              <ul>
+                <li>Reflexión y autoconciencia.</li>
+                <li>Autocontrol emocional.</li>
+                <li>Metas personales claras.</li>
+              </ul>
+            </div>
+            <div class="box">
+              <h3>Ejemplos</h3>
+              <ul>
+                <li>Diarios personales.</li>
+                <li>Autoevaluación.</li>
+                <li>Metas y hábitos.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="box">
+            <h3>Actividad sugerida</h3>
+            <ul>
+              <li>Escribe 3 fortalezas tuyas y cómo las puedes usar en la escuela.</li>
+            </ul>
+          </div>
+        `,
+        actions: `
+          <button class="btn primary" onclick="reproducirVideo('video_intrapersonal.mp4','Video: Intrapersonal')">▶️ Video</button>
+          <button class="btn" onclick="toggleFloatingVideo()">⏯️</button>
+          <button class="btn danger" onclick="cerrarVideo()">✖</button>
+        `
+      },
+
+      naturalista: {
+        title: "Inteligencia Naturalista",
+        tag: "🌿",
+        desc: "Capacidad para observar, clasificar y comprender la naturaleza, plantas, animales y ecosistemas.",
+        body: `
+          <div class="info">
+            <div class="box">
+              <h3>Fortalezas</h3>
+              <ul>
+                <li>Observación y clasificación.</li>
+                <li>Interés por el ambiente.</li>
+                <li>Reconocer patrones en la naturaleza.</li>
+              </ul>
+            </div>
+            <div class="box">
+              <h3>Ejemplos</h3>
+              <ul>
+                <li>Herbario, colecciones.</li>
+                <li>Experimentos con plantas.</li>
+                <li>Salidas de campo.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="box">
+            <h3>Actividad sugerida</h3>
+            <ul>
+              <li>Crea una guía rápida de 5 plantas/animales locales y su función en el ecosistema.</li>
+            </ul>
+          </div>
+        `,
+        actions: `
+          <button class="btn primary" onclick="reproducirVideo('video_naturalista.mp4','Video: Naturalista')">▶️ Video</button>
+          <button class="btn" onclick="toggleFloatingVideo()">⏯️</button>
+          <button class="btn danger" onclick="cerrarVideo()">✖</button>
+        `
+      },
+
+      actividad: {
+        title: "Actividad Interactiva",
+        tag: "🎮",
+        desc: "Pon a prueba lo aprendido con una mini actividad (editable).",
+        body: `
+          <div class="box">
+            <h3>Mini reto</h3>
+            <ul>
+              <li>Elige una inteligencia y escribe un ejemplo de cómo la usarías para estudiar un tema difícil.</li>
+              <li>Después, elige otra inteligencia distinta y propone una alternativa.</li>
+            </ul>
+          </div>
+          <div class="box">
+            <h3>Opcional</h3>
+            <ul>
+              <li>Comparte tus respuestas con un compañero y mejoren juntos las ideas.</li>
+            </ul>
+          </div>
+        `,
+        actions: `
+          <button class="btn primary" onclick="reproducirVideo('video_actividad.mp4','Video: Actividad')">▶️ Video</button>
+          <button class="btn" onclick="toggleFloatingVideo()">⏯️</button>
+          <button class="btn danger" onclick="cerrarVideo()">✖</button>
+        `
+      }
+    };
+
+    let currentKey = "intro";
+
+    function showContent(key){
+      currentKey = key;
+
+      document.querySelectorAll('#menuButtons button').forEach(btn=>{
+        btn.classList.toggle('active', btn.dataset.key === key);
+      });
+
+      const data = CONTENT[key];
+      if(!data) return;
+
+      document.getElementById('title').textContent = data.title;
+      document.getElementById('tag').textContent = data.tag;
+      document.getElementById('desc').textContent = data.desc;
+      document.getElementById('bodyContent').innerHTML = data.body;
+
+      const actions = document.querySelector('.actions');
+      actions.innerHTML = data.actions || `
+        <button class="btn" onclick="toggleFloatingVideo()">⏯️ Play/Pausa</button>
+        <button class="btn danger" onclick="cerrarVideo()">✖ Cerrar video</button>
+      `;
+
+      setAnimeByKey(key);
+      animeActToCurrentSelection(key);
+    }
+
+    const floatingVideo = document.getElementById('floatingVideo');
+    const floatingVideoEl = document.getElementById('floatingVideoEl');
+    const floatingVideoTitle = document.getElementById('floatingVideoTitle');
+
+    function reproducirVideo(src, titulo="Video"){
+      if(src){
+        if(floatingVideoEl.getAttribute('data-src') !== src){
+          floatingVideoEl.pause();
+          floatingVideoEl.setAttribute('data-src', src);
+          floatingVideoEl.src = src;
+          floatingVideoEl.load();
+        }
+      }
+      floatingVideoTitle.textContent = titulo;
+
+      floatingVideo.style.display = 'block';
+      floatingVideo.setAttribute('aria-hidden','false');
+
+      floatingVideoEl.play().catch(()=>{});
+    }
+
+    function toggleFloatingVideo(){
+      if(floatingVideo.style.display === 'none') {
+        floatingVideo.style.display = 'block';
+        floatingVideo.setAttribute('aria-hidden','false');
+      }
+      if(floatingVideoEl.paused) floatingVideoEl.play().catch(()=>{});
+      else floatingVideoEl.pause();
+    }
+
+    function cerrarVideo(){
+      floatingVideoEl.pause();
+      floatingVideoEl.removeAttribute('src');
+      floatingVideoEl.load();
+      floatingVideo.style.display = 'none';
+      floatingVideo.setAttribute('aria-hidden','true');
+    }
+
+    const animeChar = document.getElementById('animeChar');
+    const animeImg = document.getElementById('animeImg');
+    const animeBubble = document.getElementById('animeBubble');
+
+    const ANIME_MAP = {
+      intro: "konata_idle.gif",
+      linguistica: "konata_linguistica.gif",
+      logico: "konata_logica.gif",
+      espacial: "konata_espacial.gif",
+      musical: "konata_musical.gif",
+      corporal: "konata_corporal.gif",
+      interpersonal: "konata_interpersonal.gif",
+      intrapersonal: "konata_intrapersonal.gif",
+      naturalista: "konata_naturalista.gif",
+      actividad: "konata_ejercicio.gif"
+    };
+
+    function setAnimeByKey(key){
+      const src = ANIME_MAP[key] || "konata_idle.gif";
+      animeImg.src = src;
+
+      const label = (CONTENT[key]?.title) ? CONTENT[key].title : "esta sección";
+      showBubble(`¡Vamos con: ${label}! ✨`);
+    }
+
+    function showBubble(text){
+      animeBubble.textContent = text;
+      animeChar.classList.add('showBubble');
+      clearTimeout(showBubble._t);
+      showBubble._t = setTimeout(()=>animeChar.classList.remove('showBubble'), 1600);
+    }
+
+    function clamp(v, min, max){ return Math.max(min, Math.min(max, v)); }
+
+    function wander(){
+      const pad = 16;
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+
+      const x = (Math.random() < 0.5)
+        ? clamp(pad + Math.random()*120, pad, vw-120)
+        : clamp(vw - (pad + 140 + Math.random()*120), pad, vw-120);
+
+      const y = clamp(pad + 80 + Math.random()*(vh-200), pad, vh-120);
+
+      animeChar.style.left = x + "px";
+      animeChar.style.top = y + "px";
+    }
+
+    function animeActToCurrentSelection(key){
+      const btn = document.querySelector(`#menuButtons button[data-key="${key}"]`);
+      if(!btn) { wander(); return; }
+
+      const r = btn.getBoundingClientRect();
+      const pad = 14;
+      const charW = 86;
+      let targetX = r.right + pad + 10;
+      let targetY = r.top + (r.height/2);
+
+      if(targetX + charW > window.innerWidth){
+        targetX = r.left - (pad + charW + 10);
+      }
+      targetX = clamp(targetX, 10, window.innerWidth - charW - 10);
+      targetY = clamp(targetY, 70, window.innerHeight - 70);
+
+      animeChar.style.left = targetX + "px";
+      animeChar.style.top = targetY + "px";
+
+      showBubble("👆 ¡Aquí está la inteligencia!");
+    }
+
+    setInterval(()=>{ wander(); }, 7000);
+
+    window.addEventListener('resize', ()=>{
+      animeActToCurrentSelection(currentKey);
+    });
+
+    setAnimeByKey("intro");
+    animeActToCurrentSelection("intro");
+  </script>
+
+</body>
+</html>
