@@ -948,6 +948,9 @@
             <h4 style="margin-bottom:4px;">2. Detective Visual</h4>
             <p style="font-size:11px; color:var(--gold); margin-bottom:8px;">Espacial / Lógica</p>
             <p class="p" style="font-size:13px;"><b>Instrucciones:</b> Se proyecta una imagen compleja por 15 segundos. <br><br>1. Al quitarla, deben mencionar 5 detalles específicos. <br>2. Gana quien recuerde el dato más irrelevante.</p>
+         <button onclick="mostrarImagenFinal15s()">
+Mostrar imagen final
+</button>
           </div>
         </div>
 
@@ -962,7 +965,7 @@
       </div>
        <div class="card">
               <div class="pad">
-                <h3>Bibliografía (real)</h3>
+                <h3>Bibliografía </h3>
                 <div class="bib">
                   <div class="ref">
                     Gardner, H. (1983). <i>Frames of Mind: The Theory of Multiple Intelligences</i>. Basic Books.
@@ -993,6 +996,17 @@
         </div>
       </div>
     </section>
+  <section class="slide" id="s_final_img">
+  <div class="layer" style="height:100%; width:100%; display:flex; align-items:center; justify-content:center;">
+    <img src="final.png"
+         style="max-width:100%; max-height:100%; object-fit:contain;">
+  </div>
+</section><section class="slide" id="s_final_img">
+  <div class="layer" style="height:100%; width:100%; display:flex; align-items:center; justify-content:center;">
+    <img src="final.png"
+         style="max-width:100%; max-height:100%; object-fit:contain;">
+  </div>
+</section>
 
   </div>
     </div>
@@ -2195,6 +2209,28 @@ function closeVideo(){
         showTab(btn.dataset.tab);
       });
     });
+    let timerFinalImg = null;
+
+function mostrarImagenFinal15s(){
+  const slide = document.getElementById("s_final_img");
+  if(!slide) return;
+
+  // Ir a la diapositiva
+  slide.scrollIntoView({behavior:"smooth", block:"start"});
+
+  // limpiar timer anterior
+  if(timerFinalImg) clearTimeout(timerFinalImg);
+
+  // a los 15 segundos regresar
+  timerFinalImg = setTimeout(()=>{
+    const back = document.getElementById("s3"); // panorama / explorador
+    if(back) back.scrollIntoView({behavior:"smooth", block:"start"});
+
+    if(typeof setActiveNav === "function"){
+      setActiveNav("general"); // regresa a panorama general
+    }
+  }, 15000); // 15 segundos
+}
 
     // ---------- Utilities ----------
     function escapeHtml(str){
@@ -2226,6 +2262,7 @@ function closeVideo(){
       currentTab = "concepto";
     }
     init();
+   
   </script>
 </body>
 </html>
