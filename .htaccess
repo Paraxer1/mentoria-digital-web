@@ -1,0 +1,35 @@
+Options -Indexes
+DirectoryIndex index.html
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  RewriteRule ^urbanpets/?$ /UrbanPets/ [R=308,L]
+
+  RewriteRule ^Borcelle-agency\.html$ agencia-borcelle/ [R=308,L,NE]
+  RewriteRule ^encuesta\.html$ encuesta/ [R=308,L,NE]
+  RewriteRule ^encuestadeconveniencia\.html$ encuesta-conveniencia/ [R=308,L,NE]
+  RewriteRule ^i\.html$ explorador-inteligencias/ [R=308,L,NE]
+  RewriteRule ^perrosvsgatos\.html$ perros-vs-gatos/ [R=308,L,NE]
+  RewriteRule ^resultados\.html$ resultados/ [R=308,L,NE]
+  RewriteRule ^(?:TecnicasdeAsertividad|tecnicas-de-asertividad)\.html$ tecnicas-de-asertividad/ [R=308,L,NE,NC]
+  RewriteRule ^(?:Tipologiasdelasinteligenciasmultiples|tipologias-inteligencias-multiples)\.html$ inteligencias-multiples/ [R=308,L,NE,NC]
+</IfModule>
+
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/css application/javascript application/json image/svg+xml
+</IfModule>
+
+<IfModule mod_headers.c>
+  <FilesMatch "\.(webp|png|jpg|jpeg|svg|ico|webmanifest|exe|zip|gz)$">
+    Header set Cache-Control "public, max-age=604800, immutable"
+  </FilesMatch>
+  <FilesMatch "\.(html|php|css|js)$">
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+    Header set Pragma "no-cache"
+    Header set Expires "0"
+  </FilesMatch>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set X-Frame-Options "SAMEORIGIN"
+</IfModule>

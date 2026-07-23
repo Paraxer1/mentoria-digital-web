@@ -1,0 +1,13 @@
+{
+  "name": "Mentoría Digital Web",
+  "short_name": "Mentoría Web",
+  "description": "Panel académico interactivo con presentaciones, encuestas y recursos multimedia.",
+  "lang": "es-MX",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#070a12",
+  "theme_color": "#0f172a",
+  "orientation": "any",
+  "categories": ["education", "productivity"]
+}

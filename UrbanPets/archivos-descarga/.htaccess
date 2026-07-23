@@ -1,0 +1,9 @@
+Options -Indexes
+
+<IfModule mod_headers.c>
+  <FilesMatch "\.(exe|zip|gz)$">
+    Header set X-Content-Type-Options "nosniff"
+    Header set Cache-Control "public, max-age=3600"
+    Header set Content-Disposition "attachment"
+  </FilesMatch>
+</IfModule>

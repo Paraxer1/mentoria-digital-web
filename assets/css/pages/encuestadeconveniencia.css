@@ -1,0 +1,105 @@
+400;600;700;800&display=swap');
+        
+        body { 
+            font-family: 'Montserrat', sans-serif; 
+            overflow-x: hidden; 
+            background-color: #f8fafc;
+        }
+
+        /* --- Fondos Animados --- */
+        .animated-bg {
+            background: linear-gradient(-45deg, #0f172a, #1e3a8a, #009B3A, #064e3b);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        /* --- Efecto Glassmorphism (Vidrio) --- */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+        }
+
+        .glass-dark {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* --- Interacción 3D en Tarjetas --- */
+        .hover-3d {
+            transition: all .22s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+        }
+        .hover-3d:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px -5px rgba(0, 0, 0, 0.15), 0 10px 20px -5px rgba(0, 0, 0, 0.1);
+            border-color: #009B3A;
+            z-index: 10;
+        }
+
+        /* --- Cajas de Observación Animadas --- */
+        .obs-box { 
+            border-left: 4px solid #009B3A; 
+            background: linear-gradient(to right, #f0fdf4, white);
+            padding: 15px; 
+            margin-top: 15px; 
+            border-radius: 0 12px 12px 0; 
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: all .3s ease-out;
+        }
+        .reveal.active .obs-box {
+            opacity: 1;
+            transform: translateX(0);
+            transition-delay: .15s; /* Aparece después de que se dibuja la gráfica */
+        }
+        
+        .obs-title { font-size: 0.75rem; color: #166534; font-weight: 800; text-transform: uppercase; margin-bottom: 4px; letter-spacing: 0.05em; }
+        .obs-text { font-size: 0.9rem; color: #374151; font-style: italic; line-height: 1.5; }
+
+        /* --- Animaciones de Entrada (Scroll Reveal) --- */
+        .reveal { 
+            opacity: 0; 
+            transform: translateY(50px) scale(0.95); 
+            transition: all .45s cubic-bezier(0.5, 0, 0, 1); 
+        }
+        .reveal.active { 
+            opacity: 1; 
+            transform: translateY(0) scale(1); 
+        }
+        
+        /* --- Decoración --- */
+        .blob {
+            position: absolute;
+            filter: blur(50px);
+            opacity: 0.4;
+            z-index: -1;
+            animation: float 10s ease-in-out infinite;
+        }
+        @keyframes float {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(30px, 50px) rotate(180deg); }
+            100% { transform: translate(0, 0) rotate(360deg); }
+        }
+
+        canvas { cursor: crosshair; }
+
+.subtle-pattern{background-image:radial-gradient(circle at 1px 1px,rgba(255,255,255,.12) 1px,transparent 0);background-size:24px 24px}
+
+/* Estilos únicos extraídos del HTML para mantener una CSP limpia. */
+.u-encuestadeconveniencia-1{transition-delay: 200ms;}
+.u-encuestadeconveniencia-2{transition-delay: 150ms;}
+.u-encuestadeconveniencia-3{transition-delay: 300ms;}
+.u-encuestadeconveniencia-4{transition-delay: 100ms;}
+.u-encuestadeconveniencia-5{animation-duration: 4s;}
+
+.local-grid-pattern{background-image:linear-gradient(rgba(255,255,255,.18) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.18) 1px,transparent 1px);background-size:32px 32px}

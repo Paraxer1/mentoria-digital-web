@@ -1,0 +1,12 @@
+COLOCA AQUÍ LOS TRES ARCHIVOS FINALES DE URBAN PETS
+
+Usa exactamente estos nombres:
+
+1. UrbanPets-Windows-Instalador.exe
+2. UrbanPets-Windows-Portable.zip
+3. UrbanPets-Linux-Portable.tar.gz
+
+Ubicación publicada:
+https://mentoriadigitalmx.com/UrbanPets/archivos-descarga/
+
+No cambies los nombres. La página detecta automáticamente si cada archivo existe y habilita su botón de descarga.

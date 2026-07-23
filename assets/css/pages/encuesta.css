@@ -1,0 +1,47 @@
+/* Estado informativo: una encuesta guardada sigue disponible para otros participantes. */
+.survey-complete {
+    position: relative;
+    border-color: #10b981 !important;
+    box-shadow: 0 0 0 1px rgba(16,185,129,.25), 0 14px 35px rgba(16,185,129,.08);
+}
+.survey-complete::after {
+    content: '✓ GUARDADA';
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: #065f46;
+    color: #d1fae5;
+    padding: 4px 10px;
+    border: 1px solid rgba(167,243,208,.35);
+    border-radius: 999px;
+    font-weight: 800;
+    font-size: .7rem;
+    letter-spacing: .04em;
+    white-space: nowrap;
+    box-shadow: 0 5px 16px rgba(0,0,0,.28);
+    z-index: 10;
+}
+
+/* Botón seleccionado en kiosco. */
+.kiosco-selected {
+    transform: scale(.985);
+    box-shadow: 0 0 0 4px #a855f7, 0 0 14px rgba(168,85,247,.42);
+    border-color: #a855f7 !important;
+    background-color: #f3e8ff !important;
+    color: #6b21a8 !important;
+}
+
+/* Respuesta visual más rápida sin trabajo gráfico costoso. */
+.page-encuesta .transition,
+.page-encuesta .transition-all {
+    transition-duration: .16s !important;
+}
+.page-encuesta .animate-fade-in {
+    animation-duration: .24s !important;
+}
+
+/* Scrollbar personalizada. */
+.custom-scrollbar::-webkit-scrollbar { width: 6px; }
+.custom-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
+.custom-scrollbar::-webkit-scrollbar-thumb { background: #c1c1c1; border-radius: 4px; }
+.custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #a8a8a8; }

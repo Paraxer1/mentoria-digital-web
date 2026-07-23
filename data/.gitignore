@@ -1,0 +1,6 @@
+*
+!.gitignore
+!.gitkeep
+!.htaccess
+!web.config
+!index.html
