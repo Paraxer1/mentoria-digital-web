@@ -1,0 +1,25 @@
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+__pycache__/
+*.pyc
+node_modules/
+
+# Datos generados por el sitio
+datos.json
+datos.json.corrupto-*
+data/*.sqlite
+data/*.sqlite-*
+
+# Los instaladores se publican en GitHub Releases, nunca en GitHub Pages
+*.exe
+*.deb
+*.msi
+*.AppImage
+
+# Carpetas de trabajo que no deben quedar anidadas dentro del repositorio
+/UrbanPets-1.0-release-assets/
+/mentoria-digital-web/
+/mentoria-digital/
+/_site/

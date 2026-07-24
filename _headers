@@ -1,0 +1,11 @@
+/UrbanPets/
+  Cache-Control: no-store, no-cache, must-revalidate, max-age=0
+
+/UrbanPets/index.html
+  Cache-Control: no-store, no-cache, must-revalidate, max-age=0
+
+/UrbanPets/assets/js/app.js
+  Cache-Control: no-cache, must-revalidate, max-age=0
+
+/UrbanPets/assets/css/styles.css
+  Cache-Control: no-cache, must-revalidate, max-age=0

@@ -1,0 +1,64 @@
+ANÁLISIS Y CAMBIOS DE LA PÁGINA URBAN PETS
+==========================================
+
+Contenido de descarga
+---------------------
+La página muestra únicamente dos instaladores oficiales:
+
+1. Windows x86_64
+   Archivo: UrbanPets-Windows-Instalador.exe
+   Tamaño aproximado: 102M
+   SHA-256: 50e9fbb7211a32edb7462b56936075636377bcc1577095c4c8835eaf0712519f
+
+2. Linux Debian/Ubuntu x86_64
+   Archivo: urbanpets_1.0.0_amd64.deb
+   Tamaño aproximado: 78M
+   SHA-256: 84c32167f1cb7becf0e6823ea2dd691070e26874b5695540f07f5f19f350a274
+
+Análisis del paquete DEB
+------------------------
+Paquete: urbanpets
+Versión: 1.0.0
+Arquitectura: amd64
+Desarrollador: Ismael Olivares Hernandez
+
+Comandos verificados para la página:
+
+Instalar:
+  cd ~/Descargas
+  sudo apt install ./urbanpets_1.0.0_amd64.deb
+
+Desinstalación normal:
+  sudo apt remove urbanpets
+
+Eliminación completa:
+  sudo apt purge urbanpets
+
+El paquete actual puede preguntar durante la desinstalación si también deben
+borrarse sus datos. La operación purge ejecuta la eliminación completa prevista
+por los scripts del paquete. Se recomienda crear un respaldo antes de usarla.
+
+Mejoras realizadas
+------------------
+- Solo dos descargas: EXE y DEB.
+- Contenido simplificado y fácil de entender.
+- Diseño responsive para escritorio, tableta y teléfono.
+- Detección de Windows/Linux y recomendación visual del instalador.
+- Tamaño real de los archivos al publicar la página.
+- Instrucciones separadas para Windows y Linux.
+- Botones para copiar comandos de terminal.
+- Sección clara de desinstalación y advertencia sobre purge.
+- Animaciones suaves, tarjetas interactivas y entrada progresiva.
+- Respeto a prefers-reduced-motion por accesibilidad.
+- Menú móvil y navegación por teclado.
+- Sin dependencias externas.
+
+Prueba local
+------------
+Desde la raíz del proyecto:
+
+  python3 -m http.server 8080
+
+Abrir:
+
+  http://localhost:8080/UrbanPets/

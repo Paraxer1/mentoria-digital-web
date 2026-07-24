@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="app-base" content="../">
+<meta name="theme-color" content="#0b1220">
+<title>Dashboard de resultados</title>
+<link rel="manifest" href="../manifest.webmanifest">
+<link rel="stylesheet" href="../assets/css/core.css?v=20260719h">
+<link rel="stylesheet" href="../assets/css/pages/resultados.css?v=20260719h">
+<link rel="stylesheet" href="../assets/css/refinement.css?v=20260719h">
+</head>
+<body class="page-resultados">
+<main class="dashboard-shell">
+  <header class="dashboard-header">
+    <div>
+      <span class="dashboard-kicker">Datos consolidados</span>
+      <h1>Resultados en vivo</h1>
+      <p id="dashboard-source">Conectando con la fuente de datos…</p>
+    </div>
+    <a class="btn-home" href="../encuesta/">← Volver a encuestas</a>
+  </header>
+
+  <section class="total-counter" aria-label="Totales por modalidad">
+    <article><span>Encuesta web</span><strong id="totalCount1">0</strong></article>
+    <article><span>Telefónica</span><strong id="totalCount2">0</strong></article>
+    <article><span>Presencial</span><strong id="totalCount3">0</strong></article>
+  </section>
+
+  <section class="grid-charts" aria-label="Gráficas de resultados">
+    <article class="chart-box">
+      <header><span class="chart-icon">▰</span><div><small>Encuesta web</small><h2>Acceso a equipo</h2></div></header>
+      <div class="chart-canvas"><canvas id="pcChart" aria-label="Gráfica de acceso a equipo"></canvas></div>
+    </article>
+    <article class="chart-box">
+      <header><span class="chart-icon chart-icon--amber">⌨</span><div><small>Encuesta telefónica</small><h2>Editor favorito</h2></div></header>
+      <div class="chart-canvas"><canvas id="editorChart" aria-label="Gráfica de editor favorito"></canvas></div>
+    </article>
+    <article class="chart-box">
+      <header><span class="chart-icon chart-icon--violet">★</span><div><small>Encuesta presencial</small><h2>Satisfacción</h2></div></header>
+      <div class="chart-canvas"><canvas id="satisfaccionChart" aria-label="Gráfica de satisfacción"></canvas></div>
+    </article>
+  </section>
+</main>
+<script defer src="../assets/js/data.js?v=20260719h"></script>
+<script defer src="../assets/js/charts.js?v=20260719h"></script>
+<script defer src="../assets/js/pages/resultados.js?v=20260719h"></script>
+<script defer src="../assets/js/core.js?v=20260719h"></script>
+</body>
+</html>

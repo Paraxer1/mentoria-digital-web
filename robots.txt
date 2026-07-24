@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /data/
+Disallow: /api.php
+Disallow: /guardar.php
+Disallow: /UrbanPets/archivos-descarga/
+
+Sitemap: https://mentoriadigitalmx.com/sitemap.xml

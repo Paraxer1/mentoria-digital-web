@@ -1,0 +1,65 @@
+PUBLICAR MENTORÍA DIGITAL Y URBAN PETS EN GITHUB PAGES
+======================================================
+
+ESTRUCTURA CORRECTA DE LA RAÍZ
+------------------------------
+Al ejecutar "ls" o "dir" en el repositorio debes ver directamente:
+
+  .github/
+  UrbanPets/
+  assets/
+  index.html
+  manifest.webmanifest
+  ...
+
+No debe existir otra carpeta "mentoria-digital-web" ni "mentoria-digital"
+dentro del repositorio.
+
+DESCARGAS DE URBAN PETS
+-----------------------
+Los instaladores no van dentro del repositorio web ni en Git LFS.
+Publícalos en GitHub Releases con:
+
+  Etiqueta: urbanpets-v1.0.0
+  UrbanPets-Windows-Instalador.exe
+  urbanpets_1.0.0_amd64.deb
+
+La página UrbanPets/index.html ya enlaza a esa publicación.
+
+VALIDACIÓN LOCAL
+----------------
+Desde la raíz del repositorio:
+
+  python scripts/validate-site.py
+  python -m http.server 8080
+
+Abre:
+
+  http://localhost:8080/
+  http://localhost:8080/UrbanPets/
+
+PUBLICACIÓN
+-----------
+1. En GitHub abre Settings > Pages.
+2. En Source selecciona GitHub Actions.
+3. Ejecuta:
+
+  git add -A
+  git commit -m "Corrige estructura y rutas de Urban Pets"
+  git push origin main
+
+El workflow detendrá la publicación si detecta:
+
+  - una raíz duplicada;
+  - un instalador dentro del repositorio;
+  - rutas absolutas locales que fallen bajo GitHub Pages;
+  - enlaces internos o recursos inexistentes.
+
+RUTA CORREGIDA
+--------------
+La tarjeta de Urban Pets en index.html usa:
+
+  UrbanPets/
+
+No usa /UrbanPets/. La ruta relativa funciona tanto en un dominio personalizado
+como bajo una dirección del tipo usuario.github.io/repositorio/.

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="../" name="app-base"/>
+<title>ReqGather PRO | TSU Software</title>
+<meta content="#0f172a" name="theme-color"/>
+<link href="../manifest.webmanifest" rel="manifest"/>
+
+
+<!-- Librerías Externas (CDN) -->
+
+
+
+
+
+
+<link href="../assets/css/core.css?v=20260719h" rel="stylesheet"/><link href="../assets/css/tailwind.css?v=20260719h" rel="stylesheet"/><link href="../assets/css/pages/encuesta.css?v=20260719h" rel="stylesheet"/><link href="../assets/css/refinement.css?v=20260719h" rel="stylesheet"/>
+</head>
+<body class="bg-dark text-gray-100 font-sans min-h-screen flex flex-col page-encuesta">
+<!-- NAVBAR SUPERIOR -->
+<nav class="bg-card/90 backdrop-blur-md border-b border-gray-700 sticky top-0 z-50 shadow-lg">
+<div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+<button class="flex items-center gap-3 cursor-pointer text-left" data-survey-view="menu" type="button">
+<div class="bg-primary/20 p-2 rounded-lg"><i class="fa-solid fa-server text-primary"></i></div>
+<div>
+<h1 class="font-bold text-sm md:text-lg tracking-wide leading-tight">TSU Desarrollo de Software</h1>
+<p class="text-[10px] text-gray-400 uppercase tracking-widest">Entornos Digitales</p>
+</div>
+</button>
+<button class="text-sm bg-gray-800 hover:bg-gray-700 px-4 py-2 rounded-full border border-gray-600 transition flex items-center gap-2 shadow-lg hover:border-success hover:text-success" data-survey-view="resultados" type="button">
+<i class="fa-solid fa-chart-pie"></i> Resultados
+            </button>
+</div>
+</nav>
+<!-- CONTENIDO PRINCIPAL -->
+<main class="flex-grow container mx-auto px-4 py-8 relative">
+<!-- ================= VISTA 1: MENÚ PRINCIPAL (DASHBOARD) ================= -->
+<section class="view-section animate-fade-in block" id="view-menu">
+<!-- ENCABEZADO ACADÉMICO -->
+<div class="max-w-4xl mx-auto mb-10 bg-gray-800/60 border border-gray-700 p-6 rounded-2xl text-center relative overflow-hidden shadow-2xl">
+<div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500"></div>
+<h2 class="text-2xl md:text-3xl font-bold text-blue-400 mb-2">FUNDAMENTOS DE PROGRAMACIÓN (E)</h2>
+<p class="text-gray-300 font-mono text-sm mb-1">Demostración de encuestas interactivas</p>
+<p class="text-gray-400 text-sm mb-0 font-semibold">Proyecto académico interactivo</p>
+</div>
+<!-- TARJETAS DE SELECCIÓN -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+<!-- 1. Web -->
+<button class="bg-card p-6 rounded-xl border border-gray-700 hover:border-blue-500 cursor-pointer transition-all hover:-translate-y-2 hover:shadow-blue-900/30 shadow-lg relative group h-full text-left" data-label="Encuesta Web" data-survey-open="web" id="card-web" type="button">
+<div class="absolute top-4 right-4 text-blue-500/20 group-hover:text-blue-500 transition"><i class="fa-solid fa-laptop-code text-4xl"></i></div>
+<h3 class="text-xl font-bold mb-2 text-blue-400 group-hover:text-blue-300">1. Encuesta Web</h3>
+<p class="text-sm text-gray-400">Formulario digital auto-administrado. Enfoque en <strong>Infraestructura Tecnológica</strong>.</p>
+</button>
+<!-- 2. Teléfono -->
+<button class="bg-card p-6 rounded-xl border border-gray-700 hover:border-amber-500 cursor-pointer transition-all hover:-translate-y-2 hover:shadow-amber-900/30 shadow-lg relative group h-full text-left" data-label="Encuesta Telefónica" data-survey-open="tel" id="card-tel" type="button">
+<div class="absolute top-4 right-4 text-amber-500/20 group-hover:text-amber-500 transition"><i class="fa-solid fa-headset text-4xl"></i></div>
+<h3 class="text-xl font-bold mb-2 text-amber-400 group-hover:text-amber-300">2. Telefónica</h3>
+<p class="text-sm text-gray-400">Panel CRM para operador. Entrevista guiada sobre <strong>Herramientas de Desarrollo</strong>.</p>
+</button>
+<!-- 3. Kiosco -->
+<button class="bg-card p-6 rounded-xl border border-gray-700 hover:border-purple-500 cursor-pointer transition-all hover:-translate-y-2 hover:shadow-purple-900/30 shadow-lg relative group h-full text-left" data-label="Kiosco Táctil" data-survey-open="kiosco" id="card-kiosco" type="button">
+<div class="absolute top-4 right-4 text-purple-500/20 group-hover:text-purple-500 transition"><i class="fa-solid fa-fingerprint text-4xl"></i></div>
+<h3 class="text-xl font-bold mb-2 text-purple-400 group-hover:text-purple-300">3. Kiosco Táctil</h3>
+<p class="text-sm text-gray-400">Sistema de votación rápida en sitio. Medición de <strong>Satisfacción y Expectativas</strong>.</p>
+</button>
+</div>
+<div class="text-center mt-8">
+<!-- Botón de reinicio eliminado para seguridad -->
+</div>
+</section>
+<!-- ================= VISTA 2: WEB (Infraestructura) ================= -->
+<section class="view-section hidden max-w-xl mx-auto animate-fade-in py-4" id="view-web">
+<div class="bg-card p-8 rounded-2xl border border-gray-700 shadow-2xl relative">
+<button class="absolute top-4 right-4 text-gray-500 hover:text-white" data-survey-view="menu" type="button"><i class="fa-solid fa-xmark text-xl"></i></button>
+<h2 class="text-2xl font-bold text-blue-400 mb-6 border-b border-gray-700 pb-4 flex items-center gap-2">
+<i class="fa-solid fa-wifi"></i> Estudio de Infraestructura
+                </h2>
+<form class="space-y-8" id="survey-web-form">
+<!-- Pregunta 1 -->
+<div>
+<label class="block mb-3 font-semibold text-gray-300 text-lg">1. ¿Cuentas con equipo de cómputo propio?</label>
+<div class="grid grid-cols-2 gap-4">
+<label class="cursor-pointer">
+<input class="peer sr-only" name="pc" type="radio" value="Si"/>
+<div class="p-4 text-center bg-gray-800 rounded-xl border-2 border-gray-600 peer-checked:bg-blue-600 peer-checked:border-blue-400 peer-checked:text-white hover:bg-gray-700 transition flex flex-col items-center gap-2 h-full justify-center">
+<i class="fa-solid fa-laptop text-2xl"></i> Sí, propio
+                                </div>
+</label>
+<label class="cursor-pointer">
+<input class="peer sr-only" name="pc" type="radio" value="No"/>
+<div class="p-4 text-center bg-gray-800 rounded-xl border-2 border-gray-600 peer-checked:bg-gray-600 peer-checked:border-gray-400 peer-checked:text-white hover:bg-gray-700 transition flex flex-col items-center gap-2 h-full justify-center">
+<i class="fa-solid fa-mobile-screen text-2xl"></i> No / Compartido
+                                </div>
+</label>
+</div>
+</div>
+<!-- Pregunta 2 -->
+<div>
+<label class="block mb-3 font-semibold text-gray-300 text-lg">2. Calidad de Internet en casa:</label>
+<select class="w-full bg-gray-800 border-2 border-gray-600 rounded-xl p-4 text-white focus:border-blue-500 outline-none appearance-none cursor-pointer text-lg" name="internet">
+<option disabled="" selected="" value="">Selecciona una opción...</option>
+<option value="Buena">🟢 Buena (Fibra Óptica)</option>
+<option value="Regular">🟡 Regular (A veces falla)</option>
+<option value="Mala">🔴 Mala / Solo Datos</option>
+</select>
+</div>
+<div class="pt-4">
+<button class="w-full bg-blue-600 hover:bg-blue-500 py-4 rounded-xl font-bold shadow-lg transition transform active:scale-95 text-lg" type="submit">
+                            ENVIAR RESPUESTAS <i class="fa-solid fa-paper-plane ml-2"></i>
+</button>
+</div>
+</form>
+</div>
+</section>
+<!-- ================= VISTA 3: TELEFÓNICA (CRM) ================= -->
+<section class="view-section hidden max-w-3xl mx-auto animate-fade-in py-4" id="view-tel">
+<div class="bg-gray-100 text-gray-800 rounded-xl overflow-hidden shadow-2xl border-4 border-gray-800">
+<!-- Header CRM -->
+<div class="bg-gray-900 p-4 text-white font-bold flex justify-between items-center shadow-md border-b-4 border-amber-500">
+<span class="font-mono flex items-center gap-2"><i class="fa-solid fa-server text-amber-500"></i> CRM SYSTEM v2.4</span>
+<span class="bg-red-600 text-white text-xs px-3 py-1 rounded-full animate-pulse font-bold">● LLAMADA ACTIVA</span>
+</div>
+<div class="p-8">
+<!-- Script -->
+<div class="bg-amber-50 border-l-4 border-amber-500 p-5 mb-8 text-sm text-amber-900 shadow-sm rounded-r relative">
+<i class="fa-solid fa-quote-left absolute top-2 left-2 text-amber-200 text-4xl -z-0 opacity-50"></i>
+<strong class="block mb-1 z-10 relative uppercase text-xs tracking-widest text-amber-600">Guion Obligatorio:</strong>
+<span class="italic text-lg z-10 relative">"Buenas tardes. Estamos realizando una encuesta académica sobre herramientas de desarrollo. ¿Podría indicarme su sistema operativo y editor principal?"</span>
+</div>
+<form id="survey-tel-form">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+<!-- Campo 1 -->
+<div class="bg-white p-4 rounded-lg border border-gray-200 shadow-sm">
+<label class="block text-xs font-bold uppercase text-gray-500 mb-2 flex items-center gap-1"><i class="fa-brands fa-windows"></i> Sistema Operativo</label>
+<select class="w-full border-2 border-gray-300 p-3 rounded-lg focus:border-amber-500 outline-none bg-gray-50 font-semibold text-gray-700" name="so">
+<option disabled="" selected="" value="">-- Seleccionar --</option>
+<option value="Windows">🪟 Windows</option>
+<option value="Linux">🐧 Linux</option>
+<option value="Mac">🍎 Mac</option>
+</select>
+</div>
+<!-- Campo 2 -->
+<div class="bg-white p-4 rounded-lg border border-gray-200 shadow-sm">
+<label class="block text-xs font-bold uppercase text-gray-500 mb-2 flex items-center gap-1"><i class="fa-solid fa-code"></i> Editor Preferido</label>
+<select class="w-full border-2 border-gray-300 p-3 rounded-lg focus:border-amber-500 outline-none bg-gray-50 font-semibold text-gray-700" name="editor">
+<option disabled="" selected="" value="">-- Seleccionar --</option>
+<option value="VSCode">Visual Studio Code</option>
+<option value="IntelliJ">IntelliJ IDEA</option>
+<option value="Otros">Otros / Vim / Netbeans</option>
+</select>
+</div>
+</div>
+<div class="flex gap-4 border-t border-gray-300 pt-6">
+<button class="w-1/3 border-2 border-gray-400 text-gray-600 py-3 rounded-lg font-bold hover:bg-gray-200 transition uppercase text-sm" data-survey-view="menu" type="button">Cancelar</button>
+<button class="w-2/3 bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg font-bold shadow-md transition flex justify-center items-center gap-2 uppercase text-sm tracking-wide transform active:scale-95" type="submit">
+<i class="fa-solid fa-floppy-disk"></i> Guardar Registro en BD
+                            </button>
+</div>
+</form>
+</div>
+</div>
+</section>
+<!-- ================= VISTA 4: KIOSCO (Divertida y Validada) ================= -->
+<section class="view-section hidden h-[800px] flex items-center justify-center animate-fade-in py-4" id="view-kiosco">
+<div class="bg-white w-full max-w-md h-full rounded-[45px] border-[12px] border-gray-900 p-6 flex flex-col relative shadow-2xl overflow-hidden ring-4 ring-gray-300">
+<!-- Notch -->
+<div class="absolute top-0 left-1/2 transform -translate-x-1/2 w-40 h-7 bg-gray-900 rounded-b-2xl z-10 flex justify-center items-center">
+<div class="w-16 h-2 bg-gray-800 rounded-full opacity-50"></div>
+</div>
+<div class="text-center mt-8 mb-4">
+<h2 class="text-3xl font-black text-purple-600 tracking-tight">La Voz del Alumno 🗣️</h2>
+<p class="text-gray-400 text-xs uppercase font-bold tracking-widest">Encuesta de Satisfacción</p>
+</div>
+<!-- Scrollable Content -->
+<div class="flex-1 overflow-y-auto space-y-6 px-1 pb-4 custom-scrollbar">
+<!-- Pregunta 1 -->
+<div class="bg-gray-50 p-5 rounded-3xl border border-gray-100 shadow-sm">
+<h3 class="font-bold text-gray-700 text-center mb-4 text-lg leading-tight">🎬 ¿Qué opinas de la materia?</h3>
+<div class="grid grid-cols-3 gap-3" id="group-materia">
+<button class="kiosco-btn w-full aspect-[3/4] bg-white rounded-2xl border-2 border-gray-200 text-gray-600 hover:border-purple-300 transition flex flex-col items-center justify-center gap-2" data-kiosco-category="Materia" data-kiosco-value="Buena" type="button">
+<span class="text-3xl drop-shadow-sm">🚬</span>
+<span class="text-[10px] font-black leading-none uppercase">Es Cine<br/>(Arte)</span>
+</button>
+<button class="kiosco-btn w-full aspect-[3/4] bg-white rounded-2xl border-2 border-gray-200 text-gray-600 hover:border-purple-300 transition flex flex-col items-center justify-center gap-2" data-kiosco-category="Materia" data-kiosco-value="Regular" type="button">
+<span class="text-3xl drop-shadow-sm">🤔</span>
+<span class="text-[10px] font-black leading-none uppercase">Ahí la<br/>llevamos</span>
+</button>
+<button class="kiosco-btn w-full aspect-[3/4] bg-white rounded-2xl border-2 border-gray-200 text-gray-600 hover:border-purple-300 transition flex flex-col items-center justify-center gap-2" data-kiosco-category="Materia" data-kiosco-value="Mala" type="button">
+<span class="text-3xl drop-shadow-sm">🏳️</span>
+<span class="text-[10px] font-black leading-none uppercase">¡Auxilio!<br/>Sáquenme</span>
+</button>
+</div>
+</div>
+<!-- Pregunta 2 -->
+<div class="bg-gray-50 p-5 rounded-3xl border border-gray-100 shadow-sm">
+<h3 class="font-bold text-gray-700 text-center mb-4 text-lg leading-tight">💯 ¿Pasarás la materia?</h3>
+<div class="grid grid-cols-1 gap-3" id="group-facilidad">
+<button class="kiosco-btn w-full py-4 px-5 bg-white border-2 border-gray-200 rounded-2xl text-left flex items-center gap-4 hover:bg-gray-50 transition group" data-kiosco-category="Facilidad" data-kiosco-value="Facil" type="button">
+<span class="text-2xl group-hover:scale-110 transition">😎</span>
+<span class="font-bold text-xs uppercase text-gray-500 group-hover:text-gray-800">Izzi Pizzi<br/><span class="text-sm text-gray-800 font-black normal-case">Con los ojos cerrados</span></span>
+</button>
+<button class="kiosco-btn w-full py-4 px-5 bg-white border-2 border-gray-200 rounded-2xl text-left flex items-center gap-4 hover:bg-gray-50 transition group" data-kiosco-category="Facilidad" data-kiosco-value="Media" type="button">
+<span class="text-2xl group-hover:scale-110 transition">🙏</span>
+<span class="font-bold text-xs uppercase text-gray-500 group-hover:text-gray-800">Con Fe<br/><span class="text-sm text-gray-800 font-black normal-case">Rezándole al de arriba</span></span>
+</button>
+<button class="kiosco-btn w-full py-4 px-5 bg-white border-2 border-gray-200 rounded-2xl text-left flex items-center gap-4 hover:bg-gray-50 transition group" data-kiosco-category="Facilidad" data-kiosco-value="Dificil" type="button">
+<span class="text-2xl group-hover:scale-110 transition">💀</span>
+<span class="font-bold text-xs uppercase text-gray-500 group-hover:text-gray-800">Misión Imposible<br/><span class="text-sm text-gray-800 font-black normal-case">Nos vemos en el extra</span></span>
+</button>
+</div>
+</div>
+</div>
+<div class="mt-auto pt-4 border-t border-gray-100">
+<button class="w-full bg-purple-600 text-white py-4 rounded-2xl font-black text-lg shadow-xl shadow-purple-200 hover:bg-purple-700 active:scale-95 transition flex justify-center items-center gap-2" id="submit-kiosco" type="button">
+                        FINALIZAR ENCUESTA <i class="fa-solid fa-check-double"></i>
+</button>
+<button class="w-full mt-3 text-gray-400 text-[10px] font-bold uppercase tracking-widest hover:text-gray-600" data-survey-view="menu" type="button">Cancelar Operación</button>
+</div>
+<!-- Home Bar -->
+<div class="absolute bottom-2 left-1/2 transform -translate-x-1/2 w-36 h-1.5 bg-gray-300 rounded-full"></div>
+</div>
+</section>
+<!-- ================= VISTA 5: RESULTADOS ================= -->
+<section class="view-section hidden animate-fade-in" id="view-resultados">
+<div class="survey-results-header flex flex-col md:flex-row justify-between items-center mb-8 gap-4 bg-card p-6 rounded-xl border border-gray-700 shadow-lg">
+<div class="flex items-center gap-4">
+<div class="bg-success/20 p-3 rounded-full animate-pulse"><i class="fa-solid fa-satellite-dish text-success text-xl"></i></div>
+<div>
+<h2 class="text-2xl md:text-3xl font-bold text-white">Resultados en Vivo</h2>
+<p class="text-xs text-gray-400 uppercase tracking-wide font-bold"><span id="data-source-label">Conectando con la fuente de datos...</span></p>
+</div>
+</div>
+<button class="px-6 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-white transition font-bold border border-gray-500 flex items-center gap-2 text-sm" data-survey-view="menu" type="button">
+<i class="fa-solid fa-arrow-left"></i> Menú Principal
+                </button>
+</div>
+<!-- Tarjetas de Gráficas -->
+<div class="survey-results-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- 1. Web -->
+<div class="survey-chart-card bg-card p-5 rounded-xl border border-gray-700 shadow-lg flex flex-col">
+<div class="flex justify-between items-center mb-4 border-b border-gray-700 pb-2">
+<h3 class="font-bold text-blue-400"><i class="fa-solid fa-laptop mr-2"></i> Web: Equipo</h3>
+<span class="text-[10px] bg-blue-900 text-blue-200 px-2 py-0.5 rounded">Doughnut</span>
+</div>
+<div class="survey-chart-frame relative flex-grow"><canvas id="chartWeb"></canvas></div>
+</div>
+<!-- 2. Teléfono -->
+<div class="survey-chart-card bg-card p-5 rounded-xl border border-gray-700 shadow-lg flex flex-col">
+<div class="flex justify-between items-center mb-4 border-b border-gray-700 pb-2">
+<h3 class="font-bold text-amber-400"><i class="fa-solid fa-headset mr-2"></i> Tel: Editores</h3>
+<span class="text-[10px] bg-amber-900 text-amber-200 px-2 py-0.5 rounded">Bar</span>
+</div>
+<div class="survey-chart-frame relative flex-grow"><canvas id="chartTel"></canvas></div>
+</div>
+<!-- 3. Kiosco Materia -->
+<div class="survey-chart-card bg-card p-5 rounded-xl border border-gray-700 shadow-lg flex flex-col">
+<div class="flex justify-between items-center mb-4 border-b border-gray-700 pb-2">
+<h3 class="font-bold text-purple-400"><i class="fa-solid fa-star mr-2"></i> Kiosco: Opinión</h3>
+<span class="text-[10px] bg-purple-900 text-purple-200 px-2 py-0.5 rounded">Polar</span>
+</div>
+<div class="survey-chart-frame relative flex-grow"><canvas id="chartKiosco1"></canvas></div>
+</div>
+<!-- 4. Kiosco Facilidad (Full Width) -->
+<div class="survey-chart-card survey-chart-card-wide bg-card p-5 rounded-xl border border-gray-700 shadow-lg flex flex-col md:col-span-2 lg:col-span-3">
+<div class="flex justify-between items-center mb-4 border-b border-gray-700 pb-2">
+<h3 class="font-bold text-pink-400"><i class="fa-solid fa-graduation-cap mr-2"></i> Kiosco: Probabilidad de Aprobar</h3>
+<span class="text-[10px] bg-pink-900 text-pink-200 px-2 py-0.5 rounded">Horizontal Bar</span>
+</div>
+<div class="survey-chart-frame survey-chart-frame-wide relative flex-grow"><canvas id="chartKiosco2"></canvas></div>
+</div>
+</div>
+</section>
+</main>
+<footer class="text-center py-6 text-gray-600 text-[10px] uppercase tracking-widest border-t border-gray-800 mt-8">
+<p>© 2026 Proyecto de encuestas interactivas</p>
+</footer>
+<!-- Lógica separada: SQLite mediante API + respaldo local -->
+
+
+
+<script defer="" src="../assets/js/data.js?v=20260719h"></script><script defer="" src="../assets/js/charts.js?v=20260719h"></script><script defer="" src="../assets/js/pages/encuesta.js?v=20260719h"></script><script defer="" src="../assets/js/core.js?v=20260719h"></script></body>
+</html>

@@ -1,0 +1,138 @@
+/* Refinamiento visual centralizado: rápido, ligero y sin dependencias externas. */
+:root{
+  --mdw-fast:.13s;
+  --mdw-soft:.22s;
+  --mdw-radius:16px;
+  --mdw-shadow:0 18px 48px rgba(2,6,23,.18);
+}
+body:not(.page-index){min-height:100vh}
+body:not(.page-index) ::selection{background:rgba(34,211,238,.28);color:inherit}
+body:not(.page-index) :where(a,button,input,select,textarea){transition-duration:var(--mdw-fast)!important;transition-timing-function:cubic-bezier(.2,.8,.2,1)!important}
+body:not(.page-index) :where(button,a,[role="button"]):not(:disabled){touch-action:manipulation}
+body:not(.page-index) :where(button,[role="button"]):not(:disabled):active{scale:.985}
+body:not(.page-index) :where(input,select,textarea){caret-color:#22d3ee}
+body:not(.page-index)::-webkit-scrollbar{width:10px;height:10px}
+body:not(.page-index)::-webkit-scrollbar-track{background:rgba(15,23,42,.12)}
+body:not(.page-index)::-webkit-scrollbar-thumb{background:rgba(100,116,139,.55);border:2px solid transparent;border-radius:999px;background-clip:padding-box}
+body:not(.page-index)::-webkit-scrollbar-thumb:hover{background:rgba(100,116,139,.78);border:2px solid transparent;background-clip:padding-box}
+
+/* Menú y formularios de encuesta. */
+.page-encuesta main{width:100%;max-width:1480px}
+.page-encuesta nav{box-shadow:0 10px 32px rgba(2,6,23,.22)}
+.page-encuesta #card-web,.page-encuesta #card-tel,.page-encuesta #card-kiosco{min-height:188px;overflow:hidden;isolation:isolate}
+.page-encuesta #card-web:hover,.page-encuesta #card-tel:hover,.page-encuesta #card-kiosco:hover{transform:translateY(-4px)!important}
+.page-encuesta :where(#view-web>div,#view-tel>div,#view-kiosco>div){box-shadow:0 22px 60px rgba(2,6,23,.28)}
+.page-encuesta .survey-results-header{max-width:1320px;margin-inline:auto;background:linear-gradient(135deg,rgba(30,41,59,.98),rgba(15,23,42,.94));border-color:rgba(148,163,184,.24)}
+.page-encuesta .survey-results-grid{max-width:1320px;margin-inline:auto;align-items:stretch}
+.page-encuesta .survey-chart-card{min-width:0;min-height:318px;background:linear-gradient(160deg,rgba(30,41,59,.98),rgba(22,32,51,.96));border-color:rgba(148,163,184,.22);overflow:hidden;box-shadow:0 16px 42px rgba(2,6,23,.22)}
+.page-encuesta .survey-chart-card:hover{border-color:rgba(96,165,250,.38);transform:translateY(-2px)}
+.page-encuesta .survey-chart-card-wide{min-height:286px}
+.page-encuesta .survey-chart-frame{height:232px;min-height:0;overflow:hidden;display:grid;place-items:center}
+.page-encuesta .survey-chart-frame-wide{height:196px}
+.page-encuesta .survey-chart-frame canvas{display:block;width:100%!important;height:100%!important;max-width:100%;max-height:100%}
+.page-encuesta .survey-complete::after{top:10px;right:10px;padding:4px 9px;font-size:.64rem}
+
+/* La página de resultados usa su hoja dedicada para evitar reglas duplicadas. */
+
+/* Ajustes sutiles y compartidos para las páginas de contenido. */
+.page-encuestadeconveniencia .glass-card,.page-encuestadeconveniencia .glass-dark{border-radius:18px;box-shadow:0 16px 45px rgba(15,23,42,.14)}
+.page-encuestadeconveniencia .hover-3d:hover{transform:translateY(-3px)!important}
+.page-i :where(.card,.panel,.box){border-radius:18px;box-shadow:0 16px 44px rgba(2,6,23,.16)}
+.page-perrosvsgatos :where(.card,.content-box){border-radius:18px;box-shadow:0 16px 42px rgba(2,6,23,.16)}
+.page-perrosvsgatos .card:hover{transform:translateY(-3px)}
+.page-tecnicasdeasertividad :where(.card,.info-box,.example-box,.structure-box,.quiz-container){box-shadow:0 14px 38px rgba(15,23,42,.12)}
+.page-tecnicasdeasertividad :where(.btn-nav,.quiz-btn,.tool-btn,.btn-semaforo){transition-duration:.12s!important}
+.page-tipologiasdelasinteligenciasmultiples :where(.card,.glass,.mini,.quote,.bib){box-shadow:0 14px 38px rgba(2,6,23,.14)}
+.page-tipologiasdelasinteligenciasmultiples :where(.navbtn,.tab,.pill){transition-duration:.12s!important}
+.page-offline main{box-shadow:0 18px 55px rgba(2,6,23,.25);border:1px solid rgba(148,163,184,.18)}
+
+@media(max-width:1020px){
+  .page-encuesta .survey-chart-card{min-height:300px}
+}
+@media(max-width:700px){
+  .page-encuesta main{padding-inline:12px!important}
+  .page-encuesta #card-web,.page-encuesta #card-tel,.page-encuesta #card-kiosco{min-height:154px}
+  .page-encuesta .survey-chart-frame{height:210px}
+}
+@media(prefers-reduced-motion:reduce){
+  body:not(.page-index) :where(button,[role="button"]):not(:disabled):active{scale:1}
+}
+
+/* ===== Arquitectura visual v3: mejoras compartidas sin cambiar la portada ===== */
+body:not(.page-index){background-color:#070b14}
+body:not(.page-index) :where(h1,h2,h3){text-wrap:balance}
+body:not(.page-index) :where(p,li){text-wrap:pretty}
+
+/* Presentación de asertividad: escenario más limpio y controles menos invasivos. */
+.page-tecnicasdeasertividad .slider-container{padding:clamp(10px,2vw,24px)}
+.page-tecnicasdeasertividad .slide{padding:clamp(12px,2.2vw,28px) clamp(12px,4vw,52px);transform:translateY(16px) scale(.975);transition:opacity .2s ease,transform .2s ease,visibility .2s ease}
+.page-tecnicasdeasertividad .slide.active{transform:none}
+.page-tecnicasdeasertividad .card{width:min(1180px,100%);max-height:calc(100dvh - 88px);border-radius:28px;background:linear-gradient(155deg,rgba(30,41,59,.94),rgba(15,23,42,.9));border-color:rgba(148,163,184,.16);box-shadow:0 28px 75px rgba(2,6,23,.42);backdrop-filter:blur(10px)}
+.page-tecnicasdeasertividad .card::before{content:"";position:absolute;inset:0 0 auto;height:2px;background:linear-gradient(90deg,transparent,#38bdf8,transparent);opacity:.7}
+.page-tecnicasdeasertividad .controls{bottom:16px;padding:8px 10px;border:1px solid rgba(148,163,184,.16);border-radius:16px;background:rgba(2,6,23,.78);backdrop-filter:blur(10px);box-shadow:0 14px 35px rgba(2,6,23,.28)}
+.page-tecnicasdeasertividad .control-btn{width:44px;height:44px;border-radius:13px}
+.page-tecnicasdeasertividad .progress-bar{height:3px;background:linear-gradient(90deg,#38bdf8,#818cf8)}
+.page-tecnicasdeasertividad .background-blob{filter:blur(120px);opacity:.09;animation-duration:32s}
+
+/* Inteligencias múltiples: cada diapositiva queda contenida y no se mezcla visualmente con la siguiente. */
+.page-tipologiasdelasinteligenciasmultiples .deck{height:100svh;overscroll-behavior:contain;scrollbar-width:none}
+.page-tipologiasdelasinteligenciasmultiples .deck::-webkit-scrollbar{display:none}
+.page-tipologiasdelasinteligenciasmultiples .slide{height:100svh;min-height:100svh;padding:clamp(12px,2vw,24px);scroll-snap-stop:always}
+.page-tipologiasdelasinteligenciasmultiples .slide::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(0,0,0,.16),rgba(0,0,0,.54));pointer-events:none}
+.page-tipologiasdelasinteligenciasmultiples .layer{width:min(1280px,100%);height:calc(100svh - clamp(24px,4vw,48px));max-height:none;z-index:2}
+.page-tipologiasdelasinteligenciasmultiples .glass{border-radius:24px;border-color:rgba(212,175,55,.18);background:linear-gradient(145deg,rgba(10,10,10,.9),rgba(5,5,5,.78));box-shadow:0 28px 75px rgba(0,0,0,.48);backdrop-filter:blur(8px)}
+.page-tipologiasdelasinteligenciasmultiples #s0 .glass{position:relative;overflow:hidden}
+.page-tipologiasdelasinteligenciasmultiples #s0 .glass::before{content:"";position:absolute;inset:0 auto 0 0;width:3px;background:linear-gradient(#f8dc74,#8f7019)}
+.page-tipologiasdelasinteligenciasmultiples .dots{right:clamp(8px,1.5vw,18px);padding:10px 7px;border:1px solid rgba(255,255,255,.08);border-radius:999px;background:rgba(0,0,0,.45);backdrop-filter:blur(8px)}
+.page-tipologiasdelasinteligenciasmultiples .dot{width:8px;height:8px}
+.page-tipologiasdelasinteligenciasmultiples .dash{border-radius:24px}
+.page-tipologiasdelasinteligenciasmultiples .view{overscroll-behavior:contain}
+
+/* Explorador alternativo: menú fijo dentro de su columna y contenido más respirable. */
+.page-i header{padding-top:clamp(52px,7vw,82px)}
+.page-i header h1{font-size:clamp(2rem,4.5vw,4rem);letter-spacing:-.035em}
+.page-i header p{font-size:1rem;color:#a8b6de}
+.page-i .wrap{max-width:1320px;padding-bottom:110px}
+.page-i .grid{grid-template-columns:minmax(270px,330px) minmax(0,1fr);gap:22px}
+.page-i #leftPanel{position:sticky;top:18px;max-height:calc(100svh - 36px);overflow:auto}
+.page-i .panel,.page-i .card{border-color:rgba(148,163,184,.16);background:linear-gradient(155deg,rgba(19,30,66,.9),rgba(8,14,32,.88));backdrop-filter:blur(8px)}
+.page-i .menu button{min-height:62px;background:rgba(15,23,42,.58)}
+.page-i .menu button.active{background:linear-gradient(135deg,rgba(122,162,255,.22),rgba(85,242,208,.08));border-color:rgba(122,162,255,.55)}
+.page-i .content{padding:0}
+.page-i .card .top{padding:24px}
+.page-i .card .body{padding:22px}
+.page-i .box{padding:18px;background:rgba(2,6,23,.22)}
+.page-i #animeChar{opacity:.88;transform:translateY(-50%) scale(.86)}
+
+/* Encuestas: unificamos ritmo, superficies y ancho legible. */
+.page-encuesta{background:radial-gradient(900px 600px at 20% 0%,rgba(37,99,235,.14),transparent 60%),#0b1220!important}
+.page-encuesta main{padding-bottom:110px!important}
+.page-encuesta #menu-view{max-width:1320px;margin-inline:auto}
+.page-encuesta #card-web,.page-encuesta #card-tel,.page-encuesta #card-kiosco{border-radius:20px!important;background:linear-gradient(145deg,rgba(30,41,59,.98),rgba(23,33,52,.96))!important;border-color:rgba(148,163,184,.22)!important;box-shadow:0 16px 45px rgba(2,6,23,.2)}
+.page-encuesta :where(input,select,textarea){border-radius:12px!important}
+.page-encuesta :where(button[type="submit"],button[data-action]){min-height:46px;border-radius:13px!important}
+.page-encuestadeconveniencia{background:#f4f7f8!important}
+.page-encuestadeconveniencia nav{border-bottom:1px solid rgba(15,23,42,.08);box-shadow:0 8px 28px rgba(15,23,42,.08)}
+.page-encuestadeconveniencia section{scroll-margin-top:84px}
+.page-encuestadeconveniencia .glass-card,.page-encuestadeconveniencia .glass-dark{border:1px solid rgba(148,163,184,.18)}
+
+/* Resultados: mejor densidad y etiquetas legibles. */
+.page-resultados .grid-charts{align-items:stretch}
+.page-resultados .chart-box{display:flex;flex-direction:column}
+.page-resultados .chart-box canvas{margin-top:auto}
+.page-resultados .btn-home{text-decoration:none}
+
+@media(max-width:980px){
+  .page-i .grid{grid-template-columns:1fr}
+  .page-i #leftPanel{position:static;max-height:none}
+  .page-tipologiasdelasinteligenciasmultiples .layer{height:calc(100svh - 20px)}
+}
+@media(max-width:700px){
+  .page-tecnicasdeasertividad .slider-container{padding:0}
+  .page-tecnicasdeasertividad .slide{padding:10px 10px 74px}
+  .page-tecnicasdeasertividad .card{max-height:calc(100dvh - 92px);border-radius:20px;padding:24px 18px}
+  .page-tipologiasdelasinteligenciasmultiples .slide{padding:8px 14px 8px 8px}
+  .page-tipologiasdelasinteligenciasmultiples .glass{border-radius:18px}
+  .page-tipologiasdelasinteligenciasmultiples .dots{right:4px}
+  .page-i #animeChar{display:none}
+}

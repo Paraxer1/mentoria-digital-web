@@ -1,0 +1,25 @@
+ESTE ZIP NO CONTIENE UNA CARPETA mentoria-digital-web ANIDADA.
+
+Al abrirlo debes ver directamente:
+
+  .github
+  UrbanPets
+  assets
+  index.html
+
+Usa este contenido como la raíz del repositorio.
+
+Antes de publicar:
+
+  python scripts/validate-site.py
+
+En Windows, si tu copia actual todavía tiene una carpeta duplicada, abre
+PowerShell en la raíz y ejecuta:
+
+  powershell -ExecutionPolicy Bypass -File scripts/arreglar-estructura.ps1
+
+Después:
+
+  git add -A
+  git commit -m "Corrige estructura y rutas de Urban Pets"
+  git push origin main

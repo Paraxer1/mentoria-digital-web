@@ -1,0 +1,570 @@
+:root {
+            /* Paleta de colores Premium Dark Theme */
+            --bg-gradient: radial-gradient(circle at top right, #1e293b 0%, #0f172a 100%);
+            --glass-bg: rgba(30, 41, 59, 0.75); 
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --accent: #38bdf8; /* Sky Blue */
+            --accent-glow: rgba(56, 189, 248, 0.3);
+            --success: #10b981; /* Emerald */
+            --warning: #f59e0b; /* Amber */
+            --error: #ef4444;   /* Red */
+            --text-main: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --shadow-card: 0 20px 40px -10px rgba(0, 0, 0, 0.5);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-main);
+            overflow: hidden;
+            height: 100dvh; 
+            width: 100vw;
+            font-size: 16px;
+            position: relative;
+        }
+
+        /* Fondo animado sutil */
+        .background-blob {
+            position: absolute;
+            background: var(--accent);
+            filter: blur(80px);
+            opacity: 0.15;
+            border-radius: 50%;
+            z-index: -1;
+            animation: floatBlob 20s infinite alternate;
+        }
+        .blob-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; }
+        .blob-2 { bottom: -10%; right: -10%; width: 40vw; height: 40vw; animation-delay: -10s; background: #818cf8; }
+
+        @keyframes floatBlob {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(30px, 50px) scale(1.1); }
+        }
+
+        /* --- Estructura del Slider --- */
+        .slider-container {
+            position: relative;
+            height: 100%;
+            width: 100%;
+            touch-action: pan-y;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            visibility: hidden;
+            transition: all .3s cubic-bezier(0.22, 1, 0.36, 1);
+            transform: scale(0.92) translateY(20px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+            z-index: 0;
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1) translateY(0);
+            z-index: 1;
+        }
+
+        /* --- Diseño de Tarjetas --- */
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: clamp(2rem, 5vw, 4.5rem);
+            width: 95%; 
+            max-width: 1200px; 
+            max-height: 88vh; 
+            overflow-y: auto; 
+            box-shadow: var(--shadow-card);
+            text-align: center;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent) transparent;
+        }
+
+        .card::-webkit-scrollbar { width: 6px; }
+        .card::-webkit-scrollbar-track { background: transparent; }
+        .card::-webkit-scrollbar-thumb { background-color: rgba(255,255,255,0.1); border-radius: 20px; }
+
+        /* --- Tipografía --- */
+        h1 { 
+            font-size: clamp(2rem, 5vw, 4rem); 
+            font-weight: 800; 
+            background: linear-gradient(120deg, #e0f2fe, #38bdf8); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+            margin-bottom: 0.5rem; 
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+        }
+        h2 { 
+            font-size: clamp(1.5rem, 3.5vw, 3rem); 
+            color: var(--accent); 
+            margin-bottom: 1rem; 
+            line-height: 1.2;
+            font-weight: 600;
+        }
+        .subtitle {
+            font-size: clamp(0.9rem, 1.5vw, 1.2rem);
+            color: var(--text-secondary);
+            font-weight: 300;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 1rem;
+            display: inline-block;
+        }
+
+        p { 
+            font-size: clamp(1rem, 1.2vw, 1.25rem); 
+            color: var(--text-secondary); 
+            line-height: 1.7; 
+            margin-bottom: 1.5rem; 
+        }
+        
+        .technique-number {
+            font-size: clamp(4rem, 12vw, 12rem);
+            position: absolute;
+            top: -10px;
+            right: 20px;
+            opacity: 0.04;
+            font-weight: 900;
+            pointer-events: none;
+            line-height: 1;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* --- Elementos Educativos --- */
+        .content-section {
+            text-align: left;
+            margin-bottom: 1.5rem;
+            animation: fadeIn .25s ease-out;
+        }
+        
+        .content-label {
+            color: var(--text-main);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+        .content-label::before {
+            content: '';
+            display: block;
+            width: 4px;
+            height: 1.1rem;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .structure-box {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px dashed rgba(56, 189, 248, 0.3);
+            padding: 1.2rem;
+            border-radius: 12px;
+            font-family: 'Courier New', monospace;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .example-box {
+            background: linear-gradient(to right, rgba(56, 189, 248, 0.05), transparent);
+            border-left: 4px solid var(--accent);
+            padding: clamp(1rem, 2vw, 2rem);
+            text-align: left;
+            margin-top: 1rem;
+            border-radius: 0 16px 16px 0;
+            position: relative;
+        }
+        
+        .objective-tag {
+            display: inline-block;
+            background: rgba(56, 189, 248, 0.15);
+            color: var(--accent);
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* --- Controles --- */
+        .controls {
+            position: absolute;
+            bottom: 30px;
+            right: 40px;
+            display: flex;
+            gap: 15px;
+            z-index: 100;
+        }
+
+        .btn-nav {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid var(--glass-border);
+            color: white;
+            padding: 14px 28px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-weight: 600;
+            font-family: inherit;
+            font-size: clamp(0.9rem, 1.2vw, 1rem);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-nav:hover { 
+            background: var(--accent); 
+            color: #0f172a; 
+            box-shadow: 0 0 20px var(--accent-glow); 
+            transform: translateY(-3px);
+            border-color: var(--accent);
+        }
+
+        .progress-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 4px;
+            background: var(--accent);
+            width: 0%;
+            transition: width .3s ease-out;
+            z-index: 20;
+            box-shadow: 0 -2px 10px var(--accent);
+        }
+
+        /* --- Dinámicas --- */
+        .quiz-container {
+            display: grid;
+            gap: 15px;
+            text-align: left;
+            margin-top: 1.5rem;
+            padding-bottom: 1rem;
+        }
+        
+        .scenario-text {
+            background: rgba(255,255,255,0.03);
+            padding: 1.5rem;
+            border-radius: 16px;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--glass-border);
+            font-size: clamp(1rem, 1.2vw, 1.3rem);
+            font-weight: 500;
+            color: #e2e8f0;
+        }
+
+        .quiz-btn {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 1.2rem;
+            border-radius: 12px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: left;
+            font-family: inherit;
+            font-size: 1rem;
+            position: relative;
+            overflow: hidden;
+            line-height: 1.5;
+        }
+        
+        .quiz-btn:hover:not(:disabled) { 
+            background: rgba(255,255,255,0.08); 
+            border-color: var(--accent); 
+            color: var(--text-main);
+            transform: translateX(5px);
+        }
+
+        .quiz-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+        
+        /* Semáforo Buttons */
+        .semaforo-grid {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+        .btn-semaforo {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            border: 4px solid rgba(255,255,255,0.1);
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            font-size: 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,255,0.05);
+        }
+        .btn-semaforo:hover { transform: scale(1.1); }
+        
+        .bg-red:hover { box-shadow: 0 0 30px rgba(239, 68, 68, 0.4); border-color: var(--error); }
+        .bg-yellow:hover { box-shadow: 0 0 30px rgba(245, 158, 11, 0.4); border-color: var(--warning); }
+        .bg-green:hover { box-shadow: 0 0 30px rgba(16, 185, 129, 0.4); border-color: var(--success); }
+
+        .feedback { 
+            margin-top: 20px; 
+            padding: 20px; 
+            border-radius: 12px; 
+            font-weight: 600; 
+            display: none; 
+            font-size: 1.1rem;
+            animation: fadeIn 0.3s ease;
+            text-align: left;
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .feedback.correct { 
+            background: rgba(16, 185, 129, 0.15); 
+            color: #34d399; 
+            border: 1px solid rgba(16, 185, 129, 0.3); 
+        }
+        .feedback.incorrect { 
+            background: rgba(239, 68, 68, 0.15); 
+            color: #fca5a5; 
+            border: 1px solid rgba(239, 68, 68, 0.3); 
+        }
+
+        /* Icon Grid */
+        .icon-grid {
+            display: flex; 
+            justify-content: space-around; 
+            margin-top: 3rem; 
+            flex-wrap: wrap; 
+            gap: 20px;
+        }
+        
+        .icon-card {
+            background: rgba(255,255,255,0.03); 
+            padding: 2rem; 
+            border-radius: 20px; 
+            width: clamp(140px, 22vw, 220px); 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid transparent;
+            transition: all 0.3s;
+        }
+        .icon-card:hover {
+            border-color: var(--glass-border);
+            background: rgba(255,255,255,0.06);
+            transform: translateY(-5px);
+        }
+        .icon-emoji { font-size: clamp(2.5rem, 6vw, 4.5rem); margin-bottom: 1rem; }
+
+        /* Estilos NUEVOS para la Dinámica 3 (Caja de Herramientas) */
+        .tool-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .tool-btn {
+            background: rgba(56, 189, 248, 0.05);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            color: var(--accent);
+            padding: 1.5rem;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 600;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+        .tool-btn:hover:not(:disabled) {
+            background: var(--accent);
+            color: #0f172a;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px -5px rgba(56,189,248,0.4);
+        }
+        .tool-icon { font-size: 2rem; }
+
+        /* Teacher Info Box */
+        .info-box {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: rgba(0,0,0,0.2);
+            border-radius: 16px;
+            border: 1px solid var(--glass-border);
+            width: 100%;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .credits {
+            position: absolute;
+            bottom: 20px;
+            left: 30px;
+            font-size: 0.85rem;
+            opacity: 0.5;
+            z-index: 10;
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 480px) {
+            .card { padding: 1.5rem; width: 92%; max-height: 85dvh; }
+            .controls { 
+                right: 50%; transform: translateX(50%); bottom: 15px; 
+                width: 95%; justify-content: center;
+            }
+            .btn-nav { padding: 12px 20px; width: 45%; justify-content: center; }
+            .credits { display: none; } 
+            .technique-number { font-size: 4rem; top: 10px; right: 10px; opacity: 0.05;}
+            .icon-grid { gap: 10px; margin-top: 1.5rem;}
+            h1 { font-size: 2.2rem; }
+            .semaforo-grid { gap: 10px; }
+            .btn-semaforo { width: 60px; height: 60px; font-size: 1.5rem; }
+            .subtitle { font-size: 0.8rem; line-height: 1.4; }
+            .tool-grid { grid-template-columns: 1fr; }
+            
+        }
+        /* --- Estilos para la Bibliografía --- */
+        .bib-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+            width: 100%;
+            margin-top: 1rem;
+            text-align: left;
+        }
+
+        .bib-item {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 1.2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bib-item:hover {
+            background: rgba(255, 255, 255, 0.07);
+            border-color: var(--accent);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
+        }
+
+        .bib-item::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 4px; height: 100%;
+            background: var(--text-secondary);
+            opacity: 0.3;
+            transition: 0.3s;
+        }
+        
+        .bib-item:hover::before {
+            background: var(--accent);
+            opacity: 1;
+        }
+
+        .bib-author {
+            color: var(--text-main);
+            font-weight: 700;
+            font-size: 1rem;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .bib-title {
+            color: var(--accent);
+            font-style: italic;
+            font-size: 0.95rem;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .bib-meta {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .bib-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(16, 185, 129, 0.1); /* Green tint default */
+            color: #34d399;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .tag-blue { background: rgba(56, 189, 248, 0.1); color: var(--accent); border-color: rgba(56, 189, 248, 0.2); }
+        .tag-orange { background: rgba(245, 158, 11, 0.1); color: var(--warning); border-color: rgba(245, 158, 11, 0.2); }
+
+/* Estilos únicos extraídos del HTML para mantener una CSP limpia. */
+.u-tecnicasdeasertividad-1{position: relative;}
+.u-tecnicasdeasertividad-2{font-size: clamp(3rem, 8vw, 6rem); margin-bottom: 1rem; filter: drop-shadow(0 0 20px rgba(56,189,248,0.4));}
+.u-tecnicasdeasertividad-3{margin: 0; color: var(--accent); font-weight: 600;}
+.u-tecnicasdeasertividad-4{margin: 0; font-size: 0.9rem;}
+.u-tecnicasdeasertividad-5{margin-top: 10px; padding-top: 10px; border-top: 1px dashed rgba(255,255,255,0.1);}
+.u-tecnicasdeasertividad-6{font-size: 0.8rem; opacity: 0.7; text-transform: uppercase; letter-spacing: 1px;}
+.u-tecnicasdeasertividad-7{font-weight: 600; font-size: 1.1rem; color: #fff;}
+.u-tecnicasdeasertividad-8{font-size: clamp(0.8rem, 1.2vw, 1rem); margin-top: 2rem; opacity: 0.6;}
+.u-tecnicasdeasertividad-9{color: var(--text-secondary);}
+.u-tecnicasdeasertividad-10{font-size: 0.85rem; margin-top: 5px;}
+.u-tecnicasdeasertividad-11{background: rgba(56, 189, 248, 0.08); border: 1px solid var(--accent); transform: scale(1.05);}
+.u-tecnicasdeasertividad-12{color: var(--accent);}
+.u-tecnicasdeasertividad-13{color: var(--error);}
+.u-tecnicasdeasertividad-14{font-size:0.85rem; margin-top:0.5rem; opacity:0.8;}
+.u-tecnicasdeasertividad-15{color:var(--text-main);}
+.u-tecnicasdeasertividad-16{margin-top:20px; display:none; margin-left: auto; margin-right: auto;}
+.u-tecnicasdeasertividad-17{border-left: 4px solid var(--error);}
+.u-tecnicasdeasertividad-18{font-size: 8rem; right: 10px; opacity: 0.03;}
+.u-tecnicasdeasertividad-19{font-size: 0.9rem; margin-bottom: 1rem;}
+.u-tecnicasdeasertividad-20{font-size: clamp(1.8rem, 4vw, 3rem);}
+.u-tecnicasdeasertividad-21{margin: 1.5rem 0; padding: 1rem; background: rgba(56, 189, 248, 0.05); border-left: 4px solid var(--accent); border-radius: 8px; text-align: left;}
+.u-tecnicasdeasertividad-22{color: var(--accent); font-size: 1.1rem; margin-bottom: 0.5rem;}
+.u-tecnicasdeasertividad-23{margin: 0; font-size: 0.95rem;}
+.u-tecnicasdeasertividad-24{margin-top: 1rem; text-align: left;}
+.u-tecnicasdeasertividad-25{color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.5rem; text-align: center;}
+.u-tecnicasdeasertividad-26{color: var(--text-main); font-weight: 600; font-size: 1.1rem; margin-bottom: 1.5rem; text-align: center;}
+.u-tecnicasdeasertividad-27{border-top: 1px solid var(--glass-border); padding-top: 1rem;}
+.u-tecnicasdeasertividad-28{color: var(--accent); font-size: 0.9rem; margin-bottom: 0.5rem; font-weight: 600;}
+.u-tecnicasdeasertividad-29{list-style: none; font-size: 0.85rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 8px; color: var(--text-secondary);}
+.u-tecnicasdeasertividad-30{margin-top: 1.5rem; padding-top: 1rem; border-top: 1px dashed rgba(255,255,255,0.1); text-align: center;}
+.u-tecnicasdeasertividad-31{font-size: 0.8rem; opacity: 0.7; text-transform: uppercase;}
+.u-tecnicasdeasertividad-32{font-weight: 600; font-size: 1rem; color: #fff;}
+.u-tecnicasdeasertividad-33{margin: 2rem auto 0;}
