@@ -1,65 +1,24 @@
-PUBLICAR MENTORÍA DIGITAL Y URBAN PETS EN GITHUB PAGES
-======================================================
+PUBLICAR URBAN PETS EN MENTORIADIGITALMX.COM
+===========================================
 
-ESTRUCTURA CORRECTA DE LA RAÍZ
-------------------------------
-Al ejecutar "ls" o "dir" en el repositorio debes ver directamente:
+1. Sube TODO el contenido de este proyecto a la carpeta pública de tu dominio.
+2. Urban Pets ya está dentro de la carpeta:
 
-  .github/
-  UrbanPets/
-  assets/
-  index.html
-  manifest.webmanifest
-  ...
+   UrbanPets/
 
-No debe existir otra carpeta "mentoria-digital-web" ni "mentoria-digital"
-dentro del repositorio.
+3. Coloca tus tres archivos finales dentro de:
 
-DESCARGAS DE URBAN PETS
------------------------
-Los instaladores no van dentro del repositorio web ni en Git LFS.
-Publícalos en GitHub Releases con:
+   UrbanPets/archivos-descarga/
 
-  Etiqueta: urbanpets-v1.0.0
-  UrbanPets-Windows-Instalador.exe
-  urbanpets_1.0.0_amd64.deb
+4. Usa exactamente estos nombres:
 
-La página UrbanPets/index.html ya enlaza a esa publicación.
+   UrbanPets-Windows-Instalador.exe
+   UrbanPets-Windows-Portable.zip
+   UrbanPets-Linux-Portable.tar.gz
 
-VALIDACIÓN LOCAL
-----------------
-Desde la raíz del repositorio:
+5. La página quedará disponible en:
 
-  python scripts/validate-site.py
-  python -m http.server 8080
+   https://mentoriadigitalmx.com/UrbanPets
 
-Abre:
-
-  http://localhost:8080/
-  http://localhost:8080/UrbanPets/
-
-PUBLICACIÓN
------------
-1. En GitHub abre Settings > Pages.
-2. En Source selecciona GitHub Actions.
-3. Ejecuta:
-
-  git add -A
-  git commit -m "Corrige estructura y rutas de Urban Pets"
-  git push origin main
-
-El workflow detendrá la publicación si detecta:
-
-  - una raíz duplicada;
-  - un instalador dentro del repositorio;
-  - rutas absolutas locales que fallen bajo GitHub Pages;
-  - enlaces internos o recursos inexistentes.
-
-RUTA CORREGIDA
---------------
-La tarjeta de Urban Pets en index.html usa:
-
-  UrbanPets/
-
-No usa /UrbanPets/. La ruta relativa funciona tanto en un dominio personalizado
-como bajo una dirección del tipo usuario.github.io/repositorio/.
+6. El index principal ya incluye una tarjeta que abre Urban Pets.
+7. No subas solo la carpeta UrbanPets: sube también robots.txt, sitemap.xml y el index principal actualizado.
