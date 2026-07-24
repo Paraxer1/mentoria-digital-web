@@ -1,24 +1,38 @@
 PUBLICAR URBAN PETS EN MENTORIADIGITALMX.COM
 ===========================================
 
-1. Sube TODO el contenido de este proyecto a la carpeta pública de tu dominio.
-2. Urban Pets ya está dentro de la carpeta:
+1. Sube la carpeta completa "UrbanPets" al directorio público de tu dominio.
 
-   UrbanPets/
+2. La página quedará disponible en:
 
-3. Coloca tus tres archivos finales dentro de:
+   https://mentoriadigitalmx.com/UrbanPets/
 
-   UrbanPets/archivos-descarga/
+3. La carpeta de descargas debe contener únicamente estos dos instaladores:
 
-4. Usa exactamente estos nombres:
+   UrbanPets/archivos-descarga/UrbanPets-Windows-Instalador.exe
+   UrbanPets/archivos-descarga/urbanpets_1.0.0_amd64.deb
 
-   UrbanPets-Windows-Instalador.exe
-   UrbanPets-Windows-Portable.zip
-   UrbanPets-Linux-Portable.tar.gz
+4. No cambies esos nombres sin actualizar también los enlaces dentro de:
 
-5. La página quedará disponible en:
+   UrbanPets/index.html
 
-   https://mentoriadigitalmx.com/UrbanPets
+5. Para probar la página localmente desde la raíz del proyecto:
 
-6. El index principal ya incluye una tarjeta que abre Urban Pets.
-7. No subas solo la carpeta UrbanPets: sube también robots.txt, sitemap.xml y el index principal actualizado.
+   python3 -m http.server 8080
+
+   Después abre:
+
+   http://localhost:8080/UrbanPets/
+
+6. Comandos mostrados para Linux:
+
+   Instalar:
+   sudo apt install ./urbanpets_1.0.0_amd64.deb
+
+   Desinstalar:
+   sudo apt remove urbanpets
+
+   Eliminar completamente:
+   sudo apt purge urbanpets
+
+7. La página usa HTML, CSS y JavaScript propios. No necesita librerías externas.
