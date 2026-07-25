@@ -21,6 +21,7 @@
   <script defer src="assets/js/app.js"></script>
 </head>
 <body>
+  <div class="scroll-progress" aria-hidden="true"></div>
   <a class="skip-link" href="#contenido">Saltar al contenido</a>
 
   <header class="site-header">
@@ -40,6 +41,7 @@
       <nav class="main-nav" aria-label="Navegación principal">
         <a href="#funciones">Funciones</a>
         <a href="#fortalezas">Lo mejor</a>
+        <a href="#version-oficial">Versión 1.0</a>
         <a href="#descargas">Descargas</a>
         <a href="#instalacion">Instalación</a>
         <a href="#preguntas">Preguntas</a>
@@ -51,6 +53,9 @@
     <section class="hero" id="inicio">
       <div class="hero-orbs" aria-hidden="true">
         <span></span><span></span><span></span>
+      </div>
+      <div class="paw-trail paw-trail-hero" aria-hidden="true">
+        <span>🐾</span><span>🐾</span><span>🐾</span>
       </div>
       <div class="container hero-grid">
         <div class="hero-copy reveal">
@@ -104,15 +109,15 @@
               <div class="mock-content">
                 <div class="stats-grid">
                   <article>
-                    <strong>128</strong>
+                    <strong data-count="128">0</strong>
                     <small>Registros de mascotas</small>
                   </article>
                   <article>
-                    <strong>23</strong>
+                    <strong data-count="23">0</strong>
                     <small>En adopción</small>
                   </article>
                   <article>
-                    <strong>14</strong>
+                    <strong data-count="14">0</strong>
                     <small>Seguimientos activos</small>
                   </article>
                 </div>
@@ -169,32 +174,32 @@
         </div>
 
         <div class="feature-grid">
-          <article class="feature-card reveal">
+          <article class="feature-card interactive-card reveal">
             <div class="feature-icon">🐾</div>
             <h3>Registro de mascotas</h3>
             <p>Guarda nombre, foto, edad, especie, tamaño, procedencia, observaciones y estado de cada mascota.</p>
           </article>
-          <article class="feature-card reveal">
+          <article class="feature-card interactive-card reveal">
             <div class="feature-icon">🩺</div>
             <h3>Control de salud</h3>
             <p>Lleva vacunas, tratamientos, consultas, costos y próximas revisiones en una misma ficha.</p>
           </article>
-          <article class="feature-card reveal">
+          <article class="feature-card interactive-card reveal">
             <div class="feature-icon">🏠</div>
             <h3>Gestión de adopciones</h3>
             <p>Relaciona mascotas con adoptantes y conserva el proceso de entrega y seguimiento.</p>
           </article>
-          <article class="feature-card reveal">
+          <article class="feature-card interactive-card reveal">
             <div class="feature-icon">📄</div>
             <h3>Documentos y PDF</h3>
             <p>Genera expedientes, comprobantes y otros documentos para guardar o imprimir.</p>
           </article>
-          <article class="feature-card reveal">
+          <article class="feature-card interactive-card reveal">
             <div class="feature-icon">👥</div>
             <h3>Usuarios locales</h3>
             <p>Permite crear varias cuentas dentro de la misma computadora para el personal del refugio.</p>
           </article>
-          <article class="feature-card reveal">
+          <article class="feature-card interactive-card reveal">
             <div class="feature-icon">🔐</div>
             <h3>Privacidad local</h3>
             <p>La información permanece en el equipo donde trabajas, útil cuando no quieres depender de internet.</p>
@@ -205,63 +210,86 @@
 
     <section class="section section-soft" id="fortalezas">
       <div class="container dual-grid">
-        <div class="panel strong reveal">
+        <div class="panel strong interactive-card reveal">
           <span class="eyebrow">Puntos fuertes</span>
-          <h2>¿Por qué sí vale la pena instalarlo?</h2>
+          <h2>¿Por qué sí conviene instalar Urban Pets?</h2>
           <ul class="check-list">
-            <li>Centraliza el trabajo del refugio en una sola aplicación.</li>
-            <li>Ayuda a tener orden, seguimiento y mejor control diario.</li>
-            <li>Funciona de forma local, sin depender de nube para trabajar.</li>
-            <li>Es práctico para refugios pequeños o medianos que quieren empezar ya.</li>
-            <li>Incluye usuarios, documentos y respaldos.</li>
+            <li>Te ayuda a tener <strong>todo más ordenado</strong> en un solo lugar.</li>
+            <li>Facilita el control de <strong>mascotas, salud y adopciones</strong> sin usar varias libretas o archivos.</li>
+            <li>Es fácil de entender para el trabajo diario del refugio.</li>
+            <li>Guarda usuarios, documentos y respaldos dentro del mismo sistema.</li>
+            <li>Es una buena opción para <strong>empezar hoy</strong> con una base clara, estable y útil.</li>
           </ul>
         </div>
 
-        <div class="panel honest reveal">
+        <div class="panel honest interactive-card reveal">
           <span class="eyebrow">Antes de instalar</span>
-          <h2>Lo que debes saber, explicado sin rodeos.</h2>
+          <h2>Lo importante, explicado fácil.</h2>
           <ul class="fact-list">
-            <li><strong>Una sola computadora:</strong> esta versión 1.0 trabaja de forma local.</li>
-            <li><strong>Sin red local en tiempo real:</strong> no comparte cambios al instante entre varios equipos.</li>
-            <li><strong>Sin nube:</strong> no se entra desde celular o navegador para editar datos.</li>
-            <li><strong>Ideal para comenzar:</strong> si después quieres red local, sería una evolución futura.</li>
+            <li><strong>Se usa en una sola computadora:</strong> Urban Pets 1.0 guarda y trabaja los datos en ese equipo.</li>
+            <li><strong>No conecta varias computadoras al mismo tiempo:</strong> esta versión todavía no sincroniza cambios por red local.</li>
+            <li><strong>No depende de internet para el trabajo diario:</strong> eso lo hace práctico y estable para empezar.</li>
+            <li><strong>Está hecho para comenzar bien:</strong> primero resuelve lo esencial y luego podrán llegar mejoras oficiales.</li>
           </ul>
-          <p class="honest-note">No es una desventaja escondida: simplemente es una versión enfocada en que funcione bien, se vea bien y sea útil desde el primer día.</p>
+          <p class="honest-note">En pocas palabras: si buscas orden, control y una base clara para tu refugio, Urban Pets 1.0 ya te sirve desde hoy.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section version-section" id="version-oficial">
+      <div class="container">
+        <div class="version-card interactive-card reveal">
+          <div class="version-mark" aria-hidden="true">
+            <span>1.0</span>
+            <small>OFICIAL</small>
+          </div>
+          <div class="version-copy">
+            <span class="eyebrow">Primera versión oficial</span>
+            <h2>Una base clara para empezar desde hoy.</h2>
+            <p>
+              Urban Pets 1.0 ya reúne lo esencial para el trabajo diario del refugio: <strong>mascotas, salud, adopciones, usuarios, documentos y respaldos</strong>.
+              Es la <strong>primera versión oficial</strong> y está pensada para que puedas instalarla, entenderla rápido y empezar a usarla desde el primer día.
+            </p>
+          </div>
+          <div class="version-roadmap" aria-label="Alcance de la primera versión">
+            <article><span>✅</span><div><strong>Disponible ahora</strong><small>Puedes registrar mascotas, llevar control de salud, gestionar adopciones, crear usuarios y guardar documentos y respaldos.</small></div></article>
+            <article><span>↗</span><div><strong>Mejora continua</strong><small>Esta es la primera versión oficial. Más adelante podrán llegar mejoras y nuevas funciones en futuras actualizaciones oficiales.</small></div></article>
+            <article><span>ℹ</span><div><strong>Sin promesas ocultas</strong><small>La versión 1.0 funciona en una sola computadora y por ahora no incluye sincronización en red local.</small></div></article>
+          </div>
         </div>
       </div>
     </section>
 
     <section class="section download-section" id="descargas">
+      <div class="paw-trail paw-trail-download" aria-hidden="true">
+        <span>🐾</span><span>🐾</span><span>🐾</span><span>🐾</span>
+      </div>
       <div class="container">
         <div class="section-heading reveal">
-          <span class="eyebrow">Descargas</span>
-          <h2>Elige el instalador de tu computadora.</h2>
-          <p>
-            Aquí tienes las <strong>dos descargas reales disponibles</strong> para Urban Pets 1.0.
-            Solo selecciona la que corresponde a tu sistema.
-          </p>
+          <span class="eyebrow">Descargas oficiales</span>
+          <h2>Elige tu instalador oficial y empieza en minutos.</h2>
+          <p>Aquí tienes las dos descargas reales de Urban Pets 1.0: <strong>.exe para Windows</strong> y <strong>.deb para Linux</strong>.</p>
         </div>
 
         <div class="system-hint reveal" id="system-hint">
-          <span>🖥️</span>
+          <span class="system-hint-art"><img src="assets/img/windows-download.png" alt=""></span>
           <p>Estamos detectando tu sistema para recomendarte la mejor opción.</p>
         </div>
 
         <div class="download-grid two-columns">
-          <article class="download-card featured reveal" data-os="windows">
-            <div class="os-art windows-art" aria-hidden="true">
-              <svg viewBox="0 0 96 96" role="img" aria-label="Icono de Windows">
-                <rect x="12" y="16" width="30" height="28" rx="4"></rect>
-                <rect x="48" y="16" width="36" height="28" rx="4"></rect>
-                <rect x="12" y="50" width="30" height="30" rx="4"></rect>
-                <rect x="48" y="50" width="36" height="30" rx="4"></rect>
-              </svg>
+          <article class="download-card featured interactive-card reveal" data-os="windows">
+            <div class="download-card-head">
+              <div class="os-art windows-art" aria-hidden="true">
+                <img src="assets/img/windows-download.png" alt="Icono de Windows">
+              </div>
+              <div>
+                <div class="download-badges">
+                  <span class="badge badge-green">Recomendado</span>
+                  <span class="badge">Windows 10 y 11</span>
+                </div>
+                <h3>Urban Pets para Windows</h3>
+              </div>
             </div>
-            <div class="download-badges">
-              <span class="badge badge-green">Recomendado</span>
-              <span class="badge">Windows 10 y 11</span>
-            </div>
-            <h3>Urban Pets para Windows</h3>
             <p>Instalador completo en archivo <strong>.exe</strong>. Instala Urban Pets y deja el acceso directo listo para usar.</p>
             <ul class="download-list">
               <li>Instalación guiada</li>
@@ -278,21 +306,19 @@
             </div>
           </article>
 
-          <article class="download-card reveal" data-os="linux">
-            <div class="os-art linux-art" aria-hidden="true">
-              <svg viewBox="0 0 96 96" role="img" aria-label="Icono de Linux">
-                <circle cx="48" cy="20" r="10"></circle>
-                <path d="M32 40c0-10 7-18 16-18s16 8 16 18v16c0 14-7 24-16 24s-16-10-16-24V40z"></path>
-                <path d="M30 70l-10 10"></path>
-                <path d="M66 70l10 10"></path>
-                <path d="M40 86h16"></path>
-              </svg>
+          <article class="download-card interactive-card reveal" data-os="linux">
+            <div class="download-card-head">
+              <div class="os-art linux-art" aria-hidden="true">
+                <img src="assets/img/linux-penguin.png" alt="Icono de Linux">
+              </div>
+              <div>
+                <div class="download-badges">
+                  <span class="badge badge-amber">Linux</span>
+                  <span class="badge">Debian / Ubuntu</span>
+                </div>
+                <h3>Urban Pets para Linux</h3>
+              </div>
             </div>
-            <div class="download-badges">
-              <span class="badge badge-amber">Linux</span>
-              <span class="badge">Debian / Ubuntu</span>
-            </div>
-            <h3>Urban Pets para Linux</h3>
             <p>Paquete oficial <strong>.deb</strong> para Ubuntu, Debian, Linux Mint, Pop!_OS y distribuciones compatibles.</p>
             <ul class="download-list">
               <li>Instalación desde paquete .deb</li>
