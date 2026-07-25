@@ -39,7 +39,7 @@
       if (event.key === 'Escape') closeMenu();
     });
     addEventListener('resize', () => {
-      if (innerWidth > 860) closeMenu();
+      if (innerWidth > 900) closeMenu();
     }, { passive: true });
   }
 
@@ -97,6 +97,42 @@
       });
     });
     tilt.addEventListener('pointerleave', resetTilt);
+  }
+
+  if (finePointer.matches && !reduceMotion.matches) {
+    const halo = doc.querySelector('[data-pointer-halo]');
+    if (halo) {
+      let haloFrame = 0;
+      addEventListener('pointermove', event => {
+        cancelAnimationFrame(haloFrame);
+        haloFrame = requestAnimationFrame(() => {
+          halo.classList.add('active');
+          halo.style.left = `${event.clientX}px`;
+          halo.style.top = `${event.clientY}px`;
+        });
+      }, { passive: true });
+      doc.documentElement.addEventListener('mouseleave', () => halo.classList.remove('active'));
+    }
+
+    doc.querySelectorAll('[data-spotlight]').forEach(card => {
+      card.addEventListener('pointermove', event => {
+        const rect = card.getBoundingClientRect();
+        card.style.setProperty('--spot-x', `${event.clientX - rect.left}px`);
+        card.style.setProperty('--spot-y', `${event.clientY - rect.top}px`);
+      });
+    });
+
+    doc.querySelectorAll('[data-magnetic]').forEach(element => {
+      element.addEventListener('pointermove', event => {
+        const rect = element.getBoundingClientRect();
+        const x = event.clientX - rect.left - rect.width / 2;
+        const y = event.clientY - rect.top - rect.height / 2;
+        element.style.transform = `translate(${(x * 0.07).toFixed(1)}px, ${(y * 0.10).toFixed(1)}px)`;
+      });
+      element.addEventListener('pointerleave', () => {
+        element.style.transform = '';
+      });
+    });
   }
 
   const tabButtons = [...doc.querySelectorAll('[data-tab]')];
@@ -159,32 +195,11 @@
 
   doc.querySelectorAll('[data-download-file]').forEach(link => {
     const info = link.querySelector('[data-file-info]');
-    const href = link.getAttribute('href') || '';
-    const name = link.dataset.downloadFile || 'el instalador';
-
-    const markMissing = () => {
-      link.classList.add('download-missing');
-      link.setAttribute('aria-disabled', 'true');
-      if (info) info.textContent = 'Disponible próximamente';
-    };
-    const markReady = size => {
-      link.classList.remove('download-missing');
-      link.removeAttribute('aria-disabled');
-      if (info) info.textContent = `${formatSize(size)} · Versión 1.0`;
-    };
-
-    link.addEventListener('click', event => {
-      if (!link.classList.contains('download-missing')) return;
-      event.preventDefault();
-      showToast(`El archivo ${name} todavía no está disponible.`);
-    });
-
     const declaredSize = Number(link.dataset.fileSize || 0);
-    if (declaredSize > 0) {
-      markReady(declaredSize);
-    } else if (info) {
-      info.textContent = 'Versión 1.0 · Descarga oficial';
-    }
+    if (info && declaredSize > 0) info.textContent = `${formatSize(declaredSize)} · Versión 1.0`;
+    link.addEventListener('click', () => {
+      showToast(`Iniciando descarga de ${link.dataset.downloadFile || 'Urban Pets'}…`);
+    });
   });
 
   const userAgent = navigator.userAgent.toLowerCase();
@@ -198,13 +213,23 @@
     const detail = message.querySelector('small');
     if (platform === 'windows') {
       if (title) title.textContent = 'Detectamos Windows en tu equipo.';
-      if (detail) detail.textContent = 'Te recomendamos descargar el instalador .EXE.';
+      if (detail) detail.textContent = 'Descarga el instalador .EXE. Esta versión trabaja localmente en esa computadora.';
     } else if (platform === 'linux') {
       if (title) title.textContent = 'Detectamos Linux en tu equipo.';
-      if (detail) detail.textContent = 'Si utilizas Ubuntu, Debian o un derivado, descarga el paquete .DEB.';
+      if (detail) detail.textContent = 'Si usas Debian, Ubuntu o un derivado compatible, descarga el paquete .DEB.';
     } else {
       if (title) title.textContent = 'Elige el instalador de tu sistema.';
-      if (detail) detail.textContent = 'Hay una versión para Windows y otra para distribuciones Linux compatibles con DEB.';
+      if (detail) detail.textContent = 'Urban Pets 1.0 es una aplicación local y no conecta varias computadoras.';
     }
   }
+
+  const details = [...doc.querySelectorAll('.faq-list details')];
+  details.forEach(item => {
+    item.addEventListener('toggle', () => {
+      if (!item.open) return;
+      details.forEach(other => {
+        if (other !== item) other.open = false;
+      });
+    });
+  });
 })();

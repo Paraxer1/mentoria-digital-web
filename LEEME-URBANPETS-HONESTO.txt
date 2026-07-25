@@ -1,0 +1,16 @@
+PUBLICACIÓN
+
+Este ZIP ya tiene la raíz correcta del repositorio.
+No contiene instaladores .exe o .deb; los botones siguen apuntando a GitHub Releases.
+
+Para publicar:
+1. Conserva la carpeta oculta .git de tu repositorio.
+2. Copia el contenido de este ZIP sobre la raíz del repositorio.
+3. Ejecuta:
+
+   python scripts/validate-site.py
+   git add -A
+   git commit -m "Aclara el alcance real de Urban Pets 1.0"
+   git push origin main
+
+La página deja claro que Urban Pets 1.0 trabaja en una sola computadora y no se conecta por red local.
