@@ -1,80 +1,27 @@
-VERIFICACIÓN FUNCIONAL DE URBAN PETS 1.0
-Fecha de revisión: 24 de julio de 2026
-Proyecto revisado: UrbanPets(18).zip
+REVISIÓN DEL SITIO URBAN PETS 1.0
+Fecha de actualización: 31 de julio de 2026
 
-CONCLUSIÓN PRINCIPAL
-Urban Pets 1.0 es una aplicación local para una sola computadora por instalación.
-No incluye conexión entre computadoras, descubrimiento de red, sincronización por LAN/Wi-Fi,
-servidor central, nube, aplicación web ni aplicación móvil.
+RESULTADO
+La página fue reconstruida como una experiencia web dinámica, adaptable e interactiva.
+Se conservaron el alcance real de Urban Pets 1.0 y sus enlaces oficiales de descarga.
 
-EVIDENCIA TÉCNICA
-1. La conexión de la aplicación está fijada a 127.0.0.1:3360 en:
-   src/main/java/com/refugio/urban_pet/config/Conexion.java
+VALIDACIONES REALIZADAS
+- HTML analizado sin IDs duplicados.
+- Todas las imágenes, hojas de estilo, scripts y anclas locales tienen una referencia válida.
+- CSS analizado sin errores de sintaxis y con balance correcto de bloques.
+- JavaScript validado con Node.js sin errores de sintaxis.
+- Prueba funcional en vista de 1440 x 960 px.
+- Prueba funcional en vista móvil de 390 x 844 px.
+- Sin desbordamiento horizontal en ambas vistas.
+- Menú móvil, modo oscuro, demo interactiva y pestañas de instalación verificados.
+- Modo alternativo sin librerías CDN verificado sin errores de ejecución.
 
-2. La clase Conexion usa:
-   HOST = 127.0.0.1
-   PORT = 3360
-   DATABASE = urbanpets
+MEJORAS PRINCIPALES
+- Frameworks: GSAP, ScrollTrigger, SplitText, Lenis y Swiper.
+- Demostración visual navegable de Urban Pets.
+- Animaciones por desplazamiento y microinteracciones.
+- Modo claro/oscuro y detección orientativa del sistema.
+- Diseño responsivo, accesible y con reducción de movimiento.
+- Imágenes optimizadas y limpieza de recursos sin uso.
 
-3. No se encontraron implementaciones de ServerSocket, Socket, DatagramSocket,
-   MulticastSocket, descubrimiento por broadcast ni cliente/servidor de red en el código fuente.
-
-4. El paquete Linux inicia una base privada con:
-   --bind-address=127.0.0.1
-   --port=3360
-   Esto limita el servicio a la misma computadora.
-
-5. El lanzador Linux utiliza un bloqueo de proceso para evitar abrir dos instancias
-   de Urban Pets en la misma sesión al mismo tiempo.
-
-FUNCIONES CONFIRMADAS
-- Registro y edición de mascotas.
-- Fotografías y ficha operativa de mascotas.
-- Registro de adoptantes.
-- Procesos de adopción y seguimiento de visitas.
-- Acuerdos firmados, devoluciones y cambios de tutela.
-- Historial clínico, tratamientos, costos y próximas consultas.
-- Generación de documentos PDF y uso de plantillas.
-- Configuración de los datos del refugio.
-- Cuentas locales con roles ADMIN y EMPLOYEE.
-- Permisos por operación.
-- Bloqueo por inactividad.
-- Auditoría de acciones.
-- Respaldos manuales.
-- Respaldos automáticos opcionales cuando el usuario los configura.
-- Restauración de respaldos.
-- Interfaz en español e inglés.
-
-ACLARACIONES IMPORTANTES
-- Las cuentas de usuario son locales. No sirven para entrar desde otra computadora.
-- Es posible instalar el programa en varias computadoras, pero cada instalación tendrá
-  una base de datos diferente e independiente.
-- Para mover información entre computadoras se necesita crear y restaurar un respaldo.
-  No existe sincronización automática o en tiempo real.
-- La aplicación no sube respaldos a la nube por sí sola.
-- Internet no es necesario para el trabajo diario después de instalar los componentes.
-- Si un refugio necesita varias estaciones trabajando con los mismos datos al mismo tiempo,
-  Urban Pets 1.0 no es la versión adecuada para ese escenario.
-
-PAQUETE LINUX REVISADO
-- Paquete: urbanpets
-- Versión: 1.0.0
-- Arquitectura: amd64/x86_64
-- Incluye una instancia privada de MySQL.
-- La base inicia al abrir Urban Pets y se apaga al cerrar.
-- sudo apt remove urbanpets puede preguntar si se eliminan los datos.
-- Algunos centros de software pueden no mostrar la pregunta.
-- sudo apt purge urbanpets elimina el paquete y los datos gestionados por el paquete.
-- Se recomienda crear un respaldo antes de cualquier desinstalación.
-
-CAMBIOS APLICADOS A LA PÁGINA
-- Se explica desde el encabezado que la versión funciona en una sola computadora.
-- Se agregó una sección visible de “Sí incluye / No incluye”.
-- Se aclaró que no existe LAN, Wi-Fi compartido, nube, web o móvil.
-- Se aclaró el significado de las cuentas locales.
-- Se aclaró que varias instalaciones no comparten información.
-- Se explicó que los respaldos no se suben solos a la nube.
-- Se corrigió la explicación de remove y purge.
-- Se conservaron los enlaces oficiales de GitHub Releases.
-- Se agregaron animaciones accesibles, efectos de luz, tarjetas interactivas,
-  diagrama local animado y movimiento reducido para usuarios que lo solicitan.
+Consulta README.md y MEJORAS-APLICADAS.md para más detalles.
